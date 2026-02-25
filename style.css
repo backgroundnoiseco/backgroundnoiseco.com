@@ -110,7 +110,7 @@ header p {
   transition: width 0.3s ease;
   background: var(--surface);
   border-radius: 0 min(12px, calc(var(--thumb-w, 180px) * 0.07)) min(12px, calc(var(--thumb-w, 180px) * 0.07)) 0;
-  border-left: 1px solid transparent;
+  border-left: none;
 }
 
 .info-inner {
@@ -142,7 +142,7 @@ header p {
 .screenshot.info-left .info {
   border-radius: min(12px, calc(var(--thumb-w, 180px) * 0.07)) 0 0 min(12px, calc(var(--thumb-w, 180px) * 0.07));
   border-left: none;
-  border-right: 1px solid transparent;
+  border-right: none;
 }
 
 .screenshot.info-left.active .thumb {
