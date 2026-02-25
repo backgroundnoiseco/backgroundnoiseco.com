@@ -74,7 +74,7 @@ header p {
 
 .screenshot {
   display: flex;
-  border-radius: 12px;
+  border-radius: min(12px, calc(var(--thumb-w, 180px) * 0.07));
   overflow: hidden;
   cursor: pointer;
   flex-shrink: 0;
@@ -85,12 +85,12 @@ header p {
   overflow: hidden;
   width: var(--thumb-w, 180px);
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: min(12px, calc(var(--thumb-w, 180px) * 0.07));
   transition: border-radius 0.3s ease;
 }
 
 .screenshot.active .thumb {
-  border-radius: 12px 0 0 12px;
+  border-radius: min(12px, calc(var(--thumb-w, 180px) * 0.07)) 0 0 min(12px, calc(var(--thumb-w, 180px) * 0.07));
 }
 
 .thumb img {
@@ -109,7 +109,7 @@ header p {
   flex-shrink: 0;
   transition: width 0.3s ease;
   background: var(--surface);
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 min(12px, calc(var(--thumb-w, 180px) * 0.07)) min(12px, calc(var(--thumb-w, 180px) * 0.07)) 0;
   border-left: 1px solid transparent;
 }
 
@@ -140,13 +140,13 @@ header p {
 }
 
 .screenshot.info-left .info {
-  border-radius: 12px 0 0 12px;
+  border-radius: min(12px, calc(var(--thumb-w, 180px) * 0.07)) 0 0 min(12px, calc(var(--thumb-w, 180px) * 0.07));
   border-left: none;
   border-right: 1px solid transparent;
 }
 
 .screenshot.info-left.active .thumb {
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 min(12px, calc(var(--thumb-w, 180px) * 0.07)) min(12px, calc(var(--thumb-w, 180px) * 0.07)) 0;
 }
 
 .screenshot.info-left.active .info {
