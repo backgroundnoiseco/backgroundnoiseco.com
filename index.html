@@ -127,16 +127,23 @@
 
     shots.forEach((el) => {
       el.addEventListener('click', () => {
+        const ww = wrapper.clientWidth;
+        const gap = window.innerWidth <= 640 ? 12 : 24;
+        const totalGaps = (count - 1) * gap;
+        const baseWidth = count * thumbWidth + totalGaps;
+
         if (active === el) {
-          el.classList.remove('active');
           active = null;
-          resize();
+          row.style.marginLeft = Math.max((ww - baseWidth) / 2, 0) + 'px';
+          el.classList.remove('active');
           return;
         }
         if (active) active.classList.remove('active');
         active = el;
+        let margin = Math.max((ww - baseWidth) / 2, 0);
+        if (el.classList.contains('info-left')) margin -= thumbWidth;
+        row.style.marginLeft = margin + 'px';
         el.classList.add('active');
-        resize();
       });
     });
     const emailEl = document.querySelector('.email');
