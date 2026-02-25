@@ -156,7 +156,9 @@ header p {
   font-size: calc(var(--thumb-w, 180px) * 0.09);
   font-weight: 600;
   color: #fff;
-  margin-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid #444;
 }
 
 .info .desc {
