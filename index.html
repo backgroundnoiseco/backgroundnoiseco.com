@@ -19,7 +19,7 @@
       <div class="screenshot">
         <div class="thumb">
           <img src="images/IMG_4020.PNG" alt="RNG">
-          <span class="label">RNG</span>
+
         </div>
         <div class="info">
           <div class="info-inner">
@@ -32,7 +32,7 @@
       <div class="screenshot">
         <div class="thumb">
           <img src="images/IMG_4023.PNG" alt="RPG">
-          <span class="label">RPG</span>
+
         </div>
         <div class="info">
           <div class="info-inner">
@@ -45,7 +45,7 @@
       <div class="screenshot">
         <div class="thumb">
           <img src="images/IMG_4019.PNG" alt="Shadowboxing">
-          <span class="label">Shadowboxing</span>
+
         </div>
         <div class="info">
           <div class="info-inner">
@@ -58,7 +58,7 @@
       <div class="screenshot">
         <div class="thumb">
           <img src="images/IMG_4022.PNG" alt="Prosession">
-          <span class="label">Prosession</span>
+
         </div>
         <div class="info">
           <div class="info-inner">
@@ -78,10 +78,15 @@
         </div>
         <div class="thumb">
           <img src="images/IMG_4021.PNG" alt="Armature">
-          <span class="label">Armature</span>
+
         </div>
       </div>
     </div>
+    </div>
+
+    <div class="contact">
+      <a class="email" data-a="YWE=" data-b="YmFja2dyb3VuZG5vaXNlY28uY29t"></a>
+      <a href="https://instagram.com/bgnoiseco" target="_blank" rel="noopener">@bgnoiseco</a>
     </div>
 
     <footer>
@@ -94,13 +99,13 @@
     const row = document.querySelector('.screenshots');
     const shots = [...document.querySelectorAll('.screenshot')];
     const count = shots.length;
-    const gap = 24;
     const maxThumb = 180;
     let thumbWidth = maxThumb;
     let active = null;
 
     function resize() {
-      const available = wrapper.clientWidth - 3 * 16; // 1.5rem padding each side
+      const gap = window.innerWidth <= 640 ? 12 : 24;
+      const available = wrapper.clientWidth - 3 * 16;
       const totalGaps = (count - 1) * gap;
       thumbWidth = Math.min(maxThumb, Math.floor((available - totalGaps) / count));
       document.documentElement.style.setProperty('--thumb-w', thumbWidth + 'px');
@@ -134,6 +139,10 @@
         resize();
       });
     });
+    const emailEl = document.querySelector('.email');
+    const addr = atob(emailEl.dataset.a) + '@' + atob(emailEl.dataset.b);
+    emailEl.href = 'mailto:' + addr;
+    emailEl.textContent = addr;
   </script>
 </body>
 </html>
