@@ -78,6 +78,7 @@ header p {
   overflow: hidden;
   cursor: pointer;
   flex-shrink: 0;
+  touch-action: manipulation;
 }
 
 .thumb {
@@ -160,15 +161,15 @@ header p {
   font-size: calc(var(--thumb-w, 180px) * 0.09);
   font-weight: 600;
   color: #fff;
-  padding-bottom: 0.6rem;
-  margin-bottom: 0.6rem;
+  padding-bottom: calc(var(--thumb-w, 180px) * 0.04);
+  margin-bottom: calc(var(--thumb-w, 180px) * 0.04);
   border-bottom: 1px solid #444;
 }
 
 .info .desc {
   font-size: calc(var(--thumb-w, 180px) * 0.075);
   color: var(--text);
-  margin-bottom: 1rem;
+  margin-bottom: calc(var(--thumb-w, 180px) * 0.055);
 }
 
 .info .release {
