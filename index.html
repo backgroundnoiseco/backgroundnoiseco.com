@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Noise Co.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page">
+    <header>
+      <h1>Background Noise Co.</h1>
+      <p>iOS apps, in progress.</p>
+    </header>
+
+    <div class="screenshots-wrapper">
+    <div class="screenshots">
+      <div class="screenshot">
+        <div class="thumb">
+          <img src="images/IMG_4020.PNG" alt="RNG">
+          <span class="label">RNG</span>
+        </div>
+        <div class="info">
+          <div class="info-inner">
+            <h3>RNG</h3>
+            <p class="desc">Random Name Generator</p>
+            <p class="release">Q1 2026</p>
+          </div>
+        </div>
+      </div>
+      <div class="screenshot">
+        <div class="thumb">
+          <img src="images/IMG_4023.PNG" alt="RPG">
+          <span class="label">RPG</span>
+        </div>
+        <div class="info">
+          <div class="info-inner">
+            <h3>RPG</h3>
+            <p class="desc">Random Palette Generator</p>
+            <p class="release">Q1 2026</p>
+          </div>
+        </div>
+      </div>
+      <div class="screenshot">
+        <div class="thumb">
+          <img src="images/IMG_4019.PNG" alt="Shadowboxing">
+          <span class="label">Shadowboxing</span>
+        </div>
+        <div class="info">
+          <div class="info-inner">
+            <h3>Shadowboxing</h3>
+            <p class="desc">Experimental Image Synth</p>
+            <p class="release">Q2 2026</p>
+          </div>
+        </div>
+      </div>
+      <div class="screenshot">
+        <div class="thumb">
+          <img src="images/IMG_4022.PNG" alt="Prosession">
+          <span class="label">Prosession</span>
+        </div>
+        <div class="info">
+          <div class="info-inner">
+            <h3>Prosession</h3>
+            <p class="desc">Custom DAW</p>
+            <p class="release">Q2 2026</p>
+          </div>
+        </div>
+      </div>
+      <div class="screenshot info-left">
+        <div class="info">
+          <div class="info-inner">
+            <h3>Armature</h3>
+            <p class="desc">Writing and World Building Tool</p>
+            <p class="release">Q2 2026</p>
+          </div>
+        </div>
+        <div class="thumb">
+          <img src="images/IMG_4021.PNG" alt="Armature">
+          <span class="label">Armature</span>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Background Noise Co.</p>
+    </footer>
+  </div>
+
+  <script>
+    const wrapper = document.querySelector('.screenshots-wrapper');
+    const row = document.querySelector('.screenshots');
+    const shots = [...document.querySelectorAll('.screenshot')];
+    const count = shots.length;
+    const gap = 24;
+    const maxThumb = 180;
+    let thumbWidth = maxThumb;
+    let active = null;
+
+    function resize() {
+      const available = wrapper.clientWidth - 3 * 16; // 1.5rem padding each side
+      const totalGaps = (count - 1) * gap;
+      thumbWidth = Math.min(maxThumb, Math.floor((available - totalGaps) / count));
+      document.documentElement.style.setProperty('--thumb-w', thumbWidth + 'px');
+
+      const baseWidth = count * thumbWidth + totalGaps;
+      let margin = Math.max((wrapper.clientWidth - baseWidth) / 2, 0);
+      if (active && active.classList.contains('info-left')) {
+        margin -= thumbWidth;
+      }
+      row.style.marginLeft = margin + 'px';
+    }
+
+    row.style.transition = 'none';
+    resize();
+    row.offsetHeight;
+    row.style.transition = '';
+    row.classList.add('ready');
+    window.addEventListener('resize', resize);
+
+    shots.forEach((el) => {
+      el.addEventListener('click', () => {
+        if (active === el) {
+          el.classList.remove('active');
+          active = null;
+          resize();
+          return;
+        }
+        if (active) active.classList.remove('active');
+        active = el;
+        el.classList.add('active');
+        resize();
+      });
+    });
+  </script>
+</body>
+</html>

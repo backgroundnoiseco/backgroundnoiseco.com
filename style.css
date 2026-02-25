@@ -1,0 +1,222 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --border: #222;
+  --text: #e0e0e0;
+  --muted: #555;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  gap: 4rem;
+  overflow-x: hidden;
+}
+
+/* --- Header --- */
+
+header {
+  text-align: center;
+}
+
+h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--text);
+}
+
+header p {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* --- Screenshots --- */
+
+.screenshots-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.screenshots {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  transition: margin-left 0.3s ease;
+  visibility: hidden;
+}
+
+.screenshots.ready {
+  visibility: visible;
+}
+
+.screenshot {
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.thumb {
+  position: relative;
+  overflow: hidden;
+  width: var(--thumb-w, 180px);
+  flex-shrink: 0;
+  border-radius: 12px;
+  transition: border-radius 0.3s ease;
+}
+
+.screenshot.active .thumb {
+  border-radius: 12px 0 0 12px;
+}
+
+.thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.thumb .label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: calc(var(--thumb-w, 180px) * 0.07);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.screenshot:hover .label {
+  opacity: 1;
+}
+
+.screenshot.active .label {
+  opacity: 0;
+}
+
+/* --- Info panel --- */
+
+.info {
+  width: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+  background: var(--surface);
+  border-radius: 0 12px 12px 0;
+  border-left: 1px solid transparent;
+}
+
+.info-inner {
+  width: var(--thumb-w, 180px);
+  padding: calc(var(--thumb-w, 180px) * 0.11);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.screenshot.active .info {
+  width: var(--thumb-w, 180px);
+  border-left: 1px solid var(--border);
+}
+
+.screenshot.active .info-inner {
+  opacity: 1;
+}
+
+/* --- Info left variant --- */
+
+.screenshot.info-left .info {
+  border-radius: 12px 0 0 12px;
+  border-left: none;
+  border-right: 1px solid transparent;
+}
+
+.screenshot.info-left.active .thumb {
+  border-radius: 0 12px 12px 0;
+}
+
+.screenshot.info-left.active .info {
+  border-right: 1px solid var(--border);
+  border-left: none;
+}
+
+/* --- Info text --- */
+
+.info h3 {
+  font-size: calc(var(--thumb-w, 180px) * 0.09);
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.info .desc {
+  font-size: calc(var(--thumb-w, 180px) * 0.075);
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.info .release {
+  font-size: calc(var(--thumb-w, 180px) * 0.065);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+/* --- Footer --- */
+
+footer {
+  margin-top: auto;
+}
+
+footer p {
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+/* --- Mobile --- */
+
+@media (max-width: 640px) {
+  .screenshots {
+    flex-wrap: wrap;
+  }
+
+  .screenshot {
+    width: calc(50% - 0.75rem);
+  }
+
+  .thumb {
+    width: 100%;
+  }
+}
