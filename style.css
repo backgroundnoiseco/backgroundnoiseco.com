@@ -67,7 +67,7 @@ h2 {
 .screenshots-wrapper {
   width: 100%;
   overflow: hidden;
-  margin-bottom: clamp(3rem, 8vw, 6rem);
+  margin-bottom: 1.5rem;
 }
 
 .screenshots {
@@ -197,7 +197,6 @@ h2 {
 /* --- Footer --- */
 
 footer {
-  margin-top: auto;
   width: 100%;
   display: flex;
   justify-content: space-between;
