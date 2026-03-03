@@ -26,33 +26,40 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 1.5rem;
-  gap: 4rem;
+  align-items: flex-start;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
   overflow-x: hidden;
 }
 
 /* --- Header --- */
 
 header {
-  text-align: center;
+  text-align: left;
+  margin-bottom: clamp(3rem, 8vw, 6rem);
 }
 
 h1 {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  font-family: "Outfit", sans-serif;
   font-size: 1.5rem;
-  font-weight: 300;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  font-family: "Tac One", sans-serif;
+  text-transform: uppercase;
   color: #aaa;
 }
 
-header p {
-  margin-top: 0.5rem;
-  font-size: 0.8125rem;
-  color: var(--muted);
+h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  width: 100%;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
 }
 
 /* --- Screenshots --- */
@@ -60,6 +67,7 @@ header p {
 .screenshots-wrapper {
   width: 100%;
   overflow: hidden;
+  margin-bottom: clamp(3rem, 8vw, 6rem);
 }
 
 .screenshots {
@@ -101,6 +109,16 @@ header p {
   width: 100%;
   height: auto;
   object-fit: cover;
+  transition: filter 0.2s ease;
+}
+
+.screenshot:hover .thumb img {
+  filter: brightness(1.15);
+}
+
+.screenshot:hover .thumb {
+  transform: translateY(-2px);
+  transition: border-radius 0.3s ease, transform 0.2s ease;
 }
 
 
@@ -181,6 +199,23 @@ header p {
   color: var(--muted);
 }
 
+/* --- Footer --- */
+
+footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+footer p {
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
 /* --- Contact --- */
 
 .contact {
@@ -199,17 +234,6 @@ header p {
   color: var(--text);
 }
 
-/* --- Footer --- */
-
-footer {
-  margin-top: auto;
-}
-
-footer p {
-  font-size: 0.6875rem;
-  color: var(--muted);
-}
-
 /* --- Mobile --- */
 
 @media (max-width: 640px) {
@@ -217,9 +241,13 @@ footer p {
     gap: 0.75rem;
   }
 
-  .contact {
+  footer {
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .contact {
+    gap: 1rem;
   }
 }

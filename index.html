@@ -6,17 +6,17 @@
   <title>Background Noise Co.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Outfit:wght@300;400;600;700&family=Tac+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="page">
     <header>
-      <h1>Background Noise Co.</h1>
-      <p>Tools for Creators <em>(WIPs)</em></p>
+      <h1>BGNoiseCo.</h1>
     </header>
 
+    <h2>Current Projects</h2>
     <div class="screenshots-wrapper">
     <div class="screenshots">
       <div class="screenshot">
@@ -87,13 +87,12 @@
     </div>
     </div>
 
-    <div class="contact">
-      <a class="email" data-a="YWE=" data-b="YmFja2dyb3VuZG5vaXNlY28uY29t"></a>
-      <a href="https://instagram.com/bgnoiseco" target="_blank" rel="noopener">@bgnoiseco</a>
-    </div>
-
     <footer>
       <p>&copy; 2026 Background Noise Co.</p>
+      <div class="contact">
+        <a class="email" data-a="YWE=" data-b="YmFja2dyb3VuZG5vaXNlY28uY29t"></a>
+        <a href="https://instagram.com/bgnoiseco" target="_blank" rel="noopener">@bgnoiseco</a>
+      </div>
     </footer>
   </div>
 
@@ -107,14 +106,16 @@
     let active = null;
 
     function resize() {
-      const gap = window.innerWidth <= 640 ? 12 : 24;
-      const available = wrapper.clientWidth - 3 * 16;
-      const totalGaps = (count - 1) * gap;
-      thumbWidth = Math.min(maxThumb, Math.floor((available - totalGaps) / count));
+      const minGap = window.innerWidth <= 640 ? 12 : 24;
+      const available = wrapper.clientWidth;
+      const totalMinGaps = (count - 1) * minGap;
+      thumbWidth = Math.min(maxThumb, Math.floor((available - totalMinGaps) / count));
       document.documentElement.style.setProperty('--thumb-w', thumbWidth + 'px');
 
-      const baseWidth = count * thumbWidth + totalGaps;
-      let margin = Math.max((wrapper.clientWidth - baseWidth) / 2, 0);
+      const dynamicGap = (available - count * thumbWidth) / (count - 1);
+      row.style.gap = dynamicGap + 'px';
+
+      let margin = 0;
       if (active && active.classList.contains('info-left')) {
         margin -= thumbWidth;
       }
@@ -130,20 +131,15 @@
 
     shots.forEach((el) => {
       el.addEventListener('click', () => {
-        const ww = wrapper.clientWidth;
-        const gap = window.innerWidth <= 640 ? 12 : 24;
-        const totalGaps = (count - 1) * gap;
-        const baseWidth = count * thumbWidth + totalGaps;
-
         if (active === el) {
           active = null;
-          row.style.marginLeft = Math.max((ww - baseWidth) / 2, 0) + 'px';
+          row.style.marginLeft = '0px';
           el.classList.remove('active');
           return;
         }
         if (active) active.classList.remove('active');
         active = el;
-        let margin = Math.max((ww - baseWidth) / 2, 0);
+        let margin = 0;
         if (el.classList.contains('info-left')) margin -= thumbWidth;
         row.style.marginLeft = margin + 'px';
         el.classList.add('active');
