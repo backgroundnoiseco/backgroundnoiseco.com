@@ -12,7 +12,7 @@
   --border: #222;
   --text: #e0e0e0;
   --muted: #555;
-  --fs: clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
+  --fs: 16px;
 }
 
 body {
@@ -24,13 +24,12 @@ body {
 }
 
 .page {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 1050px;
+  width: 1050px;
   margin: 0 auto;
-  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+  padding: 56px 48px;
   overflow-x: hidden;
 }
 
@@ -38,7 +37,7 @@ body {
 
 header {
   text-align: left;
-  margin-bottom: clamp(2rem, 6vw, 4rem);
+  margin-bottom: 64px;
 }
 
 .section-header {
@@ -46,14 +45,14 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-bottom: clamp(0.25rem, 1vw, 0.5rem);
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: clamp(0.75rem, 2.5vw, 1.5rem);
+  margin-bottom: 24px;
 }
 
 .nav-links {
   display: flex;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: 32px;
   align-items: baseline;
 }
 
@@ -85,7 +84,7 @@ h1 {
 }
 
 h2 {
-  margin-top: 0.75rem;
+  margin-top: 12px;
   font-family: "Cormorant Garamond", serif;
   font-size: calc(var(--fs) * 3.5);
   font-weight: 300;
@@ -100,7 +99,7 @@ h2 {
 .content-area {
   width: 100%;
   overflow: hidden;
-  margin-bottom: clamp(0.75rem, 2.5vw, 1.5rem);
+  margin-bottom: 24px;
   transition: height 0.3s ease;
 }
 
@@ -142,8 +141,8 @@ h2 {
 
 .about-contact {
   display: flex;
-  gap: clamp(1rem, 3vw, 2rem);
-  margin-top: 1rem;
+  gap: 32px;
+  margin-top: 16px;
 }
 
 .about-contact a {
@@ -161,7 +160,7 @@ h2 {
 
 .screenshots {
   display: flex;
-  gap: 1.5rem;
+  gap: 24px;
   flex-wrap: nowrap;
   transition: margin-left 0.3s ease;
   visibility: hidden;
@@ -290,7 +289,7 @@ footer {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-top: clamp(0.75rem, 2.5vw, 1.5rem);
+  padding-top: 24px;
   border-top: 1px solid var(--border);
 }
 
@@ -303,7 +302,7 @@ footer p {
 
 .contact {
   display: flex;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: 32px;
   flex-wrap: nowrap;
 }
 
@@ -318,11 +317,3 @@ footer p {
   color: var(--text);
 }
 
-/* --- Mobile --- */
-
-@media (max-width: 640px) {
-  .screenshots {
-    gap: 0.75rem;
-  }
-
-}

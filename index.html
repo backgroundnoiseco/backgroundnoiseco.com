@@ -119,9 +119,16 @@
     let thumbWidth = maxThumb;
     let active = null;
 
+    const page = document.querySelector('.page');
+
+    function updateZoom() {
+      const scale = Math.min(1, window.innerWidth / 1050);
+      page.style.zoom = scale;
+    }
+
     function resize() {
       if (wrapper.style.display === 'none') return;
-      const minGap = window.innerWidth <= 640 ? 12 : 24;
+      const minGap = 24;
       const available = wrapper.clientWidth;
       const totalMinGaps = (count - 1) * minGap;
       thumbWidth = Math.min(maxThumb, Math.floor((available - totalMinGaps) / count));
@@ -137,12 +144,13 @@
       row.style.marginLeft = margin + 'px';
     }
 
+    updateZoom();
     row.style.transition = 'none';
     resize();
     row.offsetHeight;
     row.style.transition = '';
     row.classList.add('ready');
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', () => { updateZoom(); resize(); });
 
     shots.forEach((el) => {
       el.addEventListener('click', () => {
@@ -168,7 +176,6 @@
     // Nav toggle
     const aboutBtn = document.querySelector('.about-btn');
     const projectsBtn = document.querySelector('.projects-btn');
-    const page = document.querySelector('.page');
     const aboutSection = document.querySelector('.about-section');
     const contentArea = document.querySelector('.content-area');
 
