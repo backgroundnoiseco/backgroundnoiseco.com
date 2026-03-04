@@ -139,6 +139,25 @@ h2 {
   color: var(--text);
 }
 
+.about-contact {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: 1rem;
+}
+
+.about-contact a {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  font-weight: 300;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.about-contact a:hover {
+  color: var(--text);
+}
+
 .screenshots {
   display: flex;
   gap: 1.5rem;
