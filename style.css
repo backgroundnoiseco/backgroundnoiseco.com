@@ -46,7 +46,10 @@ h1 {
   letter-spacing: -0.03em;
   font-family: "Tac One", sans-serif;
   text-transform: uppercase;
-  color: #aaa;
+  background: linear-gradient(135deg, #888, #ddd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 h2 {
