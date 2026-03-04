@@ -56,7 +56,7 @@ header {
   align-items: baseline;
 }
 
-.about-btn {
+.nav-btn {
   font-family: "Cormorant Garamond", serif;
   font-weight: 400;
   font-style: italic;
@@ -67,7 +67,7 @@ header {
   transition: color 0.2s;
 }
 
-.about-btn:hover {
+.nav-btn:hover {
   color: #fff;
 }
 
@@ -91,6 +91,7 @@ h2 {
   font-style: italic;
   letter-spacing: 0.04em;
   color: var(--text);
+  transition: opacity 0.3s ease;
 }
 
 /* --- Content area --- */
@@ -131,13 +132,11 @@ h2 {
 }
 
 .about-section p {
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1rem, 3vw, 1.375rem);
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
   font-weight: 300;
-  font-style: italic;
-  line-height: 1.6;
+  line-height: 1.8;
   color: var(--text);
-  max-width: 40em;
 }
 
 .screenshots {

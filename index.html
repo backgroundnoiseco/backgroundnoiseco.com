@@ -19,8 +19,8 @@
     <div class="section-header">
       <h2>Current Projects</h2>
       <div class="nav-links">
-        <a href="#" class="about-btn">About</a>
-        <a href="#" class="about-btn">Contact</a>
+        <a href="#" class="nav-btn projects-btn">Projects</a>
+        <a href="#" class="nav-btn about-btn">About</a>
       </div>
     </div>
     <div class="content-area">
@@ -95,7 +95,9 @@
     </div>
 
     <div class="about-section">
-      <p>The person behind this studio hates writing About sections, so they asked Claude to do it. Background Noise Co. is a small studio that makes creative tools — music apps, design apps, that sort of thing. That's about all I was given to work with.</p>
+      <p>Small studio designing creative tools.</p>
+      <p>Based in NC.</p>
+      <p>Est. 2026.</p>
     </div>
     </div>
 
@@ -163,8 +165,9 @@
     emailEl.href = 'mailto:' + addr;
     emailEl.textContent = addr;
 
-    // About toggle
+    // Nav toggle
     const aboutBtn = document.querySelector('.about-btn');
+    const projectsBtn = document.querySelector('.projects-btn');
     const page = document.querySelector('.page');
     const aboutSection = document.querySelector('.about-section');
     const contentArea = document.querySelector('.content-area');
@@ -175,33 +178,55 @@
       }
     });
 
-    aboutBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (!page.classList.contains('show-about')) {
-        contentArea.style.height = contentArea.offsetHeight + 'px';
-        page.classList.add('show-about');
-        wrapper.addEventListener('transitionend', function handler(ev) {
-          if (ev.propertyName !== 'opacity') return;
-          wrapper.removeEventListener('transitionend', handler);
-          wrapper.style.display = 'none';
-          aboutSection.style.display = 'block';
-          contentArea.style.height = aboutSection.offsetHeight + 'px';
-          requestAnimationFrame(() => aboutSection.classList.add('visible'));
+    const heading = document.querySelector('.section-header h2');
+
+    function showAbout() {
+      if (page.classList.contains('show-about')) return;
+      // Fade out heading + screenshots together
+      heading.style.opacity = '0';
+      contentArea.style.height = contentArea.offsetHeight + 'px';
+      page.classList.add('show-about');
+      wrapper.addEventListener('transitionend', function handler(ev) {
+        if (ev.propertyName !== 'opacity') return;
+        wrapper.removeEventListener('transitionend', handler);
+        // Swap content
+        wrapper.style.display = 'none';
+        aboutSection.style.display = 'block';
+        heading.textContent = 'About';
+        contentArea.style.height = aboutSection.offsetHeight + 'px';
+        // Fade in heading + about together
+        requestAnimationFrame(() => {
+          heading.style.opacity = '';
+          aboutSection.classList.add('visible');
         });
-      } else {
-        contentArea.style.height = contentArea.offsetHeight + 'px';
-        aboutSection.classList.remove('visible');
-        aboutSection.addEventListener('transitionend', function handler(ev) {
-          if (ev.propertyName !== 'opacity') return;
-          aboutSection.removeEventListener('transitionend', handler);
-          aboutSection.style.display = 'none';
-          wrapper.style.display = '';
-          resize();
-          contentArea.style.height = wrapper.offsetHeight + 'px';
-          requestAnimationFrame(() => page.classList.remove('show-about'));
+      });
+    }
+
+    function showProjects() {
+      if (!page.classList.contains('show-about')) return;
+      // Fade out heading + about together
+      heading.style.opacity = '0';
+      contentArea.style.height = contentArea.offsetHeight + 'px';
+      aboutSection.classList.remove('visible');
+      aboutSection.addEventListener('transitionend', function handler(ev) {
+        if (ev.propertyName !== 'opacity') return;
+        aboutSection.removeEventListener('transitionend', handler);
+        // Swap content
+        aboutSection.style.display = 'none';
+        wrapper.style.display = '';
+        heading.textContent = 'Current Projects';
+        resize();
+        contentArea.style.height = wrapper.offsetHeight + 'px';
+        // Fade in heading + screenshots together
+        requestAnimationFrame(() => {
+          heading.style.opacity = '';
+          page.classList.remove('show-about');
         });
-      }
-    });
+      });
+    }
+
+    aboutBtn.addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
+    projectsBtn.addEventListener('click', (e) => { e.preventDefault(); showProjects(); });
   </script>
 </body>
 </html>
