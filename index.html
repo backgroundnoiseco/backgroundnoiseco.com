@@ -16,7 +16,14 @@
       <h1>BGNoiseCo.</h1>
     </header>
 
-    <h2>Current Projects</h2>
+    <div class="section-header">
+      <h2>Current Projects</h2>
+      <div class="nav-links">
+        <a href="#" class="about-btn">About</a>
+        <a href="#" class="about-btn">Contact</a>
+      </div>
+    </div>
+    <div class="content-area">
     <div class="screenshots-wrapper">
     <div class="screenshots">
       <div class="screenshot">
@@ -87,6 +94,11 @@
     </div>
     </div>
 
+    <div class="about-section">
+      <p>The person behind this studio hates writing About sections, so they asked Claude to do it. Background Noise Co. is a small studio that makes creative tools — music apps, design apps, that sort of thing. That's about all I was given to work with.</p>
+    </div>
+    </div>
+
     <footer>
       <p>&copy; 2026 Background Noise Co.</p>
       <div class="contact">
@@ -106,6 +118,7 @@
     let active = null;
 
     function resize() {
+      if (wrapper.style.display === 'none') return;
       const minGap = window.innerWidth <= 640 ? 12 : 24;
       const available = wrapper.clientWidth;
       const totalMinGaps = (count - 1) * minGap;
@@ -149,6 +162,46 @@
     const addr = atob(emailEl.dataset.a) + '@' + atob(emailEl.dataset.b);
     emailEl.href = 'mailto:' + addr;
     emailEl.textContent = addr;
+
+    // About toggle
+    const aboutBtn = document.querySelector('.about-btn');
+    const page = document.querySelector('.page');
+    const aboutSection = document.querySelector('.about-section');
+    const contentArea = document.querySelector('.content-area');
+
+    contentArea.addEventListener('transitionend', (ev) => {
+      if (ev.target === contentArea && ev.propertyName === 'height') {
+        contentArea.style.height = '';
+      }
+    });
+
+    aboutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!page.classList.contains('show-about')) {
+        contentArea.style.height = contentArea.offsetHeight + 'px';
+        page.classList.add('show-about');
+        wrapper.addEventListener('transitionend', function handler(ev) {
+          if (ev.propertyName !== 'opacity') return;
+          wrapper.removeEventListener('transitionend', handler);
+          wrapper.style.display = 'none';
+          aboutSection.style.display = 'block';
+          contentArea.style.height = aboutSection.offsetHeight + 'px';
+          requestAnimationFrame(() => aboutSection.classList.add('visible'));
+        });
+      } else {
+        contentArea.style.height = contentArea.offsetHeight + 'px';
+        aboutSection.classList.remove('visible');
+        aboutSection.addEventListener('transitionend', function handler(ev) {
+          if (ev.propertyName !== 'opacity') return;
+          aboutSection.removeEventListener('transitionend', handler);
+          aboutSection.style.display = 'none';
+          wrapper.style.display = '';
+          resize();
+          contentArea.style.height = wrapper.offsetHeight + 'px';
+          requestAnimationFrame(() => page.classList.remove('show-about'));
+        });
+      }
+    });
   </script>
 </body>
 </html>
