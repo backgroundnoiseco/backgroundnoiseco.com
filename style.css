@@ -83,6 +83,21 @@ h1 {
   background-clip: text;
 }
 
+/* Six Caps boxed logo option
+h1 {
+  font-size: calc(var(--fs) * 1.75);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  font-family: "Six Caps", sans-serif;
+  text-transform: uppercase;
+  color: #888;
+  border: 1px solid #888;
+  padding: 5px 6px 5px;
+  line-height: 1;
+  display: inline-block;
+}
+*/
+
 h2 {
   margin-top: 12px;
   font-family: "Cormorant Garamond", serif;

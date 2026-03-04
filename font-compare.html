@@ -6,7 +6,7 @@
   <title>Logo Font Comparison</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tac+One&family=Badeen+Display&family=Trade+Winds&family=Bebas+Neue&family=Jost:wght@400;500;600;700&family=Six+Caps&family=Micro+5&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tac+One&family=Cormorant+Garamond:wght@300;400;500&family=Outfit:wght@300;400;600;700&family=Bebas+Neue&family=Jost:wght@400;500;600;700&family=Six+Caps&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -39,9 +39,12 @@
     .option:hover {
       border-color: #444;
     }
+    .option .logo:focus {
+      outline: none;
+      border-bottom: 1px solid #333;
+    }
     .option .logo {
       font-size: 24px;
-      text-transform: uppercase;
       background: linear-gradient(135deg, #888, #ddd);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -131,6 +134,30 @@
       flex: 1;
       margin-top: 0;
     }
+    .case-toggles {
+      display: flex;
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .case-btn {
+      font-size: 9px;
+      color: #555;
+      background: none;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 3px 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .case-btn:hover {
+      border-color: #555;
+    }
+    .case-btn.active {
+      color: #ccc;
+      border-color: #666;
+    }
   </style>
 </head>
 <body>
@@ -143,12 +170,11 @@
   <script>
     const fonts = [
       { name: 'Tac One', family: '"Tac One", sans-serif', weight: 400, current: true },
-      { name: 'Badeen Display', family: '"Badeen Display", sans-serif', weight: 400 },
-      { name: 'Trade Winds', family: '"Trade Winds", serif', weight: 400 },
+      { name: 'Cormorant Garamond', family: '"Cormorant Garamond", serif', weight: 400 },
+      { name: 'Outfit', family: '"Outfit", sans-serif', weight: 400 },
       { name: 'Bebas Neue', family: '"Bebas Neue", sans-serif', weight: 400 },
       { name: 'Jost', family: '"Jost", sans-serif', weight: 400 },
       { name: 'Six Caps', family: '"Six Caps", sans-serif', weight: 400 },
-      { name: 'Micro 5', family: '"Micro 5", sans-serif', weight: 400 },
     ];
     const saved = JSON.parse(localStorage.getItem('fontCompare') || '{}');
     if (!saved._master) saved._master = {};
@@ -164,7 +190,10 @@
     textInput.addEventListener('input', () => {
       saved._master.text = textInput.value;
       save();
-      logos.forEach(el => { el.textContent = textInput.value; });
+      fonts.forEach((f, i) => {
+        const s = saved[f.name];
+        if (!s || !s.custom_text) logos[i].textContent = textInput.value;
+      });
     });
 
     function updateAllGradients() {
@@ -236,9 +265,20 @@
       div.className = 'option' + (f.current ? ' current' : '');
       const logo = document.createElement('div');
       logo.className = 'logo';
-      logo.textContent = textInput.value;
+      logo.contentEditable = true;
+      logo.spellcheck = false;
+      logo.textContent = s.custom_text || textInput.value;
       logo.style.fontFamily = f.family;
       logo.style.fontWeight = f.weight;
+      logo.addEventListener('input', () => {
+        s.custom_text = logo.textContent;
+        save();
+      });
+      logo.addEventListener('dblclick', () => {
+        logo.textContent = textInput.value;
+        delete s.custom_text;
+        save();
+      });
       logos.push(logo);
       const name = document.createElement('div');
       name.className = 'name';
@@ -288,8 +328,32 @@
       controls.appendChild(makeControl('Word Gap', -5, 30, 0, 0.5, v => { logo.style.wordSpacing = v + 'px'; }));
       controls.appendChild(makeControl('Clip', 0, 40, 0, 1, v => { logo.style.clipPath = v > 0 ? `inset(${v}% 0)` : 'none'; }));
 
+      const cases = [
+        { label: 'Aa', value: 'none' },
+        { label: 'AA', value: 'uppercase' },
+        { label: 'aa', value: 'lowercase' },
+      ];
+      const caseToggles = document.createElement('div');
+      caseToggles.className = 'case-toggles';
+      const savedCase = s.text_case || 'none';
+      logo.style.textTransform = savedCase;
+      cases.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'case-btn' + (savedCase === c.value ? ' active' : '');
+        btn.textContent = c.label;
+        btn.addEventListener('click', () => {
+          caseToggles.querySelectorAll('.case-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          logo.style.textTransform = c.value;
+          s.text_case = c.value;
+          save();
+        });
+        caseToggles.appendChild(btn);
+      });
+
       div.appendChild(logo);
       div.appendChild(name);
+      div.appendChild(caseToggles);
       div.appendChild(controls);
       grid.appendChild(div);
     });
