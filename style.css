@@ -12,6 +12,7 @@
   --border: #222;
   --text: #e0e0e0;
   --muted: #555;
+  --fs: clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
 }
 
 body {
@@ -61,7 +62,7 @@ header {
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.04em;
-  font-size: clamp(0.75rem, 2.5vw, 1.125rem);
+  font-size: calc(var(--fs) * 1.125);
   color: var(--text);
   text-decoration: none;
   transition: color 0.2s;
@@ -72,7 +73,7 @@ header {
 }
 
 h1 {
-  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-size: calc(var(--fs) * 1.5);
   font-weight: 400;
   letter-spacing: -0.03em;
   font-family: "Tac One", sans-serif;
@@ -86,7 +87,7 @@ h1 {
 h2 {
   margin-top: 0.75rem;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: calc(var(--fs) * 3.5);
   font-weight: 300;
   font-style: italic;
   letter-spacing: 0.04em;
@@ -133,7 +134,7 @@ h2 {
 
 .about-section p {
   font-family: "Outfit", sans-serif;
-  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  font-size: calc(var(--fs) * 1.125);
   font-weight: 300;
   line-height: 1.8;
   color: var(--text);
@@ -147,7 +148,7 @@ h2 {
 
 .about-contact a {
   font-family: "Outfit", sans-serif;
-  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  font-size: calc(var(--fs) * 1.125);
   font-weight: 300;
   color: var(--muted);
   text-decoration: none;
@@ -294,7 +295,7 @@ footer {
 }
 
 footer p {
-  font-size: clamp(0.5625rem, 2vw, 0.6875rem);
+  font-size: calc(var(--fs) * 0.6875);
   color: var(--muted);
 }
 
@@ -307,7 +308,7 @@ footer p {
 }
 
 .contact a {
-  font-size: clamp(0.6875rem, 2.5vw, 0.8125rem);
+  font-size: calc(var(--fs) * 0.8125);
   color: var(--muted);
   text-decoration: none;
   transition: color 0.2s;
