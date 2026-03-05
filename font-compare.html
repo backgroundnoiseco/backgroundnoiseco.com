@@ -6,8 +6,23 @@
   <title>Logo Font Comparison</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tac+One&family=Cormorant+Garamond:wght@300;400;500&family=Outfit:wght@300;400;600;700&family=Bebas+Neue&family=Jost:wght@400;500;600;700&family=Six+Caps&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tac+One&family=Cormorant+Garamond:wght@300;400;500&family=Outfit:wght@300;400;600;700&family=Bebas+Neue&family=Jost:wght@400;500;600;700&family=Six+Caps&family=Romanesco&family=Freehand&family=Mrs+Sheppards&family=Smooch&family=Sarina&family=Comforter&family=Aguafina+Script&family=Seaweed+Script&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'WC Mano Negra';
+      src: url('fonts/WCManoNegraBta.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'WC Mano Negra';
+      src: url('fonts/WCManoNegraBoldBta.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Great Lakes';
+      src: url('fonts/GREALN__-webfont.woff') format('woff');
+      font-weight: 400;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #0d0d0d;
@@ -175,6 +190,16 @@
       { name: 'Bebas Neue', family: '"Bebas Neue", sans-serif', weight: 400 },
       { name: 'Jost', family: '"Jost", sans-serif', weight: 400 },
       { name: 'Six Caps', family: '"Six Caps", sans-serif', weight: 400 },
+      { name: 'Romanesco', family: '"Romanesco", cursive', weight: 400 },
+      { name: 'Freehand', family: '"Freehand", cursive', weight: 400 },
+      { name: 'Mrs Sheppards', family: '"Mrs Sheppards", cursive', weight: 400 },
+      { name: 'Smooch', family: '"Smooch", cursive', weight: 400 },
+      { name: 'Sarina', family: '"Sarina", cursive', weight: 400 },
+      { name: 'Comforter', family: '"Comforter", cursive', weight: 400 },
+      { name: 'Aguafina Script', family: '"Aguafina Script", cursive', weight: 400 },
+      { name: 'Seaweed Script', family: '"Seaweed Script", cursive', weight: 400 },
+      { name: 'WC Mano Negra', family: '"WC Mano Negra", sans-serif', weight: 400 },
+      { name: 'Great Lakes', family: '"Great Lakes", sans-serif', weight: 400 },
     ];
     const saved = JSON.parse(localStorage.getItem('fontCompare') || '{}');
     if (!saved._master) saved._master = {};
