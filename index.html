@@ -157,6 +157,7 @@
       document.documentElement.style.setProperty('--thumb-w', thumbWidth + 'px');
 
       const dynamicGap = (available - count * thumbWidth) / (count - 1);
+      document.documentElement.style.setProperty('--gap', dynamicGap + 'px');
       row.style.gap = dynamicGap + 'px';
 
       let margin = 0;
@@ -186,7 +187,10 @@
         active = el;
         if (!isMobile()) {
           let margin = 0;
-          if (el.classList.contains('info-left')) margin -= thumbWidth;
+          if (el.classList.contains('info-left')) {
+            const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 24;
+            margin -= (thumbWidth + gap);
+          }
           row.style.marginLeft = margin + 'px';
         }
         el.classList.add('active');
