@@ -37,7 +37,7 @@ body {
 
 header {
   text-align: left;
-  margin-bottom: 64px;
+  margin-bottom: 36px;
 }
 
 .section-header {
@@ -52,7 +52,7 @@ header {
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 16px;
   align-items: baseline;
 }
 
@@ -69,6 +69,10 @@ header {
 
 .nav-btn:hover {
   color: #fff;
+}
+
+.nav-btn.active {
+  color: var(--muted);
 }
 
 h1 {
@@ -180,6 +184,7 @@ h2 {
   transition: margin-left 0.3s ease;
   visibility: hidden;
 }
+
 
 .screenshots.ready {
   visibility: visible;
@@ -330,5 +335,69 @@ footer p {
 
 .contact a:hover {
   color: var(--text);
+}
+
+/* --- Mobile 2x2 grid --- */
+
+@media (max-width: 600px) {
+  .page {
+    overflow-x: hidden;
+  }
+  .content-area,
+  .screenshots-wrapper {
+    overflow: visible;
+  }
+  .screenshots {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px !important;
+    margin-left: 0 !important;
+  }
+  .screenshot {
+    overflow: visible;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  .screenshot .info {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+  }
+  /* Left column: info overlays right neighbor */
+  .screenshot:nth-child(odd) .info {
+    left: 100%;
+    border-radius: 0 min(12px, calc(var(--thumb-w) * 0.07)) min(12px, calc(var(--thumb-w) * 0.07)) 0;
+  }
+  .screenshot:nth-child(odd).active .info {
+    width: calc(var(--thumb-w) + 16px) !important;
+    border-left: 1px solid var(--border);
+    border-right: none;
+  }
+  .screenshot:nth-child(odd).active .thumb {
+    border-radius: min(12px, calc(var(--thumb-w) * 0.07)) 0 0 min(12px, calc(var(--thumb-w) * 0.07));
+  }
+  /* Right column: info overlays left neighbor */
+  .screenshot:nth-child(even) .info {
+    right: 100%;
+    left: auto;
+    border-radius: min(12px, calc(var(--thumb-w) * 0.07)) 0 0 min(12px, calc(var(--thumb-w) * 0.07));
+  }
+  .screenshot:nth-child(even).active .info {
+    width: calc(var(--thumb-w) + 16px) !important;
+    border-right: 1px solid var(--border);
+    border-left: none;
+  }
+  .screenshot:nth-child(even).active .thumb {
+    border-radius: 0 min(12px, calc(var(--thumb-w) * 0.07)) min(12px, calc(var(--thumb-w) * 0.07)) 0;
+  }
+  /* Left column active → push right column neighbor off screen */
+  .screenshot:nth-child(odd).active + .screenshot {
+    transform: translateX(calc(100% + 16px));
+  }
+  /* Right column active → push left column neighbor off screen */
+  .screenshot:nth-child(odd):has(+ .screenshot.active) {
+    transform: translateX(calc(-100% - 16px));
+  }
 }
 
