@@ -293,11 +293,13 @@ h2 {
 /* --- Info text --- */
 
 .info h3 {
-  font-size: calc(var(--thumb-w, 180px) * 0.09);
-  font-weight: 600;
+  font-family: "WC Mano Negra", sans-serif;
+  font-size: calc(var(--thumb-w, 180px) * 0.14);
+  font-weight: 400;
+  font-style: italic;
   color: var(--text);
-  padding-bottom: calc(var(--thumb-w, 180px) * 0.04);
-  margin-bottom: calc(var(--thumb-w, 180px) * 0.04);
+  padding-bottom: 0;
+  margin-bottom: calc(var(--thumb-w, 180px) * 0.02);
   border-bottom: 0.5px solid #333;
 }
 
