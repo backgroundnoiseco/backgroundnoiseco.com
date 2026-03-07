@@ -305,7 +305,7 @@ h2 {
 
 .info h3 {
   font-family: "WC Mano Negra", sans-serif;
-  font-size: calc(var(--thumb-w, 180px) * 0.14);
+  font-size: calc(var(--thumb-w, 180px) * 0.12);
   font-weight: 400;
   font-style: italic;
   color: var(--text);
