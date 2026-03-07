@@ -292,6 +292,17 @@ h2 {
 
 /* --- Info text --- */
 
+.app-icon {
+  width: calc(var(--thumb-w, 180px) * 0.16);
+  height: auto;
+  border-radius: 20%;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+  margin-right: calc(var(--thumb-w, 180px) * 0.05);
+  border: 1px solid var(--border);
+}
+
 .info h3 {
   font-family: "WC Mano Negra", sans-serif;
   font-size: calc(var(--thumb-w, 180px) * 0.14);
@@ -306,6 +317,12 @@ h2 {
 .info .desc {
   font-size: calc(var(--fs) * 0.875);
   color: var(--text);
+  margin-bottom: calc(var(--thumb-w, 180px) * 0.055);
+}
+
+.info .platform {
+  font-size: calc(var(--fs) * 0.875);
+  color: var(--muted);
   margin-bottom: calc(var(--thumb-w, 180px) * 0.055);
 }
 
