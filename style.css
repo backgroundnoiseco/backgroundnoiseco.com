@@ -13,6 +13,21 @@
   src: url('fonts/WCManoNegraBoldBta.otf') format('opentype');
   font-weight: 700;
 }
+@font-face {
+  font-family: 'Distortion';
+  src: url('fonts/distortion-of-the-brain-and-mind.regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Sekaiwo';
+  src: url('fonts/sekaiwo/Sekaiwo-Regular.otf') format('opentype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Blue Sakura';
+  src: url('fonts/bluesakura/BlueSakura.otf') format('opentype');
+  font-weight: 400;
+}
 
 *,
 *::before,
@@ -61,6 +76,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  overflow: visible;
   padding-bottom: 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
@@ -70,6 +86,8 @@ header {
   display: flex;
   gap: 12px;
   align-items: baseline;
+  position: relative;
+  bottom: 4px;
 }
 
 .nav-btn {
@@ -94,9 +112,11 @@ h1 {
   line-height: 0;
 }
 
-.logo-img {
-  height: 15px;
-  width: auto;
+.logo-text {
+  font-family: 'Distortion', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.002em;
+  color: #999;
 }
 
 
@@ -118,14 +138,14 @@ h1 {
 h2 {
   margin-top: 12px;
   position: relative;
-  top: -3px;
-  font-family: "WC Mano Negra", sans-serif;
-  font-size: calc(var(--fs) * 3.5);
+  top: 20px;
+  font-family: "Blue Sakura", sans-serif;
+  font-size: calc(var(--fs) * 4.5);
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.04em;
-  padding-right: 8px;
-  margin-bottom: -12px;
+  padding-right: 24px;
+  margin-bottom: -28px;
   color: var(--text);
   transition: opacity 0.3s ease;
 }
@@ -293,7 +313,7 @@ h2 {
 /* --- Info text --- */
 
 .app-icon {
-  width: calc(var(--thumb-w, 180px) * 0.16);
+  width: calc(var(--thumb-w, 180px) * 0.22);
   height: auto;
   border-radius: 20%;
   vertical-align: middle;
@@ -304,12 +324,12 @@ h2 {
 }
 
 .info h3 {
-  font-family: "WC Mano Negra", sans-serif;
-  font-size: calc(var(--thumb-w, 180px) * 0.12);
-  font-weight: 400;
-  font-style: italic;
+  font-family: "Outfit", sans-serif;
+  font-size: calc(var(--thumb-w, 180px) * 0.1);
+  font-weight: 700;
+  font-style: normal;
   color: var(--text);
-  padding-bottom: 0;
+  padding-bottom: 4px;
   margin-bottom: calc(var(--thumb-w, 180px) * 0.02);
   border-bottom: 0.5px solid #333;
 }
