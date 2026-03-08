@@ -328,7 +328,6 @@ h2 {
 
 .info .release {
   font-size: calc(var(--fs) * 0.875);
-  text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
 }
