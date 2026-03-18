@@ -373,6 +373,16 @@ h2 {
   color: var(--muted);
 }
 
+.info .store-link {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.info .store-link:hover {
+  color: var(--text);
+}
+
 /* --- Footer --- */
 
 footer {
