@@ -248,6 +248,17 @@ h2 {
   flex-shrink: 0;
   border-radius: min(12px, calc(var(--thumb-w, 180px) * 0.07));
   transition: border-radius 0.3s ease;
+
+}
+
+.thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--border);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .screenshot.active .thumb {
@@ -265,6 +276,7 @@ h2 {
 .screenshot:hover .thumb img {
   filter: brightness(1.15);
 }
+
 
 
 /* --- Info panel --- */
