@@ -19,6 +19,11 @@
   font-weight: 400;
 }
 @font-face {
+  font-family: 'Endless Bummer';
+  src: url('fonts/endless-bummer/ENDLESSBUMMER-Regular.otf') format('opentype');
+  font-weight: 400;
+}
+@font-face {
   font-family: 'Sekaiwo';
   src: url('fonts/sekaiwo/Sekaiwo-Regular.otf') format('opentype');
   font-weight: 400;
@@ -114,7 +119,7 @@ h1 {
 
 .logo-text {
   font-family: 'Distortion', sans-serif;
-  font-size: 28px;
+  font-size: 22px;
   letter-spacing: 0.002em;
   color: #999;
 }
@@ -343,6 +348,12 @@ h2 {
   font-family: 'Distortion', sans-serif;
   font-weight: 400;
   font-size: 1.4em;
+}
+
+.info h3 .endless-bummer-font {
+  font-family: 'Endless Bummer', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2em;
 }
 
 .info h3 .title-accent {

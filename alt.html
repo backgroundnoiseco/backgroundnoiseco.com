@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Noise Co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Outfit:wght@300;400;600;700&family=Tac+One&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'WC Mano Negra';
+      src: url('fonts/WCManoNegraBta.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'WC Mano Negra';
+      src: url('fonts/WCManoNegraBoldBta.otf') format('opentype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Great Lakes';
+      src: url('fonts/GREALN__-webfont.woff') format('woff');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Distortion';
+      src: url('fonts/distortion-of-the-brain-and-mind.regular.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Blue Sakura';
+      src: url('fonts/bluesakura/BlueSakura.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Sekaiwo';
+      src: url('fonts/sekaiwo/Sekaiwo-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: "Outfit", sans-serif;
+      padding: 48px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Header --- */
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      font-family: 'Distortion', sans-serif;
+      font-size: 28px;
+      color: #999;
+    }
+
+    .nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav a {
+      font-size: 11px;
+      font-weight: 300;
+      color: #555;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav a:hover {
+      color: #999;
+    }
+
+    .nav a.active {
+      color: #e0e0e0;
+      border-bottom-color: #444;
+    }
+
+    /* --- Section label --- */
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 300;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    /* --- Project grid --- */
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      border: 1px solid #222;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: #444;
+    }
+
+    .card .details {
+      padding: 20px 24px;
+    }
+
+    .card .title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 6px;
+    }
+
+    .card .title .great-lakes-font {
+      font-family: 'Great Lakes', sans-serif;
+      font-weight: 400;
+    }
+
+    .card .title .logo-font {
+      font-family: 'Distortion', sans-serif;
+      font-weight: 400;
+      font-size: 1.3em;
+    }
+
+    .card .title .title-accent {
+      font-family: "Blue Sakura", sans-serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.4em;
+      vertical-align: -0.3em;
+      line-height: 0;
+      margin-left: -0.1em;
+    }
+
+    .card .desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .card .meta {
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    .card .meta a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .card .meta a:hover {
+      color: #e0e0e0;
+    }
+
+    /* --- About panel --- */
+
+    .about-panel {
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .about-panel p {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #e0e0e0;
+    }
+
+    .about-panel .contact-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #222;
+    }
+
+    .about-panel .contact-row a {
+      font-size: 12px;
+      font-weight: 300;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .about-panel .contact-row a:hover {
+      color: #e0e0e0;
+    }
+
+    /* --- View transitions --- */
+
+    .view {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .view.fading-out {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .view.fading-in {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    /* --- Footer --- */
+
+    footer {
+      padding-top: 24px;
+      border-top: 1px solid #222;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: #555;
+    }
+
+    /* --- Mobile --- */
+
+    @media (max-width: 600px) {
+      body {
+        padding: 24px 16px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">BGNoiseCo.</div>
+    <div class="nav">
+      <a class="active" data-view="projects">Projects</a>
+      <a data-view="about">About</a>
+    </div>
+  </div>
+
+  <div id="projects-view" class="view">
+    <div class="section-label">Projects</div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="details">
+          <div class="title">Unicorn Porcupine</div>
+          <div class="desc">Customizable random name generator</div>
+          <div class="meta">iOS &ensp;&middot;&ensp; <a href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener">View in App Store</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="details">
+          <div class="title">Shadowboxing</div>
+          <div class="desc">Experimental image synth and procedural greyboxing tool</div>
+          <div class="meta">iOS &ensp;&middot;&ensp; macOS &ensp;&middot;&ensp; Q2 2026</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="details">
+          <div class="title">ProSession</div>
+          <div class="desc">Customizable midi sequencer and AUV3 rack</div>
+          <div class="meta">iOS &ensp;&middot;&ensp; Q2 2026</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="about-view" class="view" style="display: none;">
+    <div class="section-label">About</div>
+    <div class="about-panel visible">
+    <p>Background Noise Co. is a small studio<br>designing creative tools.</p>
+    <br>
+    <p>Est. 2025 &ensp;&middot;&ensp; Based in NC</p>
+    <div class="contact-row">
+      <a class="email" data-a="YWE=" data-b="YmFja2dyb3VuZG5vaXNlY28uY29t"></a>
+      <a href="https://instagram.com/bgnoiseco" target="_blank" rel="noopener">@bgnoiseco</a>
+    </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Background Noise Co.</p>
+  </footer>
+
+  <script>
+    // Nav toggle with animation
+    const navLinks = document.querySelectorAll('.nav a');
+    const projectsView = document.getElementById('projects-view');
+    const aboutView = document.getElementById('about-view');
+    let transitioning = false;
+
+    function switchView(from, to) {
+      if (transitioning) return;
+      transitioning = true;
+
+      // Fade out current
+      from.classList.add('fading-out');
+      from.addEventListener('transitionend', function handler(ev) {
+        if (ev.propertyName !== 'opacity') return;
+        from.removeEventListener('transitionend', handler);
+
+        from.style.display = 'none';
+        from.classList.remove('fading-out');
+
+        // Prep incoming offscreen
+        to.classList.add('fading-in');
+        to.style.display = '';
+
+        // Trigger fade in
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            to.classList.remove('fading-in');
+            to.addEventListener('transitionend', function handler2(ev2) {
+              if (ev2.propertyName !== 'opacity') return;
+              to.removeEventListener('transitionend', handler2);
+              transitioning = false;
+            });
+          });
+        });
+      });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const view = link.dataset.view;
+        const current = view === 'projects' ? aboutView : projectsView;
+        const next = view === 'projects' ? projectsView : aboutView;
+        if (current.style.display === 'none') return;
+
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        switchView(current, next);
+      });
+    });
+
+    // Email decode
+    const emailEl = document.querySelector('.email');
+    const addr = atob(emailEl.dataset.a) + '@' + atob(emailEl.dataset.b);
+    emailEl.href = 'mailto:' + addr;
+    emailEl.textContent = addr;
+  </script>
+
+</body>
+</html>
