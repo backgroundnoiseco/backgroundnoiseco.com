@@ -368,6 +368,10 @@ h2 {
   letter-spacing: 0.2em;
 }
 
+.info h3 .thin {
+  font-weight: 300;
+}
+
 .info h3 .title-accent {
   font-family: "Blue Sakura", sans-serif;
   font-weight: 400;
