@@ -838,7 +838,19 @@
           setFs('dd', 11);
           setFs('.cta', 11);
         }
-        const delta = Math.round(window.innerWidth * 0.37 - (rect.left + rect.width / 2));
+        // Measure content bounds (title + phone + info) AFTER sizing
+        const pRect = phone.getBoundingClientRect();
+        let cLeft = pRect.left, cRight = pRect.right;
+        if (name) {
+          const r = name.getBoundingClientRect();
+          cLeft = Math.min(cLeft, r.left); cRight = Math.max(cRight, r.right);
+        }
+        if (info) {
+          const r = info.getBoundingClientRect();
+          cLeft = Math.min(cLeft, r.left); cRight = Math.max(cRight, r.right);
+        }
+        // Shift content right only (never left) so left/right spaces are equal when possible
+        const delta = Math.max(0, Math.round(window.innerWidth / 2 - (cLeft + cRight) / 2));
         phone.style.transform = 'translateX(' + delta + 'px)';
         if (name) name.style.transform = 'translateX(' + delta + 'px) rotate(180deg)';
         if (info) info.style.transform = 'translateX(' + delta + 'px)';
