@@ -248,7 +248,7 @@
 
   /* sticky side rail — project counter */
   .v-port .p-rail{position:fixed;top:50%;left:14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:30px;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
-  .v-port .p-rail span{transition:color .3s;}
+  .v-port .p-rail span{transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
   .v-port .p-rail span.on{color:#eae6dc;}
 
   .v-port .p-hero{min-height:calc(100svh - 60px);display:flex;flex-direction:column;}
@@ -257,8 +257,8 @@
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .p-intro > *{position:relative;z-index:2;}
   .v-port .p-intro > div:first-child{padding-left:clamp(0px,5vw,64px);}
-  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:28px 32px 40px;border-bottom:1px solid #181615;gap:40px;flex-wrap:wrap;}
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(22px,2.6vw,34px);line-height:1.2;letter-spacing:-.005em;margin:0;max-width:24ch;color:#eae6dc;font-weight:400;}
+  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:64px 32px 80px;border-bottom:1px solid #181615;gap:40px;flex-wrap:wrap;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(22px,2.6vw,34px);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,2.5vw,32px);max-width:24ch;color:#eae6dc;font-weight:400;}
   .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#777;display:grid;grid-template-columns:auto 1fr;row-gap:8px;column-gap:20px;margin:0;}
   .v-port .p-sub .meta dd{margin:0;color:#eae6dc;text-transform:none;letter-spacing:.02em;}
   .v-port .p-intro .kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#777;margin-bottom:32px;}
@@ -494,12 +494,12 @@
   <div class="v-port">
     <header class="p-top">
       <div class="mark">bgnoiseco.</div>
-      <nav><a href="#" class="on">Projects</a><a href="#">About</a></nav>
+      <nav><a href="#">Contact</a></nav>
     </header>
 
-    <div class="p-rail"><span class="on" data-s="1">01 Shadowbox</span><span data-s="0">02 Porcupine</span><span data-s="2">03 Prosession</span></div>
+    <div class="p-rail"><span data-s="hero">00 Title</span><span class="on" data-s="1">01 Shadowbox</span><span data-s="0">02 Porcupine</span><span data-s="2">03 Prosession</span><span data-s="contact">04 Contact</span></div>
 
-    <div class="p-hero">
+    <div class="p-hero" data-idx="hero">
     <section class="p-intro">
       <div>
         <div class="kicker">◎ Creative Software · NC</div>
@@ -513,7 +513,6 @@
       <dl class="meta">
         <dt>Located</dt><dd>North Carolina</dd>
         <dt>Est.</dt><dd>2025</dd>
-        <dt>Projects</dt><dd>03</dd>
         <dt>Instagram</dt><dd>@bgnoiseco</dd>
       </dl>
     </section>
@@ -579,13 +578,14 @@
       </div>
     </section>
 
-    <section class="p-outro">
+    <section class="p-outro" data-idx="contact">
       <h2 class="big">Designing <span class="acc">creative tools.</span></h2>
       <div class="contact">
         <dl>
           <dt>Est.</dt><dd>2025</dd>
           <dt>Based</dt><dd>North Carolina</dd>
           <dt>Instagram</dt><dd><a href="https://instagram.com/bgnoiseco" target="_blank" rel="noopener">@bgnoiseco</a></dd>
+          <dt>Contact</dt><dd><a class="email" data-a="YWE=" data-b="YmFja2dyb3VuZG5vaXNlY28uY29t"></a></dd>
         </dl>
       </div>
     </section>
@@ -778,20 +778,37 @@
   }
   show('portrait');
 
-  // Portrait rail — highlight active project on scroll
+  // Portrait rail — highlight active section on scroll
   (function(){
-    const slots = document.querySelectorAll('.v-port .p-slot');
+    const targets = document.querySelectorAll('.v-port [data-idx]');
     const marks = document.querySelectorAll('.v-port .p-rail span');
-    if (!slots.length) return;
+    if (!targets.length) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting && e.intersectionRatio > 0.4) {
-          const idx = +e.target.dataset.idx;
-          marks.forEach(m => m.classList.toggle('on', +m.dataset.s === idx));
+          const idx = e.target.dataset.idx;
+          marks.forEach(m => m.classList.toggle('on', m.dataset.s === idx));
         }
       });
     }, {threshold:[0.4,0.6]});
-    slots.forEach(s => io.observe(s));
+    targets.forEach(t => io.observe(t));
+  })();
+
+  // Portrait rail + Contact nav — click to scroll to section
+  (function(){
+    const vport = document.querySelector('.v-port');
+    if (!vport) return;
+    function go(idx){
+      const t = vport.querySelector('[data-idx="' + idx + '"]');
+      if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    document.querySelectorAll('.v-port .p-rail span').forEach(s => {
+      s.addEventListener('click', () => go(s.dataset.s));
+    });
+    const contactLink = document.querySelector('.v-port .p-top nav a');
+    if (contactLink) {
+      contactLink.addEventListener('click', (e) => { e.preventDefault(); go('contact'); });
+    }
   })();
 
 </script>
