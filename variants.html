@@ -260,14 +260,18 @@
   .v-port .p-intro .count b{color:#eae6dc;font-weight:400;font-size:13px;}
 
   /* each project slot is a full-height editorial portrait */
-  .v-port .p-slot{position:relative;padding:80px 32px 100px;border-bottom:1px solid #181615;display:grid;grid-template-columns:minmax(140px,220px) minmax(200px,260px) minmax(260px,420px) minmax(0,0.4fr);gap:40px;align-items:center;min-height:100vh;}
+  .v-port .p-slot{position:relative;padding:80px 32px 100px;border-bottom:1px solid #181615;display:grid;grid-template-columns:minmax(120px,190px) minmax(200px,260px) minmax(260px,420px) minmax(0,0.4fr);gap:40px;align-items:center;min-height:100vh;}
   .v-port .p-slot:nth-of-type(odd){background:#0a0a0a;}
   .v-port .p-slot:nth-of-type(even){background:#0c0b0a;}
 
   /* left column — giant vertical project name */
-  .v-port .p-name{font-family:"Distortion",serif;font-size:clamp(70px,9vw,140px);line-height:.88;letter-spacing:-.01em;color:#eae6dc;opacity:.65;writing-mode:vertical-rl;transform:rotate(180deg);justify-self:end;align-self:center;display:flex;align-items:center;padding:0;margin-right:12px;white-space:nowrap;font-weight:400;}
-  .v-port .p-slot[data-idx="0"] .p-name{opacity:1;}
+  .v-port .p-name{font-family:"Distortion",serif;font-size:clamp(70px,9vw,140px);line-height:1;letter-spacing:-.01em;color:#eae6dc;opacity:.65;writing-mode:vertical-rl;transform:rotate(180deg);justify-self:end;align-self:center;display:block;padding:60px 0;margin-right:-12px;white-space:nowrap;font-weight:400;}
+  .v-port .p-slot[data-idx="0"] .p-name{opacity:1;font-size:clamp(56px,7vw,110px);}
+  .v-port .p-slot[data-idx="0"] .p-name .gld{color:#a89a7d;}
+  .v-port .p-slot[data-idx="1"] .p-name{opacity:1;color:#9c9993;font-size:clamp(62px,8vw,125px);}
+  .v-port .p-slot[data-idx="1"] .p-name .wht{color:#eae6dc;}
   .v-port .p-slot[data-idx="2"] .p-name{color:#a89a7d;opacity:1;}
+  .v-port .p-slot[data-idx="2"] .p-name .wht{color:#eae6dc;}
 
   /* center column — the phone */
   .v-port .p-phone{position:relative;width:100%;max-width:240px;justify-self:center;}
@@ -291,11 +295,13 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:80px 32px 40px;border-top:1px solid #181615;}
-  .v-port .p-outro .line{font-family:"Distortion",serif;font-size:clamp(56px,10vw,140px);line-height:.9;margin:0;color:#eae6dc;letter-spacing:-.01em;}
-  .v-port .p-outro .line em{font-style:normal;color:#a89a7d;}
-  .v-port .p-outro .row{margin-top:36px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:20px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#777;}
-  .v-port .p-outro .row a{color:#eae6dc;border-bottom:1px solid #2a2724;padding-bottom:4px;}
+  .v-port .p-outro{padding:40px 32px 60px;padding-left:clamp(32px,8vw,120px);border-top:1px solid #181615;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;}
+  .v-port .p-outro .big{font-family:"DM Serif Display",serif;font-size:clamp(44px,7vw,120px);line-height:.9;letter-spacing:-.02em;margin:0;text-wrap:balance;font-weight:500;color:#eae6dc;}
+  .v-port .p-outro .big .acc{color:#a89a7d;}
+  .v-port .p-outro .contact dl{display:grid;grid-template-columns:100px 1fr;row-gap:12px;font-family:"JetBrains Mono",monospace;font-size:12px;margin:0;}
+  .v-port .p-outro .contact dt{color:#777;letter-spacing:.15em;text-transform:uppercase;font-size:11px;}
+  .v-port .p-outro .contact dd{margin:0;color:#eae6dc;font-family:"Inter Tight",sans-serif;font-size:15px;}
+  .v-port .p-outro .contact a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#333;}
 
   .v-port .p-foot{padding:22px 32px;border-top:1px solid #181615;display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#6a6a6a;}
 
@@ -499,7 +505,7 @@
 
     <!-- Project 01 -->
     <section class="p-slot" data-idx="0">
-      <div class="p-name">Unicorn Porcupine</div>
+      <div class="p-name">Unicorn <span class="gld">Porcupine</span></div>
       <div class="p-phone">
         <span class="numbadge">N° 01</span>
         <span class="status">◎ Live · iOS</span>
@@ -523,7 +529,7 @@
 
     <!-- Project 02 -->
     <section class="p-slot" data-idx="1">
-      <div class="p-name">Shadowbox Pro</div>
+      <div class="p-name">Shadowbox <span class="wht">Pro</span></div>
       <div class="p-phone">
         <span class="numbadge">N° 02</span>
         <span class="status">◎ In Beta · iPad</span>
@@ -547,7 +553,7 @@
 
     <!-- Project 03 -->
     <section class="p-slot" data-idx="2">
-      <div class="p-name">Prosession</div>
+      <div class="p-name"><span class="wht">Pro</span>session</div>
       <div class="p-phone">
         <span class="numbadge">N° 03</span>
         <span class="status">◎ In Dev · iPad</span>
@@ -568,8 +574,14 @@
     </section>
 
     <section class="p-outro">
-      <h2 class="line">That's three.<br/><em>More soon.</em></h2>
-      <div class="row"><span>Background Noise Co. — est. 2025, NC</span><a class="email" data-a="YWE=" data-b="YmFja2dyb3VuZG5vaXNlY28uY29t"></a></div>
+      <h2 class="big">Designing <span class="acc">creative tools.</span></h2>
+      <div class="contact">
+        <dl>
+          <dt>Est.</dt><dd>2025</dd>
+          <dt>Based</dt><dd>North Carolina</dd>
+          <dt>Instagram</dt><dd><a href="https://instagram.com/bgnoiseco" target="_blank" rel="noopener">@bgnoiseco</a></dd>
+        </dl>
+      </div>
     </section>
 
     <footer class="p-foot">
@@ -776,6 +788,7 @@
     }, {threshold:[0.4,0.6]});
     slots.forEach(s => io.observe(s));
   })();
+
 </script>
 <script>
 (function(){
