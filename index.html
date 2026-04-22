@@ -258,14 +258,14 @@
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .p-intro > *{position:relative;z-index:2;}
   .v-port .p-intro > div:first-child{padding-left:clamp(0px,5vw,64px);}
-  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:64px 32px 80px;border-bottom:1px solid #181615;gap:40px;flex-wrap:wrap;}
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(22px,2.6vw,34px);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,2.5vw,32px);padding-left:20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
-  .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#777;display:grid;grid-template-columns:auto 1fr;row-gap:8px;column-gap:20px;margin:0;}
-  .v-port .p-sub .meta dd{margin:0;color:#eae6dc;text-transform:none;letter-spacing:.02em;}
+  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:54px 32px 70px;border-bottom:1px solid #181615;gap:40px;flex-wrap:wrap;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(22px,2.6vw,34px);line-height:1.2;letter-spacing:-.005em;margin:0 0 16px clamp(0px,2.5vw,32px);padding-left:20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
+  .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
+  .v-port .p-sub .meta b{color:#eae6dc;font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   .v-port .p-intro .kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#777;margin-bottom:32px;}
   .v-port .p-intro h1{font-family:"Distortion",serif;font-size:clamp(78px,15vw,240px);line-height:.82;margin:0;color:#eae6dc;letter-spacing:-.015em;font-weight:400;}
-  .v-port .p-intro h1 em{font-style:normal;}
-  .v-port .p-intro h1 em .dim{opacity:.65;}
+  .v-port .p-intro h1 em{font-style:normal;display:block;padding:0 .1em 0 .3em;}
+  .v-port .p-intro h1 em .dim{color:#9c9993;}
   .v-port .p-intro h1 em .acc{color:#a89a7d;}
   .v-port .p-intro .count{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;text-align:right;display:grid;row-gap:4px;white-space:nowrap;transform:translateY(60px);}
   .v-port .p-intro .count b{color:#eae6dc;font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
@@ -513,18 +513,13 @@
     <section class="p-intro">
       <div>
         <div class="kicker">◎ Creative Software</div>
-        <h1>Background<br/><em><span class="dim">Noise</span> <span class="acc">Co.</span></em></h1>
+        <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em></h1>
       </div>
-      <div class="count"><span>Projects</span><b>03</b><span>Platforms</span><b>iOS · macOS</b></div>
     </section>
 
     <section class="p-sub">
       <p class="tag">A small studio designing creative tools.</p>
-      <dl class="meta">
-        <dt>Located</dt><dd>North Carolina</dd>
-        <dt>Est.</dt><dd>2025</dd>
-        <dt>Instagram</dt><dd>@bgnoiseco</dd>
-      </dl>
+      <div class="meta"><span>Projects</span><b>03</b><span>Platforms</span><b>iOS · macOS</b></div>
     </section>
     </div>
 
