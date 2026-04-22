@@ -784,20 +784,31 @@
   }
   show('portrait');
 
-  // Portrait rail — highlight active section on scroll
+  // Portrait rail — highlight the section nearest the snap line on scroll
   (function(){
-    const targets = document.querySelectorAll('.v-port [data-idx]');
+    const root = document.querySelector('.page[data-page="portrait"]');
+    const targets = [...document.querySelectorAll('.v-port [data-idx]')];
     const marks = document.querySelectorAll('.v-port .p-rail span');
-    if (!targets.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting && e.intersectionRatio > 0.4) {
-          const idx = e.target.dataset.idx;
-          marks.forEach(m => m.classList.toggle('on', m.dataset.s === idx));
-        }
-      });
-    }, {threshold:[0.4,0.6]});
-    targets.forEach(t => io.observe(t));
+    if (!targets.length || !root) return;
+    function update(){
+      const pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+      const maxScroll = root.scrollHeight - root.clientHeight;
+      let active = null, best = Infinity;
+      for (const t of targets) {
+        const top = t.getBoundingClientRect().top - pad;
+        const d = Math.abs(top);
+        if (d < best) { best = d; active = t.dataset.idx; }
+      }
+      if (root.scrollTop >= maxScroll - 2) active = targets[targets.length - 1].dataset.idx;
+      else if (root.scrollTop <= 1) active = targets[0].dataset.idx;
+      if (active !== null) {
+        marks.forEach(m => m.classList.toggle('on', m.dataset.s === active));
+      }
+    }
+    root.addEventListener('scroll', update, {passive:true});
+    root.addEventListener('scrollend', update);
+    setInterval(update, 150);
+    update();
   })();
 
   // Portrait — sync scroll-padding-top to the sticky header's real height
