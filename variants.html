@@ -277,8 +277,14 @@
 
   /* left column — giant vertical project name */
   .v-port .p-name{font-family:"Distortion",serif;font-size:clamp(70px,9vw,140px);line-height:1;letter-spacing:-.01em;color:#eae6dc;opacity:.65;writing-mode:vertical-rl;transform:rotate(180deg);justify-self:end;align-self:center;display:block;padding:60px 0;margin-right:-12px;white-space:nowrap;font-weight:400;}
+  .v-port .p-slot[data-idx="0"]{background:#1fcbc4;}
+  .v-port .p-slot[data-idx="0"] .p-info,.v-port .p-slot[data-idx="0"] .p-info *{color:#141b26;}
+  .v-port .p-slot[data-idx="0"] .p-info .role{color:#eae6dc;}
+  .v-port .p-slot[data-idx="0"] .p-info .role .acc{color:#e7519d;}
+  .v-port .p-slot[data-idx="0"] .p-info .cta{color:#e7519d;border-bottom-color:rgba(231,81,157,.4);}
+  .v-port .p-slot[data-idx="0"] .p-info dt{color:#eae6dc;}
   .v-port .p-slot[data-idx="0"] .p-name{opacity:1;font-size:clamp(56px,7vw,110px);}
-  .v-port .p-slot[data-idx="0"] .p-name .gld{color:#a89a7d;}
+  .v-port .p-slot[data-idx="0"] .p-name .gld{color:#e7519d;}
   .v-port .p-slot[data-idx="1"] .p-name{opacity:1;color:#9c9993;font-size:clamp(62px,8vw,125px);}
   .v-port .p-slot[data-idx="1"] .p-name .wht{color:#eae6dc;}
   .v-port .p-slot[data-idx="2"] .p-name{color:#a89a7d;opacity:1;}
@@ -294,12 +300,16 @@
   /* right column — metadata stack */
   .v-port .p-info{display:flex;flex-direction:column;gap:28px;max-width:320px;justify-self:start;}
   .v-port .p-info .role{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#a89a7d;}
+  .v-port .p-info .title{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;letter-spacing:-.005em;margin:0;color:inherit;font-weight:400;}
+  .v-port .p-info .title .thin{font-weight:inherit;opacity:1;}
+  .v-port .p-info .title em{font-style:italic;font-weight:inherit;}
   .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;margin:0;color:#eae6dc;letter-spacing:-.005em;}
   .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:20px;margin:0;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;}
   .v-port .p-info dt{color:#777;text-transform:uppercase;letter-spacing:.2em;font-size:10px;}
   .v-port .p-info dd{margin:0;color:#eae6dc;}
   .v-port .p-info .cta{margin-top:8px;display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;padding-bottom:6px;border-bottom:1px solid #2a2724;align-self:flex-start;width:auto;}
   .v-port .p-info .cta::after{content:"→";}
+  .v-port .p-info .cta[href="#"]::after{content:none;}
 
   /* ticker bar between projects */
   .v-port .p-ticker{overflow:hidden;white-space:nowrap;padding:14px 0;border-top:1px solid #181615;border-bottom:1px solid #181615;font-family:"Distortion",serif;font-size:28px;letter-spacing:.02em;color:#6a624f;}
@@ -498,12 +508,12 @@
       <nav><a href="#">Contact</a></nav>
     </header>
 
-    <div class="p-rail"><span data-s="hero">00 Title</span><span class="on" data-s="1">01 Shadowbox</span><span data-s="0">02 Porcupine</span><span data-s="2">03 Prosession</span><span data-s="contact">04 Contact</span></div>
+    <div class="p-rail"><span class="on" data-s="hero">00 Title</span><span data-s="1">01 Shadowbox</span><span data-s="2">02 Prosession</span><span data-s="0">03 Porcupine</span><span data-s="contact">04 Contact</span></div>
 
     <div class="p-hero" data-idx="hero">
     <section class="p-intro">
       <div>
-        <div class="kicker">◎ Creative Software · NC</div>
+        <div class="kicker">◎ Creative Software</div>
         <h1>Background<br/><em><span class="dim">Noise</span> <span class="acc">Co.</span></em></h1>
       </div>
       <div class="count"><span>Projects</span><b>03</b><span>Platforms</span><b>iOS · iPadOS</b></div>
@@ -528,8 +538,8 @@
         <div class="shell"><img src="images/IMG_4019.jpg" alt="Shadowbox Pro"/></div>
       </div>
       <div class="p-info">
-        <div class="role">Creative tools · Color studio</div>
-        <p class="tagline">A color-and-shadow studio for painters, built around a real-time soft-light rig.</p>
+        <div class="role">Shadowbox Pro · Procedural Design</div>
+        <p class="tagline">An experimental image synth and procedural design and drawing tool.</p>
         <dl>
           <dt>Release</dt><dd>Q2 2026</dd>
           <dt>Platform</dt><dd>iOS · macOS</dd>
@@ -539,16 +549,36 @@
       </div>
     </section>
 
-<!-- Project 02 (Porcupine) -->
+<!-- Project 02 (Prosession) -->
+    <section class="p-slot" data-idx="2">
+      <div class="p-name"><span class="wht">Pro</span>session</div>
+      <div class="p-phone">
+        <span class="numbadge">N° 02</span>
+        <span class="status">◎ In Dev · iPad</span>
+        <div class="shell"><img src="images/IMG_4022.jpg" alt="ProSESSION"/></div>
+      </div>
+      <div class="p-info">
+        <div class="role">Prosession · Sequencer</div>
+        <p class="tagline">A customizable midi sequencer and AUv3 rack for iPhone.</p>
+        <dl>
+          <dt>Release</dt><dd>Q2 2026</dd>
+          <dt>Platform</dt><dd>iOS</dd>
+          <dt>Status</dt><dd>In development</dd>
+        </dl>
+        <a href="#" class="cta">Coming soon</a>
+      </div>
+    </section>
+
+<!-- Project 03 (Porcupine) -->
     <section class="p-slot" data-idx="0">
       <div class="p-name">Unicorn <span class="gld">Porcupine</span></div>
       <div class="p-phone">
-        <span class="numbadge">N° 02</span>
+        <span class="numbadge">N° 03</span>
         <span class="status">◎ Live · iOS</span>
         <div class="shell"><img src="images/IMG_4020.jpg" alt="Unicorn Porcupine"/></div>
       </div>
       <div class="p-info">
-        <div class="role">Generative naming · Utility</div>
+        <div class="role">Unicorn Porcupine · <span class="acc">Randomizer</span></div>
         <p class="tagline">A procedural generator of improbable creature names, built for moments of naming-block.</p>
         <dl>
           <dt>Release</dt><dd>2025</dd>
@@ -556,26 +586,6 @@
           <dt>Status</dt><dd>Live on App Store</dd>
         </dl>
         <a href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener" class="cta">View on App Store</a>
-      </div>
-    </section>
-
-<!-- Project 03 -->
-    <section class="p-slot" data-idx="2">
-      <div class="p-name"><span class="wht">Pro</span>session</div>
-      <div class="p-phone">
-        <span class="numbadge">N° 03</span>
-        <span class="status">◎ In Dev · iPad</span>
-        <div class="shell"><img src="images/IMG_4022.jpg" alt="ProSESSION"/></div>
-      </div>
-      <div class="p-info">
-        <div class="role">Music production · Multi-track</div>
-        <p class="tagline">A pocket DAW for fast sketches — transport, pads, mixer, and modular patching in one window.</p>
-        <dl>
-          <dt>Release</dt><dd>Q2 2026</dd>
-          <dt>Platform</dt><dd>iOS</dd>
-          <dt>Status</dt><dd>In development</dd>
-        </dl>
-        <a href="#" class="cta">Coming soon</a>
       </div>
     </section>
 
@@ -828,7 +838,7 @@
     new ResizeObserver(render).observe(intro);
   })();
 
-  // Portrait rail + Contact nav — click to scroll to section
+// Portrait rail + Contact nav — click to scroll to section
   (function(){
     const vport = document.querySelector('.v-port');
     if (!vport) return;
