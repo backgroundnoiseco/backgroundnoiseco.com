@@ -337,6 +337,9 @@
     .v-port .p-sub{padding:28px 24px 40px 40px;}
     .v-port .p-outro{padding:32px 24px 50px 40px;}
     .v-port .p-slot{padding:40px 12px 60px 52px;gap:16px;grid-template-columns:auto minmax(0,260px) minmax(0,420px) minmax(0,0.4fr);}
+    .v-port .p-name{font-size:clamp(48px,12vw,75px);}
+    .v-port .p-slot[data-idx="0"] .p-name{font-size:clamp(40px,10vw,60px);}
+    .v-port .p-slot[data-idx="1"] .p-name{font-size:clamp(44px,11vw,68px);}
     .v-port .p-top{padding:18px 24px;}
     .v-port .p-rail{font-size:9px;letter-spacing:.25em;gap:22px;left:12px;}
     .v-port .p-sub .tag{margin-left:0;padding-left:16px;margin-bottom:32px;font-size:18px;}
@@ -824,6 +827,7 @@
     const BASE_PHONE = 240;
     const slots = [...document.querySelectorAll('.v-port .p-slot')];
     if (!slots.length || typeof ResizeObserver === 'undefined') return;
+    const lastW = new WeakMap();
     function syncAll(){
       slots.forEach(slot => {
         const phone = slot.querySelector('.p-phone');
@@ -835,9 +839,15 @@
         if (info) info.style.transform = '';
         const rect = phone.getBoundingClientRect();
         if (rect.width <= 0) return;
+        const prev = lastW.get(slot) || 0;
+        if (Math.abs(rect.width - prev) < 0.5) return;
+        lastW.set(slot, rect.width);
         const scale = rect.width / BASE_PHONE;
         const tRatio = TITLE_RATIOS[slot.dataset.idx] || TITLE_DEFAULT;
-        if (name) name.style.fontSize = Math.round(rect.width * tRatio) + 'px';
+        if (name) {
+          if (window.innerWidth <= 500) name.style.fontSize = '';
+          else name.style.fontSize = Math.round(rect.width * tRatio) + 'px';
+        }
         const shell = slot.querySelector('.p-phone .shell');
         if (shell) shell.style.borderRadius = (28 * scale) + 'px';
         if (info) {
