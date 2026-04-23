@@ -258,10 +258,10 @@
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .p-intro > *{position:relative;z-index:2;}
   .v-port .p-intro > div:first-child{padding-left:clamp(32px,6vw,96px);}
-  .v-port .p-intro .p-badge{position:absolute;top:clamp(60px,8vw,140px);right:clamp(80px,10vw,220px);width:clamp(120px,12vw,200px);aspect-ratio:1;color:#e74b6f;z-index:2;pointer-events:none;}
+  .v-port .p-intro .p-badge{position:absolute;top:clamp(60px,8vw,140px);right:clamp(80px,10vw,220px);width:clamp(120px,12vw,200px);aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   .v-port .p-intro .p-badge svg{width:100%;height:100%;display:block;}
-  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:54px 32px 70px;border-bottom:1px solid #181615;gap:24px;flex-wrap:nowrap;}
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(14px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 32px clamp(0px,2.5vw,32px);padding-left:20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
+  .v-port .p-sub{display:flex;justify-content:space-between;align-items:start;padding:54px 32px 70px;border-bottom:1px solid #181615;gap:24px;flex-wrap:nowrap;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(14px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,2.5vw,32px);padding:0 0 0 20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
   .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:#eae6dc;font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   .v-port .p-intro .kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#777;margin-bottom:32px;}
@@ -349,6 +349,7 @@
     .v-port .p-top{padding:18px 24px;}
     .v-port .p-phone .numbadge{font-size:8px;padding:4px 7px;top:-4px;left:-4px;}
     .v-port .p-phone .status{font-size:7.5px;padding:4px 7px;top:-4px;right:-4px;}
+    .v-port .p-intro .kicker{font-size:9px;margin-bottom:24px;}
     .v-port .p-rail{font-size:9px;letter-spacing:.25em;gap:22px;left:12px;}
     .v-port .p-sub .tag{margin-left:0;padding-left:16px;margin-bottom:32px;font-size:18px;}
   }
@@ -546,7 +547,7 @@
           <g transform="translate(50 50) rotate(8)" fill="#fff" font-family="Inter Tight,Helvetica,Arial,sans-serif" font-weight="700" text-anchor="middle" letter-spacing=".04em">
             <text font-size="9" y="-10">UNICORN</text>
             <text font-size="9" y="0">PORCUPINE</text>
-            <text font-size="7" y="8" font-weight="500" letter-spacing=".14em" opacity=".8">———</text>
+            <line x1="-14" y1="6" x2="14" y2="6" stroke="#fff" stroke-width="1" opacity=".8"/>
             <text font-size="9" y="18">NOW LIVE!</text>
           </g>
         </svg>
