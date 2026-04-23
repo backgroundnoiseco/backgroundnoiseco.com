@@ -296,8 +296,8 @@
   .v-port .p-phone{position:relative;width:100%;max-width:240px;justify-self:center;}
   .v-port .p-phone .shell{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 60px 120px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04);}
   .v-port .p-phone .shell img{width:100%;height:auto;display:block;}
-  .v-port .p-phone .numbadge{position:absolute;top:-14px;left:-14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:#eae6dc;padding:6px 10px;border-radius:999px;z-index:2;}
-  .v-port .p-phone .status{position:absolute;top:-12px;right:-12px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;background:rgba(20,20,20,.9);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
+  .v-port .p-phone .numbadge{position:absolute;top:-8px;left:-8px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:#eae6dc;padding:6px 10px;border-radius:999px;z-index:2;}
+  .v-port .p-phone .status{position:absolute;top:-7px;right:-7px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;background:rgba(20,20,20,.9);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
 
   /* right column — metadata stack */
   .v-port .p-info{display:flex;flex-direction:column;gap:28px;max-width:320px;justify-self:start;}
@@ -338,7 +338,7 @@
     .v-port .p-outro .big{display:none;}
   }
   @media (max-width:500px){
-    .v-port .p-intro .p-badge{width:90px;top:30px;right:30px;}
+    .v-port .p-intro .p-badge{width:90px;top:90px;right:40px;}
     .v-port .p-intro > div:first-child{padding-left:0;}
     .v-port .p-intro{padding:40px 60px 30px;}
     .v-port .p-sub{padding:28px 24px 40px 40px;}
@@ -347,6 +347,8 @@
     .v-port .p-slot[data-idx="0"] .p-name{font-size:clamp(40px,10vw,60px);}
     .v-port .p-slot[data-idx="1"] .p-name{font-size:clamp(44px,11vw,68px);}
     .v-port .p-top{padding:18px 24px;}
+    .v-port .p-phone .numbadge{font-size:8px;padding:4px 7px;top:-4px;left:-4px;}
+    .v-port .p-phone .status{font-size:7.5px;padding:4px 7px;top:-4px;right:-4px;}
     .v-port .p-rail{font-size:9px;letter-spacing:.25em;gap:22px;left:12px;}
     .v-port .p-sub .tag{margin-left:0;padding-left:16px;margin-bottom:32px;font-size:18px;}
   }
