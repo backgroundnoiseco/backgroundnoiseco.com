@@ -326,6 +326,8 @@
 
   .v-port .p-foot{padding:28px 32px;border-top:1px solid #181615;display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#777;}
   .v-port .p-foot .wm{font-family:"Distortion",serif;font-size:18px;letter-spacing:.02em;color:#eae6dc;text-transform:none;}
+  .v-port .p-foot .to-top{color:inherit;text-decoration:none;cursor:pointer;}
+  .v-port .p-foot .to-top:hover{color:#eae6dc;}
 
   @media (max-width:980px){
     .v-port .p-intro{padding:60px 22px 40px;}
@@ -609,7 +611,7 @@
     <footer class="p-foot">
       <span>© 2026</span>
       <span class="wm">BGNoiseCo.</span>
-      <span>@bgnoiseco</span>
+      <a href="#" class="to-top">↑ Top</a>
     </footer>
   </div>
 </div>
@@ -934,6 +936,14 @@
     const contactLink = document.querySelector('.v-port .p-top nav a');
     if (contactLink) {
       contactLink.addEventListener('click', (e) => { e.preventDefault(); go('contact'); });
+    }
+    const toTop = document.querySelector('.v-port .p-foot .to-top');
+    if (toTop) {
+      toTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        const root = document.querySelector('.page[data-page="portrait"]');
+        if (root) root.scrollTo({top: 0, behavior: 'smooth'});
+      });
     }
   })();
 
