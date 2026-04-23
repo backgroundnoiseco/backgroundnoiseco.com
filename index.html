@@ -906,14 +906,7 @@
     syncAll();
   })();
 
-  // Debug: show viewport width in title
-  (function(){
-    const update = () => { document.title = 'vw:' + window.innerWidth + ' | Background Noise Co.'; };
-    update();
-    window.addEventListener('resize', update);
-  })();
-
-  // Portrait — sync scroll-padding-top to the sticky header's real height
+// Portrait — sync scroll-padding-top to the sticky header's real height
   (function(){
     const page = document.querySelector('.page[data-page="portrait"]');
     const topNav = document.querySelector('.v-port .p-top');
