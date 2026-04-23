@@ -257,7 +257,7 @@
   .v-port .p-intro::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .p-intro > *{position:relative;z-index:2;}
-  .v-port .p-intro > div:first-child{padding-left:clamp(32px,8vw,128px);}
+  .v-port .p-intro > div:first-child{padding-left:clamp(32px,6vw,96px);}
   .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:54px 32px 70px;border-bottom:1px solid #181615;gap:24px;flex-wrap:nowrap;}
   .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(14px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 32px clamp(0px,2.5vw,32px);padding-left:20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
   .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
@@ -319,7 +319,7 @@
   .v-port .p-outro .big{font-family:"DM Serif Display",serif;font-size:clamp(44px,7vw,120px);line-height:.9;letter-spacing:-.02em;margin:0;text-wrap:balance;font-weight:500;color:#eae6dc;}
   .v-port .p-outro .big .acc{color:#a89a7d;}
   .v-port .p-outro .contact{padding-left:clamp(20px,4vw,80px);}
-  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto 1fr;row-gap:8px;column-gap:20px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#777;margin:0;align-items:baseline;}
+  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto 1fr;row-gap:8px;column-gap:20px;font-family:"JetBrains Mono",monospace;font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:#777;margin:0;align-items:baseline;}
   .v-port .p-outro .contact dt{}
   .v-port .p-outro .contact dd{margin:0;color:#eae6dc;text-transform:none;letter-spacing:.02em;}
   .v-port .p-outro .contact a{color:inherit;text-decoration:none;}
@@ -329,16 +329,16 @@
   .v-port .p-foot .to-top{color:inherit;text-decoration:none;cursor:pointer;}
   .v-port .p-foot .to-top:hover{color:#eae6dc;}
 
-  @media (max-width:980px){
+  @media (max-width:859px){
     .v-port .p-intro{padding:60px 22px 40px;}
-    .v-port .p-slot{padding:60px 22px 80px;}
+    .v-port .p-slot{padding:60px 22px 80px 0;gap:24px;grid-template-columns:minmax(0,130px) minmax(0,260px) minmax(0,280px) minmax(0,0.3fr);}
+    .v-port .p-outro{padding:32px 24px 50px clamp(60px,20vw,240px);gap:16px;grid-template-columns:1fr;}
+    .v-port .p-outro .big{display:none;}
   }
   @media (max-width:500px){
     .v-port .p-intro > div:first-child{padding-left:0;}
     .v-port .p-intro{padding:40px 60px 30px;}
     .v-port .p-sub{padding:28px 24px 40px 40px;}
-    .v-port .p-outro{padding:32px 24px 50px 60px;gap:16px;grid-template-columns:1fr;}
-    .v-port .p-outro .big{display:none;}
     .v-port .p-slot{padding:40px 12px 60px 52px;gap:16px;grid-template-columns:auto minmax(0,260px) minmax(0,420px) minmax(0,0.4fr);}
     .v-port .p-name{font-size:clamp(48px,12vw,75px);}
     .v-port .p-slot[data-idx="0"] .p-name{font-size:clamp(40px,10vw,60px);}
@@ -531,7 +531,7 @@
     </section>
 
     <section class="p-sub">
-      <p class="tag">A small studio designing creative tools.</p>
+      <p class="tag">A&nbsp;small&nbsp;studio&nbsp;designing creative&nbsp;tools.</p>
       <div class="meta"><span>Projects</span><b>03</b><span>Platforms</span><b>iOS · macOS</b></div>
     </section>
     </div>
@@ -597,7 +597,7 @@
     </section>
 
     <section class="p-outro" data-idx="contact">
-      <h2 class="big">Designing <span class="acc">creative tools.</span></h2>
+      <h2 class="big">Designing <span class="acc">creative&nbsp;tools.</span></h2>
       <div class="contact">
         <dl>
           <dt>Located</dt><dd>North Carolina</dd>
@@ -843,39 +843,32 @@
         const rect = phone.getBoundingClientRect();
         if (rect.width <= 0) return;
         const prev = lastW.get(slot) || 0;
-        if (Math.abs(rect.width - prev) < 0.5) return;
-        lastW.set(slot, rect.width);
-        const scale = rect.width / BASE_PHONE;
-        const tRatio = TITLE_RATIOS[slot.dataset.idx] || TITLE_DEFAULT;
-        if (name) {
-          if (window.innerWidth <= 500) name.style.fontSize = '';
-          else name.style.fontSize = Math.round(rect.width * tRatio) + 'px';
+        const widthChanged = Math.abs(rect.width - prev) >= 0.5;
+        if (widthChanged) {
+          lastW.set(slot, rect.width);
+          const scale = rect.width / BASE_PHONE;
+          const tRatio = TITLE_RATIOS[slot.dataset.idx] || TITLE_DEFAULT;
+          if (name) {
+            if (window.innerWidth <= 500) name.style.fontSize = '';
+            else name.style.fontSize = Math.round(rect.width * tRatio) + 'px';
+          }
+          const shell = slot.querySelector('.p-phone .shell');
+          if (shell) shell.style.borderRadius = (28 * scale) + 'px';
+          if (info) {
+            const setFs = (sel, base) => {
+              info.querySelectorAll(sel).forEach(el => { el.style.fontSize = (base * scale) + 'px'; });
+            };
+            setFs('.role', 11);
+            setFs('.tagline', 26);
+            setFs('dt', 10);
+            setFs('dd', 11);
+            setFs('.cta', 11);
+          }
         }
-        const shell = slot.querySelector('.p-phone .shell');
-        if (shell) shell.style.borderRadius = (28 * scale) + 'px';
-        if (info) {
-          const setFs = (sel, base) => {
-            info.querySelectorAll(sel).forEach(el => { el.style.fontSize = (base * scale) + 'px'; });
-          };
-          setFs('.role', 11);
-          setFs('.tagline', 26);
-          setFs('dt', 10);
-          setFs('dd', 11);
-          setFs('.cta', 11);
-        }
-        // Measure content bounds (title + phone + info) AFTER sizing
+        // At viewports >= 860 shift content so the phone's center lands ~37% of viewport width
         const pRect = phone.getBoundingClientRect();
-        let cLeft = pRect.left, cRight = pRect.right;
-        if (name) {
-          const r = name.getBoundingClientRect();
-          cLeft = Math.min(cLeft, r.left); cRight = Math.max(cRight, r.right);
-        }
-        if (info) {
-          const r = info.getBoundingClientRect();
-          cLeft = Math.min(cLeft, r.left); cRight = Math.max(cRight, r.right);
-        }
-        // Shift content right to center it, but skip on narrow viewports (mobile) where we want content flush-left
-        const delta = window.innerWidth <= 500 ? 0 : Math.max(0, Math.round(window.innerWidth / 2 - (cLeft + cRight) / 2));
+        const phoneCenter = pRect.left + pRect.width / 2;
+        const delta = window.innerWidth < 860 ? 0 : Math.max(0, Math.round(window.innerWidth * 0.37 - phoneCenter));
         phone.style.transform = 'translateX(' + delta + 'px)';
         if (name) name.style.transform = 'translateX(' + delta + 'px) rotate(180deg)';
         if (info) info.style.transform = 'translateX(' + delta + 'px)';
@@ -887,6 +880,13 @@
     });
     window.addEventListener('resize', syncAll);
     syncAll();
+  })();
+
+  // Debug: show viewport width in title
+  (function(){
+    const update = () => { document.title = 'vw:' + window.innerWidth + ' | Background Noise Co.'; };
+    update();
+    window.addEventListener('resize', update);
   })();
 
   // Portrait — sync scroll-padding-top to the sticky header's real height
