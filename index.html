@@ -251,15 +251,15 @@
   .v-port .p-rail span{transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
   .v-port .p-rail span.on{color:#eae6dc;}
 
-  .v-port .p-hero{min-height:calc(100svh - 60px);display:flex;flex-direction:column;--hero-size:clamp(100px,15vw,180px);}
+  .v-port .p-hero{min-height:calc(100svh - 60px);display:flex;flex-direction:column;--hero-size:clamp(54px,15vw,180px);}
   .v-port .p-intro{position:relative;padding:80px 32px 60px;flex:1;border-bottom:1px solid #181615;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;overflow:hidden;}
   .v-port .p-intro::after{content:"";position:absolute;inset:0;background:var(--p-rects) center/100% 100% no-repeat;pointer-events:none;z-index:1;}
   .v-port .p-intro::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .p-intro > *{position:relative;z-index:2;}
   .v-port .p-intro > div:first-child{padding-left:clamp(0px,5vw,64px);}
-  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:54px 32px 70px;border-bottom:1px solid #181615;gap:40px;flex-wrap:wrap;}
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:calc(var(--hero-size) * 34 / 180);line-height:1.2;letter-spacing:-.005em;margin:0 0 16px clamp(0px,2.5vw,32px);padding-left:20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
+  .v-port .p-sub{display:flex;justify-content:space-between;align-items:end;padding:54px 32px 70px;border-bottom:1px solid #181615;gap:24px;flex-wrap:nowrap;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(14px,calc(var(--hero-size) * 34 / 180),26px);line-height:1.2;letter-spacing:-.005em;margin:0 0 16px clamp(0px,2.5vw,32px);padding-left:20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
   .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:#eae6dc;font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   .v-port .p-intro .kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#777;margin-bottom:32px;}
@@ -315,7 +315,7 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:40px 32px 60px;padding-left:clamp(32px,8vw,120px);border-top:1px solid #181615;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;}
+  .v-port .p-outro{padding:40px 32px 60px;padding-left:clamp(32px,8vw,120px);border-top:1px solid #181615;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:end;}
   .v-port .p-outro .big{font-family:"DM Serif Display",serif;font-size:clamp(44px,7vw,120px);line-height:.9;letter-spacing:-.02em;margin:0;text-wrap:balance;font-weight:500;color:#eae6dc;}
   .v-port .p-outro .big .acc{color:#a89a7d;}
   .v-port .p-outro .contact{padding-left:clamp(20px,4vw,80px);}
@@ -330,6 +330,16 @@
   @media (max-width:980px){
     .v-port .p-intro{padding:60px 22px 40px;}
     .v-port .p-slot{padding:60px 22px 80px;}
+    .v-port .p-intro > div:first-child{padding-left:0;}
+  }
+  @media (max-width:500px){
+    .v-port .p-intro{padding:40px 60px 30px;}
+    .v-port .p-sub{padding:28px 24px 40px 40px;}
+    .v-port .p-outro{padding:32px 24px 50px 40px;}
+    .v-port .p-slot{padding:40px 60px 60px;}
+    .v-port .p-top{padding:18px 24px;}
+    .v-port .p-rail{font-size:9px;letter-spacing:.25em;gap:22px;left:12px;}
+    .v-port .p-sub .tag{margin-left:0;padding-left:16px;margin-bottom:32px;font-size:18px;}
   }
   .v-dist{background:#0a0a0a;color:#eae6dc;font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--ttl-font:"Syne",sans-serif;--abt-font:"DM Serif Display",serif;}
   .v-dist *{box-sizing:border-box;}
@@ -828,6 +838,8 @@
         const scale = rect.width / BASE_PHONE;
         const tRatio = TITLE_RATIOS[slot.dataset.idx] || TITLE_DEFAULT;
         if (name) name.style.fontSize = Math.round(rect.width * tRatio) + 'px';
+        const shell = slot.querySelector('.p-phone .shell');
+        if (shell) shell.style.borderRadius = (28 * scale) + 'px';
         if (info) {
           const setFs = (sel, base) => {
             info.querySelectorAll(sel).forEach(el => { el.style.fontSize = (base * scale) + 'px'; });
