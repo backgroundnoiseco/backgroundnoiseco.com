@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&family=Geist:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Serif+Display&family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Libre+Caslon+Text:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  @font-face{font-family:'Distortion';src:url('fonts/distortion-of-the-brain-and-mind.regular.ttf') format('truetype');font-weight:400;font-display:swap;}
   html,body{margin:0;padding:0;background:#0a0a0a;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
   /* ============ switcher chrome ============ */
   .switcher{position:fixed;top:0;left:0;right:0;height:44px;background:rgba(10,10,10,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;padding:0 16px;gap:8px;z-index:10000;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
@@ -282,11 +281,11 @@
   .v-port .p-name{font-family:"Distortion",serif;font-size:clamp(70px,9vw,140px);line-height:1;letter-spacing:-.01em;color:#eae6dc;opacity:.65;writing-mode:vertical-rl;transform:rotate(180deg);justify-self:end;align-self:center;display:block;padding:60px 0;margin-right:-12px;white-space:nowrap;font-weight:400;}
   .v-port .p-slot[data-idx="0"]{--section-bg:#1fcbc4;}
   .v-port .p-slot[data-idx="0"] .p-info,.v-port .p-slot[data-idx="0"] .p-info *{color:#141b26;}
-  .v-port .p-slot[data-idx="0"] .p-info .role{color:#eae6dc;text-shadow:.5px .5px 0 #a8b0bd;}
+  .v-port .p-slot[data-idx="0"] .p-info .role{color:#eae6dc;text-shadow:1px 1px 0 #a8b0bd;}
   .v-port .p-slot[data-idx="0"] .p-info .role .acc{color:#e7519d;}
   .v-port .p-slot[data-idx="0"] .p-info .cta,.v-port .p-slot[data-idx="0"] .p-info .cta *{color:#e7519d;}
   .v-port .p-slot[data-idx="0"] .p-info .cta{background:#141b26;border-color:#141b26;}
-  .v-port .p-slot[data-idx="0"] .p-info dt{color:#eae6dc;text-shadow:.5px .5px 0 #a8b0bd;}
+  .v-port .p-slot[data-idx="0"] .p-info dt{color:#eae6dc;text-shadow:1px 1px 0 #a8b0bd;}
   .v-port .p-slot[data-idx="0"] .p-name{opacity:1;font-size:clamp(56px,7vw,110px);}
   .v-port .p-slot[data-idx="0"] .p-name .gld{color:#e7519d;}
   .v-port .p-slot[data-idx="1"] .p-name{opacity:1;color:#9c9993;font-size:clamp(62px,8vw,125px);}
@@ -350,6 +349,7 @@
     .v-port .p-slot[data-idx="0"] .p-name{font-size:clamp(40px,10vw,60px);}
     .v-port .p-slot[data-idx="1"] .p-name{font-size:clamp(44px,11vw,68px);}
     .v-port .p-top{padding:18px 24px;}
+    .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}
     .v-port .p-phone .numbadge{font-size:8px;padding:4px 7px;top:-4px;left:-4px;}
     .v-port .p-phone .status{font-size:7.5px;padding:4px 7px;top:-4px;right:-4px;}
     .v-port .p-intro .kicker{font-size:9px;margin-bottom:24px;}
