@@ -34,43 +34,50 @@ The file in `fonts/` has been rebuilt with fontTools (all tables recompiled), wh
 
 ## Architecture (index.html)
 
-The live site is a **vertical scroll-snap single-page** layout. The markup lives in a single `.v-port` container with these siblings in order:
+> **This section was rewritten for the "sliding stage" redesign** (was a vertical scroll-snap layout with one full-height section per project). If anything below doesn't match the code, trust the code and fix the doc. The redesign is still being polished — known gaps: no mobile-specific layout yet, the `N°`/status pill can collide on very short windows, and `syncAll()` still scales info type imperatively instead of via container queries.
 
-1. `.p-top` — sticky header (`position: sticky; top: 0`) with the BGNoiseCo wordmark and a Contact link.
-2. `.p-rail` — a fixed, vertical, side rail on the left showing `00 Title / 01 Shadowbox / 02 Porcupine / 03 Prosession / 04 Contact` (rotated via `writing-mode: vertical-rl` + `transform: rotate(180deg)` + `flex-direction: row-reverse` so DOM-first renders at the visual top).
-3. `.p-hero` — a wrapper div containing the `.p-intro` heading and the `.p-sub` about band. `min-height: calc(100svh - 60px)`.
-4. Three `.p-slot` project sections. Each is `min-height: calc(100svh - 60px)` with a 4-column grid: vertical rotated title / phone screenshot / info block / trailing empty column.
-5. `.p-outro` — the "Designing creative tools." closer.
-6. `.p-foot` — the three-column footer.
+The live site is a **sliding-stage single-page** layout: the header, side rail, concentric-rectangle frame and info bar stay put while the hero and three project panels slide up through the frame as you scroll. Markup lives in a single `.v-port` container:
 
-### Scroll container + snap
+1. `.p-top` — sticky header (`position: sticky; top: 0`), BGNoiseCo wordmark + Contact link. Stays pinned the whole way.
+2. `.p-rail` — fixed vertical side rail (`00 Title / 01 Shadowbox / 02 Porcupine / 03 Prosession / 04 Contact`), rotated via `writing-mode: vertical-rl` + `rotate(180deg)`. Left offset is `calc(var(--gutter) - 18px)` so it tracks the content column; below the cap this resolves to the original `left: 14px`.
+3. `.stage-track` — the tall scroll runway (`height: var(--panels) * 100svh - header`). Contains the sticky `.stage` plus four `.snap` divs (`--n: 0..3`, positioned at `n * 100svh`) that provide the snap points.
+4. `.p-outro` / `.p-foot` — after the stage releases, these scroll in conventionally.
 
-**The `.page[data-page="portrait"].on` element is the scroll container**, not the window. It has `height: 100vh`, `overflow-y: auto`, and `scroll-snap-type: y mandatory`. Document body doesn't scroll; scrolling happens inside that container. This scoping is left over from when `index.html` held multiple variants with a switcher; the switcher is gone but the `.page` + `[data-page="portrait"]` markup remains and is required for the scroll container.
+### The stage
 
-Snap targets: `.p-hero`, `.p-slot`, `.p-outro` each have `scroll-snap-align: start`. The `scroll-padding-top` on the scroll container is **synced at runtime to `.p-top`'s live `offsetHeight` via a `ResizeObserver`**, so the bottom of the sticky header always aligns with the section boundary when snapped. If you change the header's height/padding, you don't need to update any constants — the observer handles it.
+`.stage` is `position: sticky` and fills the viewport below the header for the whole track. Inside it:
 
-### Side-rail active state + click-to-scroll
+- `.frame` — `container-type: size`; the framed region the panels move through. Holds the concentric-rectangle `<svg>` and all four panels.
+- `.panel` × 4 — `position: absolute; inset: 0`, stacked and translated by `translateY((var(--i) - var(--progress)) * 100%)`. Panel 0 is `.panel--hero`; 1–3 are `.panel--project`. **`.panel` needs `z-index: 2`** — `transform` creates a stacking context, so without it the rectangle svg (`z-index: 1`) paints over the panel content.
+- `.p-sub` — the info bar, pinned at the bottom of the stage. One `.sub-panel` per stage panel, all stacked in the same grid cell; each fades via `opacity: 1 - |i - progress|`, so the bar cross-fades on the same scroll value as the panels. Its height is fixed by the hero's `.sub-panel--hero`; project panels reformat their metadata to match (see below).
 
-Each scroll target carries a `data-idx` (numeric for projects, `"hero"` for `.p-hero`, `"contact"` for `.p-outro`). Each `.p-rail span` carries a matching `data-s`. An `IntersectionObserver` watches every `[data-idx]` and toggles `.on` on the rail span whose `data-s` string-matches. Click handlers on rail spans and the Contact link call `scrollIntoView({behavior: 'smooth', block: 'start'})` on the matching `[data-idx]`.
+### Scroll progress drives everything
 
-If you add a new top-level snap target (e.g. an extra section), give it a `data-idx` value and (if you want it to show in the rail) add a matching `<span data-s="...">` in `.p-rail`. The observer and click logic both pick it up automatically without further wiring.
+A single JS driver computes `progress` = fraction through the track × `(panels - 1)`, i.e. `0..3`, and writes it to `--progress` on `.v-port` each `requestAnimationFrame` on scroll. That one value drives: panel transforms, the info-bar cross-fade, the rectangle tint, and the rail's active `.on` marker (`data-idx` on each panel matched to `data-s` on each rail span; `panels[Math.round(progress)]`). There is **no `IntersectionObserver`** — that's the point, one source of truth. Click-to-scroll on rail spans maps `data-s` → panel index and scrolls the track to `i / last * travel`; Contact scrolls to `.p-outro` directly.
 
-### Rotated project titles
+**Known rough edge:** at the very bottom of the page the rail can stay on `03 Prosession` because the outro's top never quite crosses the sticky line. Adjust the outro threshold in the driver if this matters.
 
-Each `.p-slot` has a `.p-name` in its first column, rendered sideways via `writing-mode: vertical-rl; transform: rotate(180deg)`. Characters read upward. **`.p-name` requires vertical padding** (currently `padding: 60px 0`) to prevent certain Distortion-font glyphs (notably the "o" in "Pro") from being clipped at the element's box edges — this is not just decorative spacing; removing the padding re-introduces the clip. Font size is per-slot via `.p-slot[data-idx="X"] .p-name` rules.
+### Project panels & fit-to-frame
 
-### Porcupine slot color treatment
+Each `.panel--project` is a two-column grid (`phone / info`), centered. There are **no rotated vertical titles anymore** — the project name is `.p-info .role`, rendered in the Distortion display face. The single lever that keeps a panel inside the frame at any window height is the phone's `max-width: min(240px, 40cqb)`; `syncAll()` scales the info type from the phone's rendered width, so capping the phone scales the whole panel together. Left padding is `calc(var(--gutter) + 16px)` so content clears the rail.
 
-The Porcupine slot (`data-idx="0"`) pulls colors from the actual app screenshot: teal background (`#1fcbc4`), pink "Porcupine" accent (`#e7519d`), dark-navy info text (`#141b26`), white `dt` labels. These are **hardcoded**, not sampled — an earlier version used a canvas-based sampler but the algorithmic color picks weren't faithful to the app's actual UI palette. If the app's screenshot changes, update the hex values manually.
+### Info bar metadata
 
-### Intro decorations (two pseudo-elements on `.p-intro`)
+Hero shows `LOCATED / PLATFORMS` stacked (label over value). Each project shows `RELEASE / PLATFORM` the same way. The tagline + `<dl>` were moved out of the panels into the bar, so each project's copy lives once. **Beware global regex edits over `<dl>`** — the outro's contact list and a legacy-variant list are also `<dl>`s; a global strip during the redesign wiped them and had to be restored from backup.
 
-- `::before` — animated noise grain. 200×200 SVG tile with `feTurbulence` + `feColorMatrix` (white + alpha), tiled via `background-repeat: repeat` and flickered via `@keyframes bgnoise` stepping through 10 pre-set `background-position` values every 60ms. `z-index: 0`.
-- `::after` — concentric darkening rectangles. **Generated at runtime** by a `ResizeObserver` on `.p-intro`: measures pixel width/height, builds an inline SVG of stacked `<rect fill="black" fill-opacity="0.15">` at equal 40px pixel insets on all four sides, encodes it with `encodeURIComponent`, and sets it on a CSS custom property `--p-rects`. The JS path exists because static SVG with `preserveAspectRatio='none'` stretches non-uniformly and breaks the "equal spacing on both axes" visual. `z-index: 1` — above the noise so the stacked black alphas actually darken the composite. Each layer multiplies remaining luminance by 0.85, so the inner ring reaches ~88% cumulative black.
+### Concentric-rectangle frame decoration
+
+Built at runtime by a `ResizeObserver` on `.frame` as a live inline `<svg class="rects">` (NOT a data-URI background — a background image is an isolated document and can't inherit CSS colour). It stacks `<rect>`s at equal 40px insets, sized to match the section background band (starts at `--cap`). Each rect's fill is `color-mix(in srgb, var(--c) calc(var(--rect-mix) * 100%), #000)` with `fill-opacity: calc(0.15 + 0.7 * var(--rect-mix))`.
+
+- `--rect-mix` peaks at 1 on the Porcupine panel (`data-idx="0"`, panel 2) and falls to 0 either side, so the tint eases in/out on scroll.
+- On every other panel `--rect-mix` is 0 → fill is black at 0.15 → the **documented cumulative vignette** (each layer × 0.85 luminance) is preserved.
+- On Porcupine, each ring gets an interpolated `--c` (currently **white outermost → pink innermost**) and opacity rises to 0.85 so the single-layer outer ring reads at full colour instead of bleeding the dark bg. To recolour another panel, give it its own `--rect-mix` expression and per-ring `--c` endpoints — the machinery generalises.
+
+Also on `.frame`: `::before` is the animated noise grain (200×200 `feTurbulence` tile, flickered via `@keyframes bgnoise`, `z-index: 0`); the rects svg is `z-index: 1`; panels `z-index: 2`.
 
 ### Email obfuscation
 
-The contact email (shown in the `.p-outro` as "Contact") is stored as two base64 chunks in `data-a` / `data-b` on `<a class="email">` and assembled at runtime (`atob(...) + '@' + atob(...)`). If you change the address, update both attributes; don't hardcode the plaintext into the HTML. The decoder runs once on load.
+The contact email (in `.p-outro`) is stored as two base64 chunks in `data-a` / `data-b` on `<a class="email">` and assembled at runtime (`atob(...) + '@' + atob(...)`). If you change the address, update both attributes; don't hardcode the plaintext. The decoder runs once on load.
 
 ## Deployment
 

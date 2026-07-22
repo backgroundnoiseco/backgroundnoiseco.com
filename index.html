@@ -18,7 +18,7 @@
   .page{display:none;min-height:100svh;}
   .page.on{display:block;}
   .page[data-page="portrait"].on{height:100svh;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-padding-top:var(--p-top-h,60px);}
-  .v-port .p-hero,.v-port .p-slot,.v-port .p-outro{scroll-snap-align:start;}
+  .v-port .snap,.v-port .p-outro{scroll-snap-align:start;}
 
   @font-face{font-family:"Distortion";src:url("data:font/woff2;base64,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") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 
@@ -236,8 +236,8 @@
   }
 
   /* ============ v-portrait: editorial, phone-centric ============ */
-  .v-port{background:#000;color:#eae6dc;font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:1280px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:max(0px,calc((100% - var(--maxw)) / 2));}
-  .v-port .p-top,.v-port .p-intro,.v-port .p-sub,.v-port .p-slot,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,#000 0,#000 var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),#000 calc(100% - var(--cap)),#000 100%);}
+  .v-port{background:#000;color:#eae6dc;font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,#000 0,#000 var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),#000 calc(100% - var(--cap)),#000 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
   .v-port .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;}
@@ -247,69 +247,118 @@
   .v-port .p-top nav a.on{color:#eae6dc;}
 
   /* sticky side rail — project counter */
-  .v-port .p-rail{position:fixed;top:50%;left:14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:30px;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
+  /* left tracks --gutter so the rail holds a constant offset from the content column at
+     every width. At the 32px gutter floor this resolves to the original left:14px. */
+  .v-port .p-rail{position:fixed;top:50%;left:calc(var(--gutter) - 18px);font-family:"JetBrains Mono",monospace;font-size:clamp(9px,calc(7.611px + .2778vw),10px);letter-spacing:clamp(2.25px,calc(1.208px + .2083vw),3px);text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:clamp(22px,calc(10.889px + 2.2222vw),30px);z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
   .v-port .p-rail span{transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
   .v-port .p-rail span.on{color:#eae6dc;}
 
-  .v-port .p-hero{min-height:calc(100svh - var(--p-top-h,60px));display:flex;flex-direction:column;--hero-size:clamp(54px,15vw,180px);}
-  .v-port .p-intro{position:relative;padding:80px var(--gutter) 60px;flex:1;border-bottom:1px solid #181615;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;overflow:hidden;}
-  .v-port .p-intro::after{content:"";position:absolute;inset:0;background:var(--p-rects) center center/var(--p-rects-w,100%) 100% no-repeat;pointer-events:none;z-index:1;}
-  .v-port .p-intro::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
+  /* ===== stage: pinned frame, panels slide through it =====
+     .stage-track is N*100svh tall minus the header, so each panel step is exactly one
+     viewport and lines up with the .snap targets. .stage sticks for the whole track, then
+     releases and .p-outro / .p-foot scroll in normally. */
+  .v-port{--panels:4;--hero-size:clamp(54px,15vw,150px);}
+  .v-port .stage-track{position:relative;height:calc(var(--panels) * 100svh - var(--p-top-h,60px));}
+  .v-port .stage{position:sticky;top:var(--p-top-h,60px);height:calc(100svh - var(--p-top-h,60px));display:flex;flex-direction:column;}
+  .v-port .snap{position:absolute;left:0;width:1px;height:1px;pointer-events:none;top:calc(var(--n) * 100svh);}
+  /* the frame is the query container — everything inside sizes to it, not the viewport,
+     so nothing can keep growing once the layout caps */
+  .v-port .frame{position:relative;flex:1;min-height:0;overflow:hidden;border-bottom:1px solid #181615;container-type:size;container-name:frame;}
+  /* transform creates a stacking context, so the panel itself must clear the ::after
+     decoration (z-index 1) — a z-index on its children would be trapped inside. */
+  .v-port .panel{position:absolute;inset:0;z-index:2;transform:translateY(calc((var(--i) - var(--progress,0)) * 100%));will-change:transform;}
+  .v-port .panel--hero{display:grid;align-items:center;padding:80px var(--gutter) 60px;}
+  .v-port .panel--project{display:grid;grid-template-columns:minmax(0,260px) minmax(0,420px);gap:40px;align-items:center;justify-content:center;padding:2cqb var(--gutter);}
+  /* The rings are an inline <svg> (not a background image) so their fill inherits colour
+     from CSS. --rect-mix is 1 on the Porcupine panel and falls to 0 either side of it, so the
+     tint interpolates across the transition rather than snapping. */
+  .v-port .frame{--rect-mix:clamp(0,calc(1 - max(var(--progress,0) - 2, 2 - var(--progress,0))),1);}
+  .v-port .frame > .rects{position:absolute;top:0;left:50%;transform:translateX(-50%);pointer-events:none;z-index:1;}
+  /* fill fades to black off-panel (keeps the documented vignette on other panels); opacity
+     rises 0.15 -> 0.85 on the Porcupine panel. At 0.85 a single layer nearly reaches full
+     colour, so the outer ring stops bleeding the dark frame bg and all bands read at even
+     luminance — the ramp becomes pure hue (white outer -> pink inner). */
+  .v-port .frame > .rects rect{fill:color-mix(in srgb, var(--c,#000) calc(var(--rect-mix) * 100%), #000);fill-opacity:calc(0.15 + 0.7 * var(--rect-mix));}
+  .v-port .frame::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
-  .v-port .p-intro > *{position:relative;z-index:2;}
-  .v-port .p-intro > div:first-child{padding-left:clamp(32px,6vw,96px);}
-  .v-port .p-intro .p-badge{position:absolute;top:140px;right:clamp(80px,10vw,220px);width:clamp(120px,12vw,200px);aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
-  .v-port .p-intro .p-badge svg{width:100%;height:100%;display:block;}
-  .v-port .p-sub{display:flex;justify-content:space-between;align-items:start;padding:54px var(--gutter) 70px;border-bottom:1px solid #181615;gap:24px;flex-wrap:nowrap;}
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(14px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,2.5vw,32px);padding:0 0 0 20px;border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
+  .v-port .panel > *{position:relative;z-index:2;}
+  /* vw-based insets below all top out at their value at the 1000px viewport, where --maxw
+     is reached — past that the content column is a fixed width, so anything still scaling
+     with vw would slide the content sideways against the background band. */
+  .v-port .hero-block{padding-left:clamp(32px,6vw,60px);}
+  /* The badge lives inside the h1 and is sized/placed in em, so every offset is a fixed
+     fraction of the hero font size — it holds the same position against the text at any
+     --hero-size, and follows the glyphs if the wording changes. h1 shrink-wraps so
+     left:100% lands on the end of the text rather than the end of the grid column. */
+  /* Badge geometry is pinned at two keyframes and interpolated linearly between them, so
+     nothing snaps at a breakpoint:
+        <= 500px viewport : width 1.45em, margin-left -.15em, top -2.35em
+        >=1000px viewport : width  .80em, margin-left  .50em, top  -.83em
+     (em = --hero-size, which is 15vw until it caps at 150px exactly at the 1000px keyframe.)
+     Written in px/vw because CSS can't interpolate a unitless em multiplier: each property
+     is the min()/max() of the two straight lines meeting at those keyframes. These numbers
+     derive from --hero-size alone (not --maxw), so recompute them only if it changes. */
+  .v-port .panel .p-badge{position:absolute;left:100%;
+    width:min(21.75vw,calc(97.5px + 2.25vw),120px);
+    margin-left:min(max(-2.25vw,calc(-97.5px + 17.25vw)),75px);
+    top:min(max(-35.25vw,calc(-228px + 10.35vw)),-124.5px);
+    aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
+  /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
+     letter-spacing is in em and would otherwise resolve against 150px instead of 15px */
+  .v-port .panel .p-badge svg{width:100%;height:100%;display:block;font-size:15px;letter-spacing:normal;}
+  /* Vertical padding here interpolates 28/40 (at 500px) -> 54/70 (at 860px) instead of
+     stepping. .p-sub shares the sticky stage with .frame, so a jump in its height resizes
+     the frame and makes every concentric ring jump at once. */
+  .v-port .p-sub{display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),54px) var(--gutter) clamp(40px,calc(8.333vw - 1.67px),70px);border-bottom:1px solid #181615;}
+  /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
+     container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
+     cross-fades on exactly the same scroll value that drives the panels. */
+  .v-port .sub-panel{grid-area:1/1;display:flex;justify-content:space-between;align-items:start;gap:24px;flex-wrap:nowrap;
+    opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
+  /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
+     stacked layout unchanged; only the description is resized to hold the bar's height. */
+  .v-port .p-sub .sub-panel--project .tag{font-size:clamp(16px,calc(var(--hero-size) * 26 / 180),22px);}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(18px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 clamp(0px,calc(76.444px - 8.889vw),32px) clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:#eae6dc;font-weight:400;}
   .v-port .p-sub .meta{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:#eae6dc;font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
-  .v-port .p-intro .kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#777;margin-bottom:32px;}
-  .v-port .p-intro h1{font-family:"Distortion",serif;font-size:var(--hero-size);line-height:.82;margin:0;color:#eae6dc;letter-spacing:-.015em;font-weight:400;}
-  .v-port .p-intro h1 em{font-style:normal;display:block;padding:0 .1em 0 .3em;}
-  .v-port .p-intro h1 em .dim{color:#9c9993;}
-  .v-port .p-intro h1 em .acc{color:#a89a7d;}
-  .v-port .p-intro .count{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;text-align:right;display:grid;row-gap:4px;white-space:nowrap;transform:translateY(60px);}
-  .v-port .p-intro .count b{color:#eae6dc;font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
+  .v-port .panel .kicker{font-family:"JetBrains Mono",monospace;font-size:clamp(9px,calc(6.222px + .5556vw),11px);letter-spacing:.3em;text-transform:uppercase;color:#777;margin-bottom:clamp(24px,calc(12.889px + 2.2222vw),32px);}
+  .v-port .panel h1{font-family:"Distortion",serif;font-size:var(--hero-size);line-height:.82;margin:0;color:#eae6dc;letter-spacing:-.015em;font-weight:400;position:relative;width:max-content;max-width:100%;}
+  .v-port .panel h1 em{font-style:normal;display:block;padding:0 .1em 0 .3em;}
+  .v-port .panel h1 em .dim{color:#9c9993;}
+  .v-port .panel h1 em .acc{color:#a89a7d;}
 
   /* each project slot is a full-height editorial portrait */
-  .v-port .p-slot{position:relative;padding:80px var(--gutter) 100px;border-bottom:1px solid #181615;display:grid;grid-template-columns:minmax(0,190px) minmax(0,260px) minmax(0,420px) minmax(0,0.4fr);gap:40px;align-items:center;min-height:calc(100svh - var(--p-top-h,60px));}
-  .v-port .p-slot:nth-of-type(odd){--section-bg:#0a0a0a;}
-  .v-port .p-slot:nth-of-type(even){--section-bg:#0c0b0a;}
 
   /* left column — giant vertical project name */
-  .v-port .p-name{font-family:"Distortion",serif;font-size:clamp(70px,9vw,140px);line-height:1;letter-spacing:-.01em;color:#eae6dc;opacity:.65;writing-mode:vertical-rl;transform:rotate(180deg);justify-self:end;align-self:center;display:block;padding:60px 0;margin-right:-12px;white-space:nowrap;font-weight:400;}
-  .v-port .p-slot[data-idx="0"]{--section-bg:#1fcbc4;}
-  .v-port .p-slot[data-idx="0"] .p-info,.v-port .p-slot[data-idx="0"] .p-info *{color:#141b26;}
-  .v-port .p-slot[data-idx="0"] .p-info .role{color:#eae6dc;text-shadow:1px 1px 0 #a8b0bd;}
-  .v-port .p-slot[data-idx="0"] .p-info .role .acc{color:#e7519d;}
-  .v-port .p-slot[data-idx="0"] .p-info .cta,.v-port .p-slot[data-idx="0"] .p-info .cta *{color:#e7519d;}
-  .v-port .p-slot[data-idx="0"] .p-info .cta{background:#141b26;border-color:#141b26;}
-  .v-port .p-slot[data-idx="0"] .p-info dt{color:#eae6dc;text-shadow:1px 1px 0 #a8b0bd;}
-  .v-port .p-slot[data-idx="0"] .p-name{opacity:1;font-size:clamp(56px,7vw,110px);}
-  .v-port .p-slot[data-idx="0"] .p-name .gld{color:#e7519d;}
-  .v-port .p-slot[data-idx="1"] .p-name{opacity:1;color:#9c9993;font-size:clamp(62px,8vw,125px);}
-  .v-port .p-slot[data-idx="2"] .p-name{color:#a89a7d;opacity:1;}
-  .v-port .p-slot[data-idx="2"] .p-name .wht{color:#eae6dc;}
+  .v-port .panel[data-idx="0"]{--section-bg:#1fcbc4;}
+  .v-port .panel[data-idx="0"] .p-info,.v-port .panel[data-idx="0"] .p-info *{color:#141b26;}
+  .v-port .panel[data-idx="0"] .p-info .role{color:#eae6dc;}
+  .v-port .panel[data-idx="0"] .p-info .role .acc{color:#e7519d;}
+  .v-port .panel[data-idx="0"] .p-info .cta,.v-port .panel[data-idx="0"] .p-info .cta *{color:#e7519d;}
+  .v-port .panel[data-idx="0"] .p-info .cta{background:#141b26;border-color:#141b26;}
+  .v-port .panel[data-idx="0"] .p-info dt{color:#eae6dc;text-shadow:1px 1px 0 #a8b0bd;}
 
   /* center column — the phone */
-  .v-port .p-phone{position:relative;width:100%;max-width:240px;justify-self:center;}
-  .v-port .p-phone .shell{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 60px 120px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04);}
+  /* the phone is now the tallest thing in the panel (aspect ~2.175), so this cap is what
+     keeps the panel inside the frame at any window height; syncAll scales the info type
+     from the same width. */
+  .v-port .p-phone{position:relative;width:100%;max-width:min(240px,40cqb);justify-self:center;}
+  .v-port .p-phone .shell{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.04);}
   .v-port .p-phone .shell img{width:100%;height:auto;display:block;}
-  .v-port .p-phone .numbadge{position:absolute;top:-8px;left:-8px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:#eae6dc;padding:6px 10px;border-radius:999px;z-index:2;}
-  .v-port .p-phone .status{position:absolute;top:-7px;right:-7px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;background:rgba(20,20,20,.9);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
+  .v-port .p-phone .numbadge{position:absolute;top:clamp(-8px,calc(1.556px - 1.111vw),-4px);left:clamp(-8px,calc(1.556px - 1.111vw),-4px);font-family:"JetBrains Mono",monospace;font-size:clamp(8px,calc(5.222px + .5556vw),10px);letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:#eae6dc;padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;z-index:2;}
+  .v-port .p-phone .status{position:absolute;top:clamp(-7px,calc(.167px - .8333vw),-4px);right:clamp(-7px,calc(.167px - .8333vw),-4px);font-family:"JetBrains Mono",monospace;font-size:clamp(7.5px,calc(4.722px + .5556vw),9.5px);letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;background:rgba(20,20,20,.9);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
 
   /* right column — metadata stack */
-  .v-port .p-info{display:flex;flex-direction:column;gap:28px;max-width:320px;justify-self:start;}
-  .v-port .p-info .role{font-family:"JetBrains Mono",monospace;font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:#a89a7d;margin-bottom:-12px;}
+  .v-port .p-info{display:flex;flex-direction:column;gap:clamp(20px,calc(8.889px + 2.222vw),28px);max-width:320px;justify-self:start;}
+  .v-port .p-info .role{font-family:"Distortion",serif;font-weight:400;font-size:clamp(38px,calc(7.44px + 6.111vw),60px);line-height:.9;letter-spacing:-.015em;text-transform:none;color:#a89a7d;margin-bottom:0;}
   .v-port .p-info .title{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;letter-spacing:-.005em;margin:0;color:inherit;font-weight:400;}
   .v-port .p-info .title .thin{font-weight:inherit;opacity:1;}
   .v-port .p-info .title em{font-style:italic;font-weight:inherit;}
-  .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;margin:0;color:#eae6dc;letter-spacing:-.005em;}
-  .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:14px;margin:0;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;}
-  .v-port .p-info dt{color:#777;text-transform:uppercase;letter-spacing:.2em;font-size:10px;}
-  .v-port .p-info dd{margin:0;color:#eae6dc;}
-  .v-port .p-info .cta{margin-top:8px;display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;padding:8px 14px;border:1px solid #2a2724;align-self:flex-start;width:auto;}
+  .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:clamp(17px,calc(4.5px + 2.5vw),26px);line-height:1.2;margin:0;color:#eae6dc;letter-spacing:-.005em;}
+  .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px,calc(4.444px + 1.111vw),14px);margin:0;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;}
+  .v-port .p-info dt{color:#777;text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px,calc(7.611px + .2778vw),10px);}
+  .v-port .p-info dd{margin:0;color:#eae6dc;font-size:clamp(10px,calc(8.611px + .2778vw),11px);}
+  .v-port .p-info .cta{margin-top:8px;display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:clamp(10px,calc(8.611px + .2778vw),11px);letter-spacing:.2em;text-transform:uppercase;color:#eae6dc;padding:8px 14px;border:1px solid #2a2724;align-self:flex-start;width:auto;}
   .v-port .p-info a.cta::after{content:"→";}
   .v-port .p-info .short{display:none;}
 
@@ -318,10 +367,10 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:40px var(--gutter) 60px;padding-left:calc(var(--gutter) + clamp(0px,5vw,88px));border-top:1px solid #181615;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:end;}
+  .v-port .p-outro{padding:40px var(--gutter) 60px;padding-left:calc(var(--gutter) + clamp(0px,5vw,50px));border-top:1px solid #181615;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:end;}
   .v-port .p-outro .big{font-family:"DM Serif Display",serif;font-size:clamp(44px,7vw,120px);line-height:.9;letter-spacing:-.02em;margin:0;text-wrap:balance;font-weight:500;color:#eae6dc;}
   .v-port .p-outro .big .acc{color:#a89a7d;}
-  .v-port .p-outro .contact{padding-left:clamp(20px,4vw,80px);}
+  .v-port .p-outro .contact{padding-left:clamp(20px,4vw,40px);}
   .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto 1fr;row-gap:8px;column-gap:20px;font-family:"JetBrains Mono",monospace;font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:#777;margin:0;align-items:baseline;}
   .v-port .p-outro .contact dt{}
   .v-port .p-outro .contact dd{margin:0;color:#eae6dc;text-transform:none;letter-spacing:.02em;}
@@ -333,34 +382,24 @@
   .v-port .p-foot .to-top:hover{color:#eae6dc;}
 
   @media (max-width:859px){
-    .v-port .p-intro{padding:60px 22px 40px;}
-    .v-port .p-slot{padding:60px 22px 80px 0;gap:24px;grid-template-columns:minmax(0,130px) minmax(0,260px) minmax(0,280px) minmax(0,0.3fr);}
+    .v-port .panel{padding:60px 22px 40px;}
+    .v-port .panel--project{padding:2cqb 22px 2cqb calc(var(--gutter) + 16px);gap:24px;grid-template-columns:minmax(0,260px) minmax(0,280px);}
     .v-port .p-outro{padding:32px 24px 50px clamp(60px,20vw,240px);gap:16px;grid-template-columns:1fr;}
     .v-port .p-outro .big{display:none;}
   }
   @media (max-width:500px){
-    .v-port .p-intro .p-badge{width:90px;top:115px;right:28px;}
-    .v-port .p-intro > div:first-child{padding-left:0;}
-    .v-port .p-intro{padding:40px 60px 30px;}
-    .v-port .p-sub{padding:28px 24px 40px 40px;}
-    .v-port .p-slot{padding:40px 12px 60px 52px;gap:16px;grid-template-columns:auto minmax(0,260px) minmax(0,420px) minmax(0,0.4fr);}
-    .v-port .p-name{font-size:clamp(48px,12vw,75px);}
-    .v-port .p-slot[data-idx="0"] .p-name{font-size:clamp(40px,10vw,60px);}
-    .v-port .p-slot[data-idx="1"] .p-name{font-size:clamp(44px,11vw,68px);}
+    .v-port .hero-block{padding-left:0;}
+    .v-port .panel{padding:40px 60px 30px;}
+    /* horizontal only — vertical comes from the fluid rule above, which floors at 28/40 here */
+    .v-port .p-sub{padding-left:40px;padding-right:24px;}
+    .v-port .panel--project{padding:2cqb 12px 2cqb calc(var(--gutter) + 16px);gap:16px;grid-template-columns:minmax(0,260px) minmax(0,420px);}
+  
+  
+  
     .v-port .p-top{padding:18px 24px;}
     .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}
-    .v-port .p-phone .numbadge{font-size:8px;padding:4px 7px;top:-4px;left:-4px;}
-    .v-port .p-phone .status{font-size:7.5px;padding:4px 7px;top:-4px;right:-4px;}
-    .v-port .p-intro .kicker{font-size:9px;margin-bottom:24px;}
-    .v-port .p-rail{font-size:9px;letter-spacing:.25em;gap:22px;left:12px;}
-    .v-port .p-sub .tag{margin-left:0;padding-left:16px;margin-bottom:32px;font-size:18px;}
-    .v-port .p-info{gap:20px;}
-    .v-port .p-info .role{font-size:12px;letter-spacing:.18em;margin-bottom:-10px;}
-    .v-port .p-info .tagline{font-size:17px;}
-    .v-port .p-info dt{font-size:9px;}
-    .v-port .p-info dd{font-size:10px;}
-    .v-port .p-info .cta{font-size:10px;}
-    .v-port .p-info dl{column-gap:10px;}
+    /* the type/spacing that used to snap here is now fluid in the base rules, interpolating
+       from these same values at 500px up to the desktop values at 860px */
     .v-port .p-info .full{display:none;}
     .v-port .p-info .short{display:inline;}
   }
@@ -539,13 +578,13 @@
 
     <div class="p-rail"><span class="on" data-s="hero">00 Title</span><span data-s="1">01 Shadowbox</span><span data-s="0">02 Porcupine</span><span data-s="2">03 Prosession</span><span data-s="contact">04 Contact</span></div>
 
-    <div class="p-hero" data-idx="hero">
-    <section class="p-intro">
-      <div>
+    <div class="stage-track">
+      <div class="stage">
+        <div class="frame">
+      <article class="panel panel--hero" data-panel="0" data-idx="hero" style="--i:0">
+        <div class="hero-block">
         <div class="kicker">◎ Creative Software</div>
-        <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em></h1>
-      </div>
-      <div class="p-badge" aria-hidden="true">
+        <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em><span class="p-badge" aria-hidden="true">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g fill="currentColor" transform="translate(50 50)">
             <rect x="-36" y="-36" width="72" height="72"/>
@@ -562,18 +601,10 @@
             <text font-size="9" y="18">NOW LIVE!</text>
           </g>
         </svg>
-      </div>
-    </section>
-
-    <section class="p-sub">
-      <p class="tag">A&nbsp;small&nbsp;studio&nbsp;designing creative&nbsp;tools.</p>
-      <div class="meta"><span>Projects</span><b>03</b><span>Platforms</span><b>iOS · macOS</b></div>
-    </section>
-    </div>
-
-    <!-- Project 01 (Shadowbox) -->
-    <section class="p-slot" data-idx="1">
-      <div class="p-name">Shadowbox</div>
+        </span></h1>
+        </div>
+      </article>
+      <article class="panel panel--project" data-panel="1" data-idx="1" style="--i:1">
       <div class="p-phone">
         <span class="numbadge">N° 01</span>
         <span class="status">◎ In Dev</span>
@@ -581,19 +612,10 @@
       </div>
       <div class="p-info">
         <div class="role">Shadowbox</div>
-        <p class="tagline">An experimental image synth and procedural drawing tool.</p>
-        <dl>
-          <dt>Release</dt><dd>Q2 2026</dd>
-          <dt>Platform</dt><dd>iOS</dd>
-          <dt>Status</dt><dd><span class="full">In development</span><span class="short">In dev</span></dd>
-        </dl>
         <span class="cta">Coming soon</span>
       </div>
-    </section>
-
-<!-- Project 02 (Porcupine) -->
-    <section class="p-slot" data-idx="0">
-      <div class="p-name">Unicorn <span class="gld">Porcupine</span></div>
+      </article>
+      <article class="panel panel--project" data-panel="2" data-idx="0" style="--i:2">
       <div class="p-phone">
         <span class="numbadge">N° 02</span>
         <span class="status">◎ Live</span>
@@ -601,19 +623,10 @@
       </div>
       <div class="p-info">
         <div class="role">Unicorn Porcupine</div>
-        <p class="tagline">A customizable random name generator.</p>
-        <dl>
-          <dt>Release</dt><dd>2025</dd>
-          <dt>Platform</dt><dd>iOS</dd>
-          <dt>Status</dt><dd><span class="full">Live on App Store</span><span class="short">Live</span></dd>
-        </dl>
         <a href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener" class="cta"><span class="full">View on App Store</span><span class="short">App Store</span></a>
       </div>
-    </section>
-
-<!-- Project 03 (Prosession) -->
-    <section class="p-slot" data-idx="2">
-      <div class="p-name"><span class="wht">Pro</span>session</div>
+      </article>
+      <article class="panel panel--project" data-panel="3" data-idx="2" style="--i:3">
       <div class="p-phone">
         <span class="numbadge">N° 03</span>
         <span class="status">◎ In Dev</span>
@@ -621,15 +634,34 @@
       </div>
       <div class="p-info">
         <div class="role">Prosession</div>
-        <p class="tagline">A customizable midi sequencer and AUv3 rack for iPhone.</p>
-        <dl>
-          <dt>Release</dt><dd>Q3 2026</dd>
-          <dt>Platform</dt><dd>iOS</dd>
-          <dt>Status</dt><dd><span class="full">In development</span><span class="short">In dev</span></dd>
-        </dl>
         <span class="cta">Coming soon</span>
       </div>
-    </section>
+      </article>
+        </div>
+        <section class="p-sub">
+          <div class="sub-panel sub-panel--hero" style="--i:0">
+            <p class="tag">A&nbsp;small&nbsp;studio&nbsp;designing creative&nbsp;tools.</p>
+            <div class="meta"><span>Located</span><b>NC</b><span>Platforms</span><b>iOS · macOS</b></div>
+          </div>
+          <div class="sub-panel sub-panel--project" style="--i:1">
+            <p class="tag">An experimental image synth and procedural drawing tool.</p>
+            <div class="meta"><span>Release</span><b>Q2 2026</b><span>Platform</span><b>iOS</b></div>
+          </div>
+          <div class="sub-panel sub-panel--project" style="--i:2">
+            <p class="tag">A customizable random name generator.</p>
+            <div class="meta"><span>Release</span><b>2025</b><span>Platform</span><b>iOS</b></div>
+          </div>
+          <div class="sub-panel sub-panel--project" style="--i:3">
+            <p class="tag">A customizable midi sequencer and AUv3 rack for iPhone.</p>
+            <div class="meta"><span>Release</span><b>Q3 2026</b><span>Platform</span><b>iOS</b></div>
+          </div>
+        </section>
+      </div>
+      <div class="snap" aria-hidden="true" style="--n:0"></div>
+      <div class="snap" aria-hidden="true" style="--n:1"></div>
+      <div class="snap" aria-hidden="true" style="--n:2"></div>
+      <div class="snap" aria-hidden="true" style="--n:3"></div>
+    </div>
 
     <section class="p-outro" data-idx="contact">
       <h2 class="big">Designing <span class="acc">creative&nbsp;tools.</span></h2>
@@ -831,49 +863,59 @@
   }
   show('portrait');
 
-  // Portrait rail — highlight the section nearest the snap line on scroll
+  // Portrait stage — one scroll-progress value drives everything: the panels translate by
+  // (index - progress) * 100%, and the rail reads the same number. No IntersectionObserver,
+  // no second source of truth to drift out of sync.
   (function(){
-    const root = document.querySelector('.page[data-page="portrait"]');
-    const targets = [...document.querySelectorAll('.v-port [data-idx]')];
-    const marks = document.querySelectorAll('.v-port .p-rail span');
-    if (!targets.length || !root) return;
-    function update(){
-      const pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
-      const maxScroll = root.scrollHeight - root.clientHeight;
-      let active = null, best = Infinity;
-      for (const t of targets) {
-        const top = t.getBoundingClientRect().top - pad;
-        const d = Math.abs(top);
-        if (d < best) { best = d; active = t.dataset.idx; }
-      }
-      if (root.scrollTop >= maxScroll - 2) active = targets[targets.length - 1].dataset.idx;
-      else if (root.scrollTop <= 1) active = targets[0].dataset.idx;
-      if (active !== null) {
-        marks.forEach(m => m.classList.toggle('on', m.dataset.s === active));
-      }
+    const root   = document.querySelector('.page[data-page="portrait"]');
+    const vport  = document.querySelector('.v-port');
+    const track  = document.querySelector('.v-port .stage-track');
+    const stage  = document.querySelector('.v-port .stage');
+    const outro  = document.querySelector('.v-port .p-outro');
+    const panels = [...document.querySelectorAll('.v-port .panel')];
+    const marks  = [...document.querySelectorAll('.v-port .p-rail span')];
+    if (!root || !vport || !track || !stage || !panels.length) return;
+    const last = panels.length - 1;
+    const stickyTop = () => parseFloat(getComputedStyle(stage).top) || 0;
+
+    function progress(){
+      const travel = track.offsetHeight - stage.offsetHeight;   // === last * 100svh
+      if (travel <= 0) return 0;
+      const scrolled = stickyTop() - track.getBoundingClientRect().top;
+      return Math.min(Math.max(scrolled / travel, 0), 1) * last;
     }
-    root.addEventListener('scroll', update, {passive:true});
-    root.addEventListener('scrollend', update);
-    setInterval(update, 150);
+
+    let raf = 0;
+    function update(){
+      raf = 0;
+      const p = progress();
+      vport.style.setProperty('--progress', p);
+      let active = panels[Math.round(p)].dataset.idx;
+      if (outro && outro.getBoundingClientRect().top - stickyTop() <= 2) active = 'contact';
+      marks.forEach(m => m.classList.toggle('on', m.dataset.s === active));
+    }
+    function schedule(){ if (!raf) raf = requestAnimationFrame(update); }
+
+    root.addEventListener('scroll', schedule, {passive:true});
+    window.addEventListener('resize', schedule);
     update();
+
+    // expose for the click-to-scroll handler below
+    vport._stage = {track, stage, panels, last, stickyTop};
   })();
 
   // Portrait — scale each project section uniformly from its phone image width
   (function(){
-    const TITLE_RATIOS = {'0': 0.31, '1': 0.36, '2': 0.40};
-    const TITLE_DEFAULT = 0.40;
     const BASE_PHONE = 240;
-    const slots = [...document.querySelectorAll('.v-port .p-slot')];
+    const slots = [...document.querySelectorAll('.v-port .panel--project')];
     if (!slots.length || typeof ResizeObserver === 'undefined') return;
     const lastW = new WeakMap();
     function syncAll(){
       slots.forEach(slot => {
         const phone = slot.querySelector('.p-phone');
-        const name = slot.querySelector('.p-name');
         const info = slot.querySelector('.p-info');
         if (!phone) return;
         phone.style.transform = '';
-        if (name) name.style.transform = '';
         if (info) info.style.transform = '';
         const rect = phone.getBoundingClientRect();
         if (rect.width <= 0) return;
@@ -882,11 +924,6 @@
         if (widthChanged) {
           lastW.set(slot, rect.width);
           const scale = rect.width / BASE_PHONE;
-          const tRatio = TITLE_RATIOS[slot.dataset.idx] || TITLE_DEFAULT;
-          if (name) {
-            if (window.innerWidth <= 500) name.style.fontSize = '';
-            else name.style.fontSize = Math.round(rect.width * tRatio) + 'px';
-          }
           const shell = slot.querySelector('.p-phone .shell');
           if (shell) shell.style.borderRadius = (28 * scale) + 'px';
           if (info) {
@@ -897,7 +934,7 @@
               const setFs = (sel, base) => {
                 info.querySelectorAll(sel).forEach(el => { el.style.fontSize = (base * scale) + 'px'; });
               };
-              setFs('.role', 17);
+              setFs('.role', 60);
               setFs('.tagline', 26);
               setFs('dt', 10);
               setFs('dd', 11);
@@ -932,31 +969,40 @@
     sync();
   })();
 
-  // Portrait intro — draw concentric rectangles at equal pixel insets
+  // Portrait frame — concentric rectangles, drawn as a live <svg> element rather than a
+  // data-URI background so the fill can inherit currentColor and tint per panel.
   (function(){
-    const intro = document.querySelector('.v-port .p-intro');
-    if (!intro || typeof ResizeObserver === 'undefined') return;
+    const frame = document.querySelector('.v-port .frame');
+    if (!frame || typeof ResizeObserver === 'undefined') return;
     const STEP = 40;
-    const MAX_W = 1280; // keep in sync with --maxw
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'rects');
+    svg.setAttribute('aria-hidden', 'true');
+    frame.prepend(svg);
     function render(){
-      const r = intro.getBoundingClientRect();
+      const r = frame.getBoundingClientRect();
       if (!r.width || !r.height) return;
-      const W = Math.min(r.width, MAX_W);
-      const H = r.height;
+      // match the section background band, which starts at --cap (= --gutter minus its floor)
+      const maxw = parseFloat(getComputedStyle(frame).getPropertyValue('--maxw')) || Infinity;
+      const edge = Math.max(0, (r.width - maxw) / 2 - 32);
+      const W = r.width - 2 * edge, H = r.height;
       const limit = Math.floor(Math.min(W, H) / 2 / STEP);
-      let rects = '';
+      // ring colour ramps white (outermost) -> pink (innermost); the CSS fill blends this
+      // toward black by --rect-mix so it only shows on the Porcupine panel.
+      const WHITE = [255, 255, 255], PINK = [231, 81, 157];
+      let out = '';
       for (let i = 0; i <= limit; i++) {
-        const inset = i * STEP;
-        const w = W - 2 * inset;
-        const h = H - 2 * inset;
+        const inset = i * STEP, w = W - 2 * inset, h = H - 2 * inset;
         if (w <= 0 || h <= 0) break;
-        rects += '<rect x="'+inset+'" y="'+inset+'" width="'+w+'" height="'+h+'" fill="black" fill-opacity="0.15"/>';
+        const t = limit > 0 ? i / limit : 0;
+        const c = WHITE.map((v, k) => Math.round(v + (PINK[k] - v) * t)).join(',');
+        out += '<rect x="'+inset+'" y="'+inset+'" width="'+w+'" height="'+h+'" style="--c:rgb('+c+')" fill-opacity="0.15"/>';
       }
-      const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'">'+rects+'</svg>';
-      intro.style.setProperty('--p-rects', 'url("data:image/svg+xml;utf8,'+encodeURIComponent(svg)+'")');
-      intro.style.setProperty('--p-rects-w', W + 'px');
+      svg.setAttribute('width', W);
+      svg.setAttribute('height', H);
+      svg.innerHTML = out;
     }
-    new ResizeObserver(render).observe(intro);
+    new ResizeObserver(render).observe(frame);
   })();
 
 // Portrait rail + Contact nav — click to scroll to section
@@ -964,8 +1010,18 @@
     const vport = document.querySelector('.v-port');
     if (!vport) return;
     function go(idx){
-      const t = vport.querySelector('[data-idx="' + idx + '"]');
-      if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+      const st = vport._stage;
+      if (idx === 'contact' || !st) {
+        const t = vport.querySelector('[data-idx="' + idx + '"]');
+        if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+        return;
+      }
+      const i = st.panels.findIndex(p => p.dataset.idx === idx);
+      if (i < 0) return;
+      const root = document.querySelector('.page[data-page="portrait"]');
+      const travel = st.track.offsetHeight - st.stage.offsetHeight;
+      const trackTop = root.scrollTop + st.track.getBoundingClientRect().top - st.stickyTop();
+      root.scrollTo({top: trackTop + (i / st.last) * travel, behavior:'smooth'});
     }
     document.querySelectorAll('.v-port .p-rail span').forEach(s => {
       s.addEventListener('click', () => go(s.dataset.s));
