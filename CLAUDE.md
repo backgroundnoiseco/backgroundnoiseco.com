@@ -21,8 +21,16 @@ python3 -m http.server 8000
 - `style.css` — stylesheet for `index-old.html` only. `index.html` does not reference it.
 - `alt.html`, `experiment.html`, `font-compare.html` — self-contained scratch pages for layout/typography experiments. They embed their own CSS and aren't linked from `index.html`. Leave them alone unless the task is about them.
 - `privacy-policy.html` — standalone privacy page for the Unicorn Porcupine iOS app (linked from the App Store listing, not from `index.html`).
-- `fonts/` — locally hosted display faces (`Distortion` is referenced by name inside `index.html`'s inline `@font-face`; others are used by legacy pages).
+- `fonts/` — locally hosted display faces (`Distortion` is referenced by name inside `index.html`'s inline `@font-face`; others are used by legacy pages). See "The Distortion font was repaired" below.
 - `images/` — project screenshots referenced by `index.html` (`IMG_4019.jpg`, `IMG_4020.jpg`, `IMG_4022.jpg`). `images/old/` holds archived versions; don't reference it from the live site.
+
+## The Distortion font was repaired — don't restore the original
+
+The upstream `distortion-of-the-brain-and-mind.regular.ttf` (a FontStruct export) is **rejected outright by Chrome's OTS font sanitizer**, so Chrome/Edge silently fell back to `serif` while Safari rendered it fine. Cause: the last segment of its `cmap` format-4 subtable had `idDelta=212`, mapping `U+FFFF` to glyph 211 in a font with only 211 glyphs (valid ids 0–210). The spec requires that segment to use `idDelta=1` so `U+FFFF` maps to glyph 0.
+
+The file in `fonts/` has been rebuilt with fontTools (all tables recompiled), which fixes the cmap and drops ~14KB of dead `glyphIdArray` and long-format `loca` padding. Outlines, advance widths, glyph order, and all 208 cmap codepoints are byte-verified identical to the original. `fonts/distortion-of-the-brain-and-mind.regular.woff2` is the same font in WOFF2.
+
+`index.html` embeds the **WOFF2** as a `data:font/woff2` URI with `format("woff2")` — 2.6KB instead of the old 36KB TTF, which cut ~45KB off the page. If you ever re-embed the font, generate it from the repaired file, not from a fresh upstream download, or Chrome loses the typeface again.
 
 ## Architecture (index.html)
 
