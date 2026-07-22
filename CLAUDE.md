@@ -29,7 +29,7 @@ python3 -m http.server 8000
 The live site is a **vertical scroll-snap single-page** layout. The markup lives in a single `.v-port` container with these siblings in order:
 
 1. `.p-top` — sticky header (`position: sticky; top: 0`) with the BGNoiseCo wordmark and a Contact link.
-2. `.p-rail` — a fixed, vertical, side rail on the left showing `00 Title / 01 Shadowbox / 02 Prosession / 03 Porcupine / 04 Contact` (rotated via `writing-mode: vertical-rl` + `transform: rotate(180deg)` + `flex-direction: row-reverse` so DOM-first renders at the visual top).
+2. `.p-rail` — a fixed, vertical, side rail on the left showing `00 Title / 01 Shadowbox / 02 Porcupine / 03 Prosession / 04 Contact` (rotated via `writing-mode: vertical-rl` + `transform: rotate(180deg)` + `flex-direction: row-reverse` so DOM-first renders at the visual top).
 3. `.p-hero` — a wrapper div containing the `.p-intro` heading and the `.p-sub` about band. `min-height: calc(100svh - 60px)`.
 4. Three `.p-slot` project sections. Each is `min-height: calc(100svh - 60px)` with a 4-column grid: vertical rotated title / phone screenshot / info block / trailing empty column.
 5. `.p-outro` — the "Designing creative tools." closer.
