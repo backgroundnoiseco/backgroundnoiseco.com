@@ -252,6 +252,7 @@
   .v-port .p-rail{position:fixed;top:50%;left:calc(var(--gutter) - 18px);font-family:"JetBrains Mono",monospace;font-size:clamp(9px,calc(7.611px + .2778vw),10px);letter-spacing:clamp(2.25px,calc(1.208px + .2083vw),3px);text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:clamp(22px,calc(10.889px + 2.2222vw),30px);z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
   .v-port .p-rail span{transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
   .v-port .p-rail span.on{color:#eae6dc;}
+  .v-port .p-rail span[data-s="0"].on{color:#1fcbc4;}
 
   /* ===== stage: pinned frame, panels slide through it =====
      .stage-track is N*100svh tall minus the header, so each panel step is exactly one
@@ -274,11 +275,12 @@
      tint interpolates across the transition rather than snapping. */
   .v-port .frame{--rect-mix:clamp(0,calc(1 - max(var(--progress,0) - 2, 2 - var(--progress,0))),1);}
   .v-port .frame > .rects{position:absolute;top:0;left:50%;transform:translateX(-50%);pointer-events:none;z-index:1;}
-  /* fill fades to black off-panel (keeps the documented vignette on other panels); opacity
-     rises 0.15 -> 0.85 on the Porcupine panel. At 0.85 a single layer nearly reaches full
-     colour, so the outer ring stops bleeding the dark frame bg and all bands read at even
-     luminance — the ramp becomes pure hue (white outer -> pink inner). */
-  .v-port .frame > .rects rect{fill:color-mix(in srgb, var(--c,#000) calc(var(--rect-mix) * 100%), #000);fill-opacity:calc(0.15 + 0.7 * var(--rect-mix));}
+  /* fill fades to black off-panel (keeps the documented 0.15 vignette on other panels);
+     on the Porcupine panel opacity reaches 1 so no dark frame bg bleeds through. Below full
+     opacity the single-layer outer ring bleeds more bg than the multi-layer inner bands, so
+     the edge reads as a dark rim; at opacity 1 every band shows its exact colour and the ramp
+     is clean (warm-white outer -> pink inner). */
+  .v-port .frame > .rects rect{fill:color-mix(in srgb, var(--c,#000) calc(var(--rect-mix) * 100%), #000);fill-opacity:calc(0.15 + 0.85 * var(--rect-mix));}
   .v-port .frame::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .panel > *{position:relative;z-index:2;}
@@ -309,7 +311,7 @@
   /* Vertical padding here interpolates 28/40 (at 500px) -> 54/70 (at 860px) instead of
      stepping. .p-sub shares the sticky stage with .frame, so a jump in its height resizes
      the frame and makes every concentric ring jump at once. */
-  .v-port .p-sub{display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),54px) var(--gutter) clamp(40px,calc(8.333vw - 1.67px),70px);border-bottom:1px solid #181615;}
+  .v-port .p-sub{display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px) var(--gutter) clamp(40px,calc(8.333vw - 1.67px),48px);border-bottom:1px solid #181615;}
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
@@ -334,7 +336,7 @@
   .v-port .panel[data-idx="0"] .p-info,.v-port .panel[data-idx="0"] .p-info *{color:#141b26;}
   .v-port .panel[data-idx="0"] .p-info .role{color:#eae6dc;}
   .v-port .panel[data-idx="0"] .p-info .role .acc{color:#e7519d;}
-  .v-port .panel[data-idx="0"] .p-info .cta,.v-port .panel[data-idx="0"] .p-info .cta *{color:#e7519d;}
+  .v-port .panel[data-idx="0"] .p-info .cta,.v-port .panel[data-idx="0"] .p-info .cta *{color:#1fcbc4;}
   .v-port .panel[data-idx="0"] .p-info .cta{background:#141b26;border-color:#141b26;}
   .v-port .panel[data-idx="0"] .p-info dt{color:#eae6dc;text-shadow:1px 1px 0 #a8b0bd;}
 
@@ -367,11 +369,9 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:40px var(--gutter) 60px;padding-left:calc(var(--gutter) + clamp(0px,5vw,50px));border-top:1px solid #181615;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:end;}
-  .v-port .p-outro .big{font-family:"DM Serif Display",serif;font-size:clamp(44px,7vw,120px);line-height:.9;letter-spacing:-.02em;margin:0;text-wrap:balance;font-weight:500;color:#eae6dc;}
-  .v-port .p-outro .big .acc{color:#a89a7d;}
-  .v-port .p-outro .contact{padding-left:clamp(20px,4vw,40px);}
-  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto 1fr;row-gap:8px;column-gap:20px;font-family:"JetBrains Mono",monospace;font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:#777;margin:0;align-items:baseline;}
+  .v-port .p-outro{padding:40px var(--gutter) 60px;border-top:1px solid #181615;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
+  .v-port .p-outro .contact{padding-left:0;}
+  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:"JetBrains Mono",monospace;font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:#777;margin:0;align-items:baseline;}
   .v-port .p-outro .contact dt{}
   .v-port .p-outro .contact dd{margin:0;color:#eae6dc;text-transform:none;letter-spacing:.02em;}
   .v-port .p-outro .contact a{color:inherit;text-decoration:none;}
@@ -384,8 +384,7 @@
   @media (max-width:859px){
     .v-port .panel{padding:60px 22px 40px;}
     .v-port .panel--project{padding:2cqb 22px 2cqb calc(var(--gutter) + 16px);gap:24px;grid-template-columns:minmax(0,260px) minmax(0,280px);}
-    .v-port .p-outro{padding:32px 24px 50px clamp(60px,20vw,240px);gap:16px;grid-template-columns:1fr;}
-    .v-port .p-outro .big{display:none;}
+    .v-port .p-outro{padding:32px 24px 50px;gap:16px;grid-template-columns:1fr;}
   }
   @media (max-width:500px){
     .v-port .hero-block{padding-left:0;}
@@ -664,7 +663,6 @@
     </div>
 
     <section class="p-outro" data-idx="contact">
-      <h2 class="big">Designing <span class="acc">creative&nbsp;tools.</span></h2>
       <div class="contact">
         <dl>
           <dt>Located</dt><dd>North Carolina</dd>
@@ -986,18 +984,27 @@
       const maxw = parseFloat(getComputedStyle(frame).getPropertyValue('--maxw')) || Infinity;
       const edge = Math.max(0, (r.width - maxw) / 2 - 32);
       const W = r.width - 2 * edge, H = r.height;
-      const limit = Math.floor(Math.min(W, H) / 2 / STEP);
-      // ring colour ramps white (outermost) -> pink (innermost); the CSS fill blends this
-      // toward black by --rect-mix so it only shows on the Porcupine panel.
-      const WHITE = [255, 255, 255], PINK = [231, 81, 157];
+      // Collect ring insets, stopping before any rect whose shorter side would be under one
+      // STEP — otherwise a frame height that's just past a STEP boundary leaves a thin sliver
+      // as the innermost rect. MIN_SIDE keeps the centre rect a sane proportion.
+      const MIN_SIDE = STEP;
+      const insets = [];
+      for (let inset = 0; W - 2 * inset >= MIN_SIDE && H - 2 * inset >= MIN_SIDE; inset += STEP) insets.push(inset);
+      // ring colour ramps warm-white (outermost) -> pink (innermost); the CSS fill blends this
+      // toward black by --rect-mix so it only shows on the Porcupine panel. Colour is keyed to
+      // each ring's pixel depth against a FIXED reference (RAMP_PX), NOT its index-over-count —
+      // so a given ring keeps its colour when the window (and thus the ring count) changes.
+      // 240px = 6 steps, the innermost depth at desktop, so the centre still reaches full pink
+      // there; narrower windows simply don't ramp as deep (consistent, no recolour on resize).
+      const WHITE = [252, 205, 226], PINK = [231, 81, 157];  // pink-tinted white -> the outer ring reads clearly pink
+      const RAMP_PX = 240;
       let out = '';
-      for (let i = 0; i <= limit; i++) {
-        const inset = i * STEP, w = W - 2 * inset, h = H - 2 * inset;
-        if (w <= 0 || h <= 0) break;
-        const t = limit > 0 ? i / limit : 0;
+      insets.forEach((inset, i) => {
+        const w = W - 2 * inset, h = H - 2 * inset;
+        const t = Math.min(inset / RAMP_PX, 1);
         const c = WHITE.map((v, k) => Math.round(v + (PINK[k] - v) * t)).join(',');
         out += '<rect x="'+inset+'" y="'+inset+'" width="'+w+'" height="'+h+'" style="--c:rgb('+c+')" fill-opacity="0.15"/>';
-      }
+      });
       svg.setAttribute('width', W);
       svg.setAttribute('height', H);
       svg.innerHTML = out;

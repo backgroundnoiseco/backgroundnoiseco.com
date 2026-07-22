@@ -67,11 +67,11 @@ Hero shows `LOCATED / PLATFORMS` stacked (label over value). Each project shows 
 
 ### Concentric-rectangle frame decoration
 
-Built at runtime by a `ResizeObserver` on `.frame` as a live inline `<svg class="rects">` (NOT a data-URI background — a background image is an isolated document and can't inherit CSS colour). It stacks `<rect>`s at equal 40px insets, sized to match the section background band (starts at `--cap`). Each rect's fill is `color-mix(in srgb, var(--c) calc(var(--rect-mix) * 100%), #000)` with `fill-opacity: calc(0.15 + 0.7 * var(--rect-mix))`.
+Built at runtime by a `ResizeObserver` on `.frame` as a live inline `<svg class="rects">` (NOT a data-URI background — a background image is an isolated document and can't inherit CSS colour). It stacks `<rect>`s at equal 40px insets, sized to match the section background band (starts at `--cap`). The loop stops before any rect whose shorter side would drop below one 40px step, so a frame height just past a step boundary can't leave a thin sliver as the innermost rect. Each rect's fill is `color-mix(in srgb, var(--c) calc(var(--rect-mix) * 100%), #000)` with `fill-opacity: calc(0.15 + 0.85 * var(--rect-mix))`.
 
 - `--rect-mix` peaks at 1 on the Porcupine panel (`data-idx="0"`, panel 2) and falls to 0 either side, so the tint eases in/out on scroll.
 - On every other panel `--rect-mix` is 0 → fill is black at 0.15 → the **documented cumulative vignette** (each layer × 0.85 luminance) is preserved.
-- On Porcupine, each ring gets an interpolated `--c` (currently **white outermost → pink innermost**) and opacity rises to 0.85 so the single-layer outer ring reads at full colour instead of bleeding the dark bg. To recolour another panel, give it its own `--rect-mix` expression and per-ring `--c` endpoints — the machinery generalises.
+- On Porcupine, opacity reaches **1** (so no dark bg bleeds through and the outer ring reads at full colour) and each ring gets an interpolated `--c` ramping **warm-white outermost → pink innermost**. Colour is keyed to the ring's pixel depth against a fixed `RAMP_PX` (240px, the desktop innermost depth), NOT its index-over-count — otherwise a given ring recolours as the window (and ring count) changes. Narrower windows simply don't ramp as deep. To recolour another panel, give it its own `--rect-mix` expression and per-ring `--c` endpoints — the machinery generalises.
 
 Also on `.frame`: `::before` is the animated noise grain (200×200 `feTurbulence` tile, flickered via `@keyframes bgnoise`, `z-index: 0`); the rects svg is `z-index: 1`; panels `z-index: 2`.
 
