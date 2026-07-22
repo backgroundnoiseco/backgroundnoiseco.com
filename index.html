@@ -331,7 +331,7 @@
 
   /* each project slot is a full-height editorial portrait */
 
-  /* left column — giant vertical project name */
+  /* Porcupine info-block colour treatment, pulled from the app's screenshot palette */
   .v-port .panel[data-idx="0"]{--section-bg:#1fcbc4;}
   .v-port .panel[data-idx="0"] .p-info,.v-port .panel[data-idx="0"] .p-info *{color:#141b26;}
   .v-port .panel[data-idx="0"] .p-info .role{color:#eae6dc;}
@@ -945,7 +945,6 @@
         const phoneCenter = pRect.left + pRect.width / 2;
         const delta = window.innerWidth < 860 ? 0 : Math.max(0, Math.round(window.innerWidth * 0.37 - phoneCenter));
         phone.style.transform = 'translateX(' + delta + 'px)';
-        if (name) name.style.transform = 'translateX(' + delta + 'px) rotate(180deg)';
         if (info) info.style.transform = 'translateX(' + delta + 'px)';
       });
     }
