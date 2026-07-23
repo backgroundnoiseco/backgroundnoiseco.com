@@ -76,6 +76,33 @@
      is clean (warm-white outer -> pink inner). */
   .v-port .frame > .rects rect{fill:color-mix(in srgb, var(--c,#000) calc(var(--rect-mix) * 100%), #000);fill-opacity:calc(0.15 + 0.85 * var(--rect-mix));}
   .v-port .frame::before{content:"";position:absolute;inset:-48px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;will-change:transform;animation:bgnoise .6s steps(1) infinite;}
+
+  /* ===== Scroll-driven animations: panel motion + bar cross-fade on the COMPOSITOR =====
+     Safari throttles requestAnimationFrame to 30fps in Low Power Mode, so any rAF-driven
+     motion stutters against native (compositor) scrolling no matter how cheap the JS is.
+     Where supported, the scroller exposes a scroll timeline and the panels/bar animate
+     against it directly - full frame rate, zero main-thread work per frame. The JS driver
+     still writes --progress (rail state, rect tint), but the smoothness-critical motion no
+     longer depends on it; CSS animations also outrank the var-driven declarations in the
+     cascade, so these simply take over where supported. Travel is exactly 300svh: track
+     (4*100svh - header) minus sticky stage (100svh - header). */
+  @supports (animation-timeline: scroll()) {
+    .page[data-page="portrait"].on{scroll-timeline-name:--page;}
+    .v-port .panel{animation-name:panel-slide;animation-duration:auto;animation-timing-function:linear;
+      animation-fill-mode:both;animation-timeline:--page;animation-range:0 300svh;}
+    .v-port .sub-panel{animation-duration:auto;animation-timing-function:linear;
+      animation-fill-mode:both;animation-timeline:--page;animation-range:0 300svh;}
+    .v-port .sub-panel:nth-child(1){animation-name:bar-0;}
+    .v-port .sub-panel:nth-child(2){animation-name:bar-1;}
+    .v-port .sub-panel:nth-child(3){animation-name:bar-2;}
+    .v-port .sub-panel:nth-child(4){animation-name:bar-3;}
+  }
+  @keyframes panel-slide{from{transform:translateY(calc(var(--i) * 100%))}to{transform:translateY(calc((var(--i) - 3) * 100%))}}
+  @keyframes bar-0{0%{opacity:1}33.333%{opacity:0}100%{opacity:0}}
+  @keyframes bar-1{0%{opacity:0}33.333%{opacity:1}66.667%{opacity:0}100%{opacity:0}}
+  @keyframes bar-2{0%{opacity:0}33.333%{opacity:0}66.667%{opacity:1}100%{opacity:0}}
+  @keyframes bar-3{0%{opacity:0}66.667%{opacity:0}100%{opacity:1}}
+
   @media (prefers-reduced-motion: reduce){
     .v-port .frame::before{animation:none;}
   }

@@ -5,6 +5,8 @@
     el.textContent = addr;
   });
 
+
+
   // Respect the OS reduced-motion preference for programmatic scrolls
   const SCROLL_BEHAVIOR = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
@@ -68,7 +70,7 @@
     measure();
 
     // expose for the click-to-scroll handler below
-    vport._stage = {track, stage, panels, last, stickyTop};
+    vport._stage = {track, stage, panels, last, stickyTop, update, measure};
   })();
 
   // Portrait — position each project's phone/info pair. Sizing (title, CTA, shell radius)
