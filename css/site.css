@@ -10,7 +10,7 @@
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
-  .v-port .p-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px var(--gutter);border-bottom:1px solid var(--hairline);}
+  .v-port .p-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px));border-bottom:1px solid var(--hairline);}
   .v-port .p-top .mark{font-family:"Distortion",serif;font-size:22px;letter-spacing:.02em;color:var(--ink);}
   .v-port .p-top nav{display:flex;gap:20px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
   .v-port .p-top nav a.on{color:var(--ink);}
@@ -40,8 +40,25 @@
   /* transform creates a stacking context, so the panel itself must clear the ::after
      decoration (z-index 1) — a z-index on its children would be trapped inside. */
   .v-port .panel{position:absolute;inset:0;z-index:2;transform:translateY(calc((var(--i) - var(--progress,0)) * 100%));will-change:transform;}
-  .v-port .panel--hero{display:grid;align-items:center;padding:80px var(--gutter) 60px;}
-  .v-port .panel--project{display:grid;grid-template-columns:minmax(0,260px) minmax(0,420px);gap:40px;align-items:center;justify-content:center;padding:2cqb var(--gutter);}
+  /* Hero padding interpolates through the old breakpoint values instead of stepping:
+     top 40@500 -> 60@860 -> 80@1000, bottom 30 -> 40 -> 60, horizontal is a smoothed V
+     (60@500 -> 22 valley @680 -> 32@1000, then rides the gutter via --cap). */
+  .v-port .panel--hero{display:grid;align-items:center;
+    padding:clamp(40px, max(calc(12.222px + 5.5556vw), calc(-62.857px + 14.286vw)), 80px)
+            calc(var(--cap) + clamp(22px, max(calc(165.556px - 21.111vw), min(calc(0.75px + 3.125vw), 32px)), 60px))
+            clamp(30px, max(calc(16.111px + 2.7778vw), calc(-82.857px + 14.286vw)), 60px);}
+  /* Project panel interpolates the old breakpoint steps: right pad 12@500 -> 22@860 -> 32@1000,
+     left pad 48 (gutter+16, rail clearance) until 860 -> 32@1000, gap 16 -> 24 -> 40, and the
+     info column max is a smoothed V (420@500 -> 280@860 -> 420@1000). All gutter-tied sides
+     ride var(--cap) so they keep growing past the layout cap. */
+  .v-port .panel--project{display:grid;
+    grid-template-columns:minmax(0,260px) minmax(0, clamp(280px, max(calc(614.444px - 38.889vw), calc(100vw - 580px)), 420px));
+    gap:clamp(16px, max(calc(4.889px + 2.2222vw), calc(-74.286px + 11.4286vw)), 40px);
+    align-items:center;justify-content:center;
+    padding:2cqb
+            calc(var(--cap) + clamp(12px, max(calc(-1.889px + 2.7778vw), calc(-39.4286px + 7.1429vw)), 32px))
+            2cqb
+            calc(var(--cap) + clamp(32px, calc(146.286px - 11.4286vw), 48px));}
   /* The rings are an inline <svg> (not a background image) so their fill inherits colour
      from CSS. --rect-mix is 1 on the Porcupine panel and falls to 0 either side of it, so the
      tint interpolates across the transition rather than snapping. */
@@ -67,7 +84,7 @@
   /* vw-based insets below all top out at their value at the 1000px viewport, where --maxw
      is reached — past that the content column is a fixed width, so anything still scaling
      with vw would slide the content sideways against the background band. */
-  .v-port .hero-block{padding-left:clamp(32px,6vw,60px);}
+  .v-port .hero-block{padding-left:clamp(0px, min(calc(-71.667px + 14.3333vw), 6vw), 60px);}
   /* The badge lives inside the h1 and is sized/placed in em, so every offset is a fixed
      fraction of the hero font size — it holds the same position against the text at any
      --hero-size, and follows the glyphs if the wording changes. h1 shrink-wraps so
@@ -91,7 +108,10 @@
   /* Vertical padding here interpolates 28/40 (at 500px) -> 36/48 (capping ~600px) instead of
      stepping. .p-sub shares the sticky stage with .frame, so a jump in its height resizes
      the frame and makes every concentric ring jump at once. */
-  .v-port .p-sub{display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px) var(--gutter) clamp(40px,calc(8.333vw - 1.67px),48px);border-bottom:1px solid var(--hairline);}
+  .v-port .p-sub{display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
+            calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
+            clamp(40px,calc(8.333vw - 1.67px),48px)
+            calc(var(--cap) + clamp(32px, calc(51.111px - 2.2222vw), 40px));border-bottom:1px solid var(--hairline);}
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
@@ -149,7 +169,9 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:40px var(--gutter) 60px;border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
+  .v-port .p-outro{padding:clamp(32px, calc(20.889px + 2.2222vw), 40px)
+            calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
+            clamp(50px, calc(36.111px + 2.7778vw), 60px);border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
   .v-port .p-outro .contact{padding-left:0;}
   .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:var(--mono);font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;align-items:baseline;}
   .v-port .p-outro .contact dt{}
@@ -161,21 +183,9 @@
   .v-port .p-foot .to-top{color:inherit;text-decoration:none;cursor:pointer;}
   .v-port .p-foot .to-top:hover{color:var(--ink);}
 
-  @media (max-width:859px){
-    .v-port .panel{padding:60px 22px 40px;}
-    .v-port .panel--project{padding:2cqb 22px 2cqb calc(var(--gutter) + 16px);gap:24px;grid-template-columns:minmax(0,260px) minmax(0,280px);}
-    .v-port .p-outro{padding:32px 24px 50px;gap:16px;grid-template-columns:1fr;}
-  }
+  /* Everything that used to step at 859/500 now interpolates in the base rules above.
+     Only genuinely binary switches remain below. */
   @media (max-width:500px){
-    .v-port .hero-block{padding-left:0;}
-    .v-port .panel{padding:40px 60px 30px;}
-    /* horizontal only — vertical comes from the fluid rule above, which floors at 28/40 here */
-    .v-port .p-sub{padding-left:40px;padding-right:24px;}
-    .v-port .panel--project{padding:2cqb 12px 2cqb calc(var(--gutter) + 16px);gap:16px;grid-template-columns:minmax(0,260px) minmax(0,420px);}
-  
-  
-  
-    .v-port .p-top{padding:18px 24px;}
     .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}
     /* the type/spacing that used to snap here is now fluid in the base rules, interpolating
        from these same values at 500px up to the desktop values at 860px */
