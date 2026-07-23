@@ -14,6 +14,8 @@ There is no build step. Open `index.html` directly in a browser, or serve the di
 python3 -m http.server 8000
 ```
 
+Browsers (including the Claude Code preview pane) cache `css/site.css` / `js/site.js` hard; a `?v=` buster on `index.html` does **not** refresh them. When previewing changes, hard-reload or fetch the assets with `cache:'no-store'` to confirm what's actually being served.
+
 ## Files
 
 - `index.html` — the live site (markup only, ~7KB). This was previously the "Portrait" variant in `variants.html`; it now **is** the main site.
@@ -57,7 +59,7 @@ The live site is a **sliding-stage single-page** layout: the header, side rail, 
 
 A single JS driver computes `progress` = fraction through the track × `(panels - 1)`, i.e. `0..3`, and writes it to `--progress` on `.v-port` each `requestAnimationFrame` on scroll. That one value drives: panel transforms, the info-bar cross-fade, the rectangle tint, and the rail's active `.on` + `aria-current` marker (`data-idx` on each panel matched to `data-s` on each rail button; `panels[Math.round(progress)]`). There is **no `IntersectionObserver`** — that's the point, one source of truth. Click-to-scroll on rail buttons maps `data-s` → panel index and scrolls the track to `i / last * travel`; Contact scrolls the stage container directly (never `scrollIntoView` — that also scrolls ancestor scrollers and once pushed the window out of bounds). All programmatic scrolls use `SCROLL_BEHAVIOR`, which respects `prefers-reduced-motion`.
 
-**Known rough edge:** at the very bottom of the page the rail can stay on `03 Prosession` because the outro's top never quite crosses the sticky line. Adjust the outro threshold in the driver if this matters.
+**Hot-path discipline (Safari fps):** the scroll handler must never read layout — all geometry (`stickyTop`, `trackStart`, `travel`, `outroLine`) is cached by `measure()`, which runs only on load, `resize`, a `ResizeObserver` on `.stage`, and `fonts.ready`. `update()` is one `scrollTop` read + one `--progress` write (rail buttons are only touched when the active section actually changes). Reading `getComputedStyle`/`getBoundingClientRect` per frame — right after the previous frame's `--progress` write dirtied styles — forces a full synchronous recalc of everything var-dependent and was the source of low-fps scrolling in Safari. If the driver ever needs new geometry, add it to `measure()`, not `update()`. The contact line is clamped to max-scroll in `measure()`, so the rail correctly reads `04 Contact` at the very bottom of the page (on short pages the outro's top never crosses the sticky line unclamped).
 
 ### Project panels & fit-to-frame
 
@@ -77,7 +79,7 @@ Built at runtime by a `ResizeObserver` on `.frame` as a live inline `<svg class=
 - On every other panel `--rect-mix` is 0 → fill is black at 0.15 → the **documented cumulative vignette** (each layer × 0.85 luminance) is preserved.
 - On Porcupine, opacity reaches **1** (so no dark bg bleeds through and the outer ring reads at full colour) and each ring gets an interpolated `--c` ramping **warm-white outermost → pink innermost**. Colour is keyed to the ring's pixel depth against a fixed `RAMP_PX` (240px, the desktop innermost depth), NOT its index-over-count — otherwise a given ring recolours as the window (and ring count) changes. Narrower windows simply don't ramp as deep. To recolour another panel, give it its own `--rect-mix` expression and per-ring `--c` endpoints — the machinery generalises.
 
-The **gutters** (frame background past `--cap`, left/right of the band) are treated as the ring *one step out* from ring 0. The band gradient paints them with `var(--gutterC,#000)` (only `.frame` sets `--gutterC: #0a0a0a` = the band; header/bar/footer keep `#000`), and `.frame::after` overlays `--ringOverlay` in the gutter columns only, above the noise like the rects: transparent on dark panels (so the gutter is bare band + full grain = `ring0 / 0.85`, one cumulative step brighter with grain included) and opaque pale-pink on Porcupine (one linear ramp step out from the warm-white ring). Layer order on `.frame`: `::before` animated noise grain (200×200 `feTurbulence` tile, flickered via `@keyframes bgnoise`, `z-index: 0`) → rects svg + `::after` gutter overlay (`z-index: 1`) → panels (`z-index: 2`).
+The **gutters** (frame background past `--cap`, left/right of the band) are treated as the ring *one step out* from ring 0. The band gradient paints them with `var(--gutterC,#000)` (only `.frame` sets `--gutterC: #0a0a0a` = the band; header/bar/footer keep `#000`), and `.frame::after` overlays `--ringOverlay` in the gutter columns only, above the noise like the rects: transparent on dark panels (so the gutter is bare band + full grain = `ring0 / 0.85`, one cumulative step brighter with grain included) and opaque pale-pink on Porcupine (one linear ramp step out from the warm-white ring). Layer order on `.frame`: `::before` animated noise grain (200×200 `feTurbulence` tile oversized by 48px each side and flickered by animating `transform` — NOT `background-position`, which repaints the whole frame every 60ms and tanked Safari scroll fps; `z-index: 0`) → rects svg + `::after` gutter overlay (`z-index: 1`) → panels (`z-index: 2`).
 
 ### Email obfuscation
 

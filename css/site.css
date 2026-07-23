@@ -75,11 +75,11 @@
      the edge reads as a dark rim; at opacity 1 every band shows its exact colour and the ramp
      is clean (warm-white outer -> pink inner). */
   .v-port .frame > .rects rect{fill:color-mix(in srgb, var(--c,#000) calc(var(--rect-mix) * 100%), #000);fill-opacity:calc(0.15 + 0.85 * var(--rect-mix));}
-  .v-port .frame::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
+  .v-port .frame::before{content:"";position:absolute;inset:-48px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;will-change:transform;animation:bgnoise .6s steps(1) infinite;}
   @media (prefers-reduced-motion: reduce){
     .v-port .frame::before{animation:none;}
   }
-  @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
+  @keyframes bgnoise{0%{transform:translate(0,0)}10%{transform:translate(-30px,-20px)}20%{transform:translate(40px,10px)}30%{transform:translate(-20px,30px)}40%{transform:translate(15px,-35px)}50%{transform:translate(-45px,25px)}60%{transform:translate(30px,40px)}70%{transform:translate(-15px,-30px)}80%{transform:translate(25px,20px)}90%{transform:translate(-35px,-15px)}100%{transform:translate(0,0)}}
   .v-port .panel > *{position:relative;z-index:2;}
   /* vw-based insets below all top out at their value at the 1000px viewport, where --maxw
      is reached — past that the content column is a fixed width, so anything still scaling
@@ -115,7 +115,7 @@
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
-  .v-port .sub-panel{grid-area:1/1;display:flex;justify-content:space-between;align-items:start;gap:24px;flex-wrap:nowrap;
+  .v-port .sub-panel{grid-area:1/1;display:flex;justify-content:space-between;align-items:start;gap:24px;flex-wrap:nowrap;will-change:opacity;
     opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
   /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
      stacked layout unchanged; only the description is resized to hold the bar's height. */

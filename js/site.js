@@ -21,22 +21,38 @@
     const marks  = [...document.querySelectorAll('.v-port .p-rail button')];
     if (!root || !vport || !track || !stage || !panels.length) return;
     const last = panels.length - 1;
-    const stickyTop = () => parseFloat(getComputedStyle(stage).top) || 0;
 
-    function progress(){
-      const travel = track.offsetHeight - stage.offsetHeight;   // === last * 100svh
-      if (travel <= 0) return 0;
-      const scrolled = stickyTop() - track.getBoundingClientRect().top;
-      return Math.min(Math.max(scrolled / travel, 0), 1) * last;
+    // All geometry is measured once (and on real size changes), never in the scroll hot
+    // path: reading getComputedStyle/getBoundingClientRect right after writing --progress
+    // forces a full synchronous style recalc of everything var-dependent, every frame -
+    // which is exactly the Safari jank. The hot path is one scrollTop read + one var write.
+    let stickyTopV = 0, trackStart = 0, travel = 1, outroLine = Infinity;
+    function measure(){
+      const rootTop = root.getBoundingClientRect().top;
+      stickyTopV = parseFloat(getComputedStyle(stage).top) || 0;
+      travel = Math.max(1, track.offsetHeight - stage.offsetHeight);   // === last * 100svh
+      trackStart = track.getBoundingClientRect().top - rootTop + root.scrollTop - stickyTopV;
+      // clamp to max scroll: on short pages the outro's top never reaches the sticky
+      // line, which used to leave the rail stuck on 03 at the very bottom
+      const maxScroll = root.scrollHeight - root.clientHeight;
+      outroLine = outro ? Math.min(
+        outro.getBoundingClientRect().top - rootTop + root.scrollTop - stickyTopV - 2,
+        maxScroll - 2
+      ) : Infinity;
+      schedule();
     }
+    const stickyTop = () => stickyTopV;
 
-    let raf = 0;
+    let raf = 0, lastActive = null;
     function update(){
       raf = 0;
-      const p = progress();
+      const st = root.scrollTop;
+      const p = Math.min(Math.max((st - trackStart) / travel, 0), 1) * last;
       vport.style.setProperty('--progress', p);
       let active = panels[Math.round(p)].dataset.idx;
-      if (outro && outro.getBoundingClientRect().top - stickyTop() <= 2) active = 'contact';
+      if (st >= outroLine) active = 'contact';
+      if (active === lastActive) return;
+      lastActive = active;
       marks.forEach(m => {
         const on = m.dataset.s === active;
         m.classList.toggle('on', on);
@@ -46,8 +62,10 @@
     function schedule(){ if (!raf) raf = requestAnimationFrame(update); }
 
     root.addEventListener('scroll', schedule, {passive:true});
-    window.addEventListener('resize', schedule);
-    update();
+    window.addEventListener('resize', measure);
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measure).observe(stage);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure();
 
     // expose for the click-to-scroll handler below
     vport._stage = {track, stage, panels, last, stickyTop};
