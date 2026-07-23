@@ -34,7 +34,7 @@ The file in `fonts/` has been rebuilt with fontTools (all tables recompiled), wh
 
 ## Architecture (index.html)
 
-> **This section was rewritten for the "sliding stage" redesign** (was a vertical scroll-snap layout with one full-height section per project). If anything below doesn't match the code, trust the code and fix the doc. The redesign is still being polished — known gaps: no mobile-specific layout yet, the `N°`/status pill can collide on very short windows, and `syncAll()` still scales info type imperatively instead of via container queries.
+> **This section was rewritten for the "sliding stage" redesign** (was a vertical scroll-snap layout with one full-height section per project). If anything below doesn't match the code, trust the code and fix the doc. The redesign is still being polished — known gaps: no mobile-specific layout yet, the `N°`/status pill can collide on very short windows, and the wide-screen composition shift is still viewport-keyed JS (see below).
 
 The live site is a **sliding-stage single-page** layout: the header, side rail, concentric-rectangle frame and info bar stay put while the hero and three project panels slide up through the frame as you scroll. Markup lives in a single `.v-port` container:
 
@@ -59,7 +59,9 @@ A single JS driver computes `progress` = fraction through the track × `(panels 
 
 ### Project panels & fit-to-frame
 
-Each `.panel--project` is a two-column grid (`phone / info`), centered. There are **no rotated vertical titles anymore** — the project name is `.p-info .role`, rendered in the Distortion display face. The single lever that keeps a panel inside the frame at any window height is the phone's `max-width: min(240px, 40cqb)`; `syncAll()` scales the info type from the phone's rendered width, so capping the phone scales the whole panel together. Left padding is `calc(var(--gutter) + 16px)` so content clears the rail.
+Each `.panel--project` is a two-column grid (`phone / info`), centered. There are **no rotated vertical titles anymore** — the project name is `.p-info .role`, rendered in the Distortion display face. Everything sizes to the frame via container units (`.frame` is `container-type: size`): the phone caps at `min(240px, 40cqb)`, and the title/CTA/shell-radius are `min(<max>px, <coef>cqb)` where the coefficient is `<max> × 40/240` — so the whole panel scales together with frame height, purely in CSS, no JS. Left padding is `calc(var(--gutter) + 16px)` so content clears the rail.
+
+The one thing still done in JS (`positionAll()` near the bottom) is the wide-screen composition shift: at viewports ≥ 860 it `translateX`es the phone/info pair so the phone's centre lands at ~37% of **viewport** width. That's viewport-relative, not frame-relative, so it can't be a container query — migrating it means deciding whether the composition should key to the frame instead.
 
 ### Info bar metadata
 
