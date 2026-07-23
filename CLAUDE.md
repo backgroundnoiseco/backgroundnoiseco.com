@@ -61,7 +61,7 @@ A single JS driver computes `progress` = fraction through the track × `(panels 
 
 Each `.panel--project` is a two-column grid (`phone / info`), centered. There are **no rotated vertical titles anymore** — the project name is `.p-info .role`, rendered in the Distortion display face. Everything sizes to the frame via container units (`.frame` is `container-type: size`): the phone caps at `min(240px, 40cqb)`, and the title/CTA/shell-radius are `min(<max>px, <coef>cqb)` where the coefficient is `<max> × 40/240` — so the whole panel scales together with frame height, purely in CSS, no JS. Left padding is `calc(var(--gutter) + 16px)` so content clears the rail.
 
-The one thing still done in JS (`positionAll()` near the bottom) is the wide-screen composition shift: at viewports ≥ 860 it `translateX`es the phone/info pair so the phone's centre lands at ~37% of **viewport** width. That's viewport-relative, not frame-relative, so it can't be a container query — migrating it means deciding whether the composition should key to the frame instead.
+The one thing still done in JS (`positionAll()` near the bottom) is the wide-screen composition shift: at viewports ≥ 860 it `translateX`es the phone/info pair so the phone's centre lands at ~37% of width. **Past the layout cap (`maxw + 64 = 1000px`) the target is frozen at a constant offset left of centre** (`vw/2 − 130`) so the pair stops drifting left as the window widens — below the cap it's `0.37 × viewport`. It's still viewport-relative, not frame-relative, so it can't be a container query — migrating it means deciding whether the composition should key to the frame instead.
 
 ### Info bar metadata
 
