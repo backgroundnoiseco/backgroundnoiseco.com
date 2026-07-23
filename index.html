@@ -934,6 +934,30 @@
         phone.style.transform = 'translateX(' + delta + 'px)';
         if (info) info.style.transform = 'translateX(' + delta + 'px)';
       });
+      fitTitles();
+    }
+    // On narrow windows the info column can run past the frame's right edge and clip the
+    // project title. Shrink the title's font just enough that its rendered text fits inside
+    // the frame. Measured with a Range (the actual glyph extent), reset to the CSS cqb size
+    // each pass so it grows back when there's room. All panels share the same x (inset:0,
+    // vertical translate only), so the off-screen panels measure correctly too.
+    const frameEl = document.querySelector('.v-port .frame');
+    function fitTitles(){
+      if (!frameEl) return;
+      const fr = frameEl.getBoundingClientRect();
+      slots.forEach(slot => {
+        const role = slot.querySelector('.p-info .role');
+        if (!role) return;
+        role.style.fontSize = '';
+        const range = document.createRange();
+        range.selectNodeContents(role);
+        const tr = range.getBoundingClientRect();
+        const avail = fr.right - tr.left - 12;
+        if (tr.width > avail && avail > 0) {
+          const cur = parseFloat(getComputedStyle(role).fontSize);
+          role.style.fontSize = Math.max(14, cur * avail / tr.width).toFixed(1) + 'px';
+        }
+      });
     }
     slots.forEach(slot => {
       const phone = slot.querySelector('.p-phone');
