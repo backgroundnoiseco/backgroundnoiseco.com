@@ -237,7 +237,7 @@
 
   /* ============ v-portrait: editorial, phone-centric ============ */
   .v-port{background:#000;color:#eae6dc;font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
-  .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,#000 0,#000 var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),#000 calc(100% - var(--cap)),#000 100%);}
+  .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
   .v-port .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;}
@@ -273,7 +273,12 @@
   /* The rings are an inline <svg> (not a background image) so their fill inherits colour
      from CSS. --rect-mix is 1 on the Porcupine panel and falls to 0 either side of it, so the
      tint interpolates across the transition rather than snapping. */
-  .v-port .frame{--rect-mix:clamp(0,calc(1 - max(var(--progress,0) - 2, 2 - var(--progress,0))),1);}
+  .v-port .frame{--rect-mix:clamp(0,calc(1 - max(var(--progress,0) - 2, 2 - var(--progress,0))),1);--gutterC:#0a0a0a;--ringOverlay:color-mix(in srgb, rgba(255,226,238,1) calc(var(--rect-mix) * 100%), rgba(0,0,0,0));}
+  /* Treat the gutter (past --cap) as the ring one step OUT from ring 0. --ringOverlay sits
+     above the noise, in the gutter columns only. Dark panels: transparent -> gutter is the
+     bare band + full grain, i.e. ring0 / 0.85 (one cumulative step brighter, grain included).
+     Porcupine: opaque pale-pink -> one linear ramp step out from the warm-white ring. */
+  .v-port .frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to right,var(--ringOverlay) 0,var(--ringOverlay) var(--cap),transparent var(--cap),transparent calc(100% - var(--cap)),var(--ringOverlay) calc(100% - var(--cap)),var(--ringOverlay) 100%);}
   .v-port .frame > .rects{position:absolute;top:0;left:50%;transform:translateX(-50%);pointer-events:none;z-index:1;}
   /* fill fades to black off-panel (keeps the documented 0.15 vignette on other panels);
      on the Porcupine panel opacity reaches 1 so no dark frame bg bleeds through. Below full
