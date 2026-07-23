@@ -258,7 +258,7 @@
      .stage-track is N*100svh tall minus the header, so each panel step is exactly one
      viewport and lines up with the .snap targets. .stage sticks for the whole track, then
      releases and .p-outro / .p-foot scroll in normally. */
-  .v-port{--panels:4;--hero-size:clamp(54px,15vw,150px);}
+  .v-port{--panels:4;--hero-size:clamp(54px,15vw,137px);}
   .v-port .stage-track{position:relative;height:calc(var(--panels) * 100svh - var(--p-top-h,60px));}
   .v-port .stage{position:sticky;top:var(--p-top-h,60px);height:calc(100svh - var(--p-top-h,60px));display:flex;flex-direction:column;}
   .v-port .snap{position:absolute;left:0;width:1px;height:1px;pointer-events:none;top:calc(var(--n) * 100svh);}
