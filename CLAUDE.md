@@ -16,21 +16,23 @@ python3 -m http.server 8000
 
 ## Files
 
-- `index.html` — the live site. This was previously the "Portrait" variant in `variants.html`; it now **is** the main site. All page CSS and JS are inline at the top and bottom of this file respectively.
+- `index.html` — the live site (markup only, ~7KB). This was previously the "Portrait" variant in `variants.html`; it now **is** the main site.
+- `css/site.css` — all page styles, including the base64-embedded Distortion `@font-face`.
+- `js/site.js` — all page behavior (email decoder + the stage driver, rect renderer, positioning). Loaded with a plain `<script src>` at the end of `<body>`, so it can assume the DOM exists — no DOMContentLoaded wrappers.
 - `index-old.html` — the previous live site (a simpler Projects / About thumbnail-row layout) preserved in case we want to refer back. Not linked from anywhere.
 - `style.css` — stylesheet for `index-old.html` only. `index.html` does not reference it.
 - `alt.html`, `experiment.html`, `font-compare.html` — self-contained scratch pages for layout/typography experiments. They embed their own CSS and aren't linked from `index.html`. Leave them alone unless the task is about them.
 - `privacy-policy.html` — standalone privacy page for the Unicorn Porcupine iOS app (linked from the App Store listing, not from `index.html`).
-- `fonts/` — display faces used only by the legacy/scratch pages. **`index.html` loads nothing from here**: the Distortion glyph data is base64-embedded in its inline `@font-face`, so the repaired `distortion-…regular.ttf` in this directory and the inline embed are independent copies — updating one does not update the other. See "The Distortion font was repaired" below.
+- `fonts/` — display faces used only by the legacy/scratch pages. **`index.html` loads nothing from here**: the Distortion glyph data is base64-embedded in the `@font-face` in `css/site.css`, so the repaired `distortion-…regular.ttf` in this directory and the inline embed are independent copies — updating one does not update the other. See "The Distortion font was repaired" below.
 - `images/` — project screenshots referenced by `index.html` (`IMG_4019.jpg`, `IMG_4020.jpg`, `IMG_4022.jpg`). These files are the canonical current screenshots (an earlier base64-hydration mechanism that shadowed them inline was removed). `images/old/` holds archived versions; don't reference it from the live site.
 
 ## The Distortion font was repaired — don't restore the original
 
 The upstream `distortion-of-the-brain-and-mind.regular.ttf` (a FontStruct export) is **rejected outright by Chrome's OTS font sanitizer**, so Chrome/Edge silently fell back to `serif` while Safari rendered it fine. Cause: the last segment of its `cmap` format-4 subtable had `idDelta=212`, mapping `U+FFFF` to glyph 211 in a font with only 211 glyphs (valid ids 0–210). The spec requires that segment to use `idDelta=1` so `U+FFFF` maps to glyph 0.
 
-The file in `fonts/` has been rebuilt with fontTools (all tables recompiled), which fixes the cmap and drops ~14KB of dead `glyphIdArray` and long-format `loca` padding. Outlines, advance widths, glyph order, and all 208 cmap codepoints are byte-verified identical to the original. (A standalone `.woff2` copy used to sit in `fonts/` but was orphaned and removed — the WOFF2 bytes live inline in `index.html`, and can be regenerated from the repaired `.ttf` with fontTools if ever needed.)
+The file in `fonts/` has been rebuilt with fontTools (all tables recompiled), which fixes the cmap and drops ~14KB of dead `glyphIdArray` and long-format `loca` padding. Outlines, advance widths, glyph order, and all 208 cmap codepoints are byte-verified identical to the original. (A standalone `.woff2` copy used to sit in `fonts/` but was orphaned and removed — the WOFF2 bytes live base64-embedded in `css/site.css`, and can be regenerated from the repaired `.ttf` with fontTools if ever needed.)
 
-`index.html` embeds the **WOFF2** as a `data:font/woff2` URI with `format("woff2")` — 2.6KB instead of the old 36KB TTF, which cut ~45KB off the page. If you ever re-embed the font, generate it from the repaired file, not from a fresh upstream download, or Chrome loses the typeface again.
+`css/site.css` embeds the **WOFF2** as a `data:font/woff2` URI with `format("woff2")` — 2.6KB instead of the old 36KB TTF, which cut ~45KB off the page. If you ever re-embed the font, generate it from the repaired file, not from a fresh upstream download, or Chrome loses the typeface again.
 
 ## Architecture (index.html)
 
