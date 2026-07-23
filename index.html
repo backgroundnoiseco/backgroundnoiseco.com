@@ -4,10 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Background Noise Co.</title>
+<meta name="description" content="Background Noise Co. is a small studio in North Carolina designing creative tools for iOS and macOS — Shadowbox, Unicorn Porcupine, and Prosession." />
+<link rel="canonical" href="https://backgroundnoiseco.com/" />
+<meta name="theme-color" content="#000000" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://backgroundnoiseco.com/" />
+<meta property="og:title" content="Background Noise Co." />
+<meta property="og:description" content="A small studio designing creative tools for iOS and macOS." />
+<meta property="og:image" content="https://backgroundnoiseco.com/images/IMG_4020.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23000'/%3E%3Ctext x='50' y='74' font-size='62' font-family='Georgia,serif' font-weight='700' fill='%23eae6dc' text-anchor='middle'%3Eb.%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
   html,body{margin:0;padding:0;background:#0a0a0a;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
   .page[data-page="portrait"].on{height:100svh;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-padding-top:var(--p-top-h,60px);}
   .v-port .snap,.v-port .p-outro{scroll-snap-align:start;}
@@ -29,9 +40,10 @@
   /* left tracks --gutter so the rail holds a constant offset from the content column at
      every width. At the 32px gutter floor this resolves to the original left:14px. */
   .v-port .p-rail{position:fixed;top:50%;left:calc(var(--gutter) - 18px);font-family:"JetBrains Mono",monospace;font-size:clamp(9px,calc(7.611px + .2778vw),10px);letter-spacing:clamp(2.25px,calc(1.208px + .2083vw),3px);text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:clamp(22px,calc(10.889px + 2.2222vw),30px);z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
-  .v-port .p-rail span{transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
-  .v-port .p-rail span.on{color:#eae6dc;}
-  .v-port .p-rail span[data-s="0"].on{color:#1fcbc4;}
+  .v-port .p-rail button{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;writing-mode:inherit;color:inherit;transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
+  .v-port .p-rail button:focus-visible{outline:1px solid #eae6dc;outline-offset:3px;color:#eae6dc;}
+  .v-port .p-rail button.on{color:#eae6dc;}
+  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;}
 
   /* ===== stage: pinned frame, panels slide through it =====
      .stage-track is N*100svh tall minus the header, so each panel step is exactly one
@@ -66,6 +78,9 @@
      is clean (warm-white outer -> pink inner). */
   .v-port .frame > .rects rect{fill:color-mix(in srgb, var(--c,#000) calc(var(--rect-mix) * 100%), #000);fill-opacity:calc(0.15 + 0.85 * var(--rect-mix));}
   .v-port .frame::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-repeat:repeat;pointer-events:none;opacity:.2;z-index:0;animation:bgnoise .6s steps(1) infinite;}
+  @media (prefers-reduced-motion: reduce){
+    .v-port .frame::before{animation:none;}
+  }
   @keyframes bgnoise{0%{background-position:0 0}10%{background-position:-30px -20px}20%{background-position:40px 10px}30%{background-position:-20px 30px}40%{background-position:15px -35px}50%{background-position:-45px 25px}60%{background-position:30px 40px}70%{background-position:-15px -30px}80%{background-position:25px 20px}90%{background-position:-35px -15px}100%{background-position:0 0}}
   .v-port .panel > *{position:relative;z-index:2;}
   /* vw-based insets below all top out at their value at the 1000px viewport, where --maxw
@@ -136,7 +151,7 @@
 
   /* right column — metadata stack */
   .v-port .p-info{display:flex;flex-direction:column;gap:clamp(20px,calc(8.889px + 2.222vw),28px);max-width:320px;justify-self:start;}
-  .v-port .p-info .role{font-family:"Distortion",serif;font-weight:400;font-size:min(60px,10cqb);line-height:.9;letter-spacing:-.015em;text-transform:none;color:#a89a7d;margin-bottom:0;}
+  .v-port .p-info .role{font-family:"Distortion",serif;font-weight:400;font-size:min(60px,10cqb);line-height:.9;letter-spacing:-.015em;text-transform:none;color:#a89a7d;margin:0;}
   .v-port .p-info .title{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;letter-spacing:-.005em;margin:0;color:inherit;font-weight:400;}
   .v-port .p-info .title .thin{font-weight:inherit;opacity:1;}
   .v-port .p-info .title em{font-style:italic;font-weight:inherit;}
@@ -198,8 +213,9 @@
       <nav><a href="#">Contact</a></nav>
     </header>
 
-    <div class="p-rail"><span class="on" data-s="hero">00 Title</span><span data-s="1">01 Shadowbox</span><span data-s="0">02 Porcupine</span><span data-s="2">03 Prosession</span><span data-s="contact">04 Contact</span></div>
+    <nav class="p-rail" aria-label="Sections"><button type="button" class="on" aria-current="true" data-s="hero">00 Title</button><button type="button" data-s="1">01 Shadowbox</button><button type="button" data-s="0">02 Porcupine</button><button type="button" data-s="2">03 Prosession</button><button type="button" data-s="contact">04 Contact</button></nav>
 
+    <main>
     <div class="stage-track">
       <div class="stage">
         <div class="frame">
@@ -230,10 +246,10 @@
       <div class="p-phone">
         <span class="numbadge">N° 01</span>
         <span class="status">◎ In Dev</span>
-        <div class="shell"><img src="images/IMG_4019.jpg" alt="Shadowbox"/></div>
+        <div class="shell"><img src="images/IMG_4019.jpg" alt="Shadowbox app — procedural drawing canvas with color controls"/></div>
       </div>
       <div class="p-info">
-        <div class="role">Shadowbox</div>
+        <h2 class="role">Shadowbox</h2>
         <span class="cta">Coming soon</span>
       </div>
       </article>
@@ -241,10 +257,10 @@
       <div class="p-phone">
         <span class="numbadge">N° 02</span>
         <span class="status">◎ Live</span>
-        <div class="shell"><img src="images/IMG_4020.jpg" alt="Unicorn Porcupine"/></div>
+        <div class="shell"><img src="images/IMG_4020.jpg" alt="Unicorn Porcupine app — name generator options and history"/></div>
       </div>
       <div class="p-info">
-        <div class="role">Unicorn Porcupine</div>
+        <h2 class="role">Unicorn Porcupine</h2>
         <a href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener" class="cta"><span class="full">View on App Store</span><span class="short">App Store</span></a>
       </div>
       </article>
@@ -252,15 +268,15 @@
       <div class="p-phone">
         <span class="numbadge">N° 03</span>
         <span class="status">◎ In Dev</span>
-        <div class="shell"><img src="images/IMG_4022.jpg" alt="ProSESSION"/></div>
+        <div class="shell"><img src="images/IMG_4022.jpg" alt="Prosession app — MIDI sequencer project view"/></div>
       </div>
       <div class="p-info">
-        <div class="role">Prosession</div>
+        <h2 class="role">Prosession</h2>
         <span class="cta">Coming soon</span>
       </div>
       </article>
         </div>
-        <section class="p-sub">
+        <section class="p-sub" aria-label="Details">
           <div class="sub-panel sub-panel--hero" style="--i:0">
             <p class="tag">A&nbsp;small&nbsp;studio&nbsp;designing creative&nbsp;tools.</p>
             <div class="meta"><span>Located</span><b>NC</b><span>Platforms</span><b>iOS · macOS</b></div>
@@ -285,7 +301,8 @@
       <div class="snap" aria-hidden="true" style="--n:3"></div>
     </div>
 
-    <section class="p-outro" data-idx="contact">
+    <section class="p-outro" data-idx="contact" aria-label="Contact">
+      <h2 class="sr-only">Contact</h2>
       <div class="contact">
         <dl>
           <dt>Located</dt><dd>North Carolina</dd>
@@ -295,6 +312,7 @@
         </dl>
       </div>
     </section>
+    </main>
 
     <footer class="p-foot">
       <span>© 2026</span>
@@ -314,6 +332,8 @@
 </script>
 
 <script>
+  // Respect the OS reduced-motion preference for programmatic scrolls
+  const SCROLL_BEHAVIOR = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
   // Portrait stage — one scroll-progress value drives everything: the panels translate by
   // (index - progress) * 100%, and the rail reads the same number. No IntersectionObserver,
@@ -325,7 +345,7 @@
     const stage  = document.querySelector('.v-port .stage');
     const outro  = document.querySelector('.v-port .p-outro');
     const panels = [...document.querySelectorAll('.v-port .panel')];
-    const marks  = [...document.querySelectorAll('.v-port .p-rail span')];
+    const marks  = [...document.querySelectorAll('.v-port .p-rail button')];
     if (!root || !vport || !track || !stage || !panels.length) return;
     const last = panels.length - 1;
     const stickyTop = () => parseFloat(getComputedStyle(stage).top) || 0;
@@ -344,7 +364,11 @@
       vport.style.setProperty('--progress', p);
       let active = panels[Math.round(p)].dataset.idx;
       if (outro && outro.getBoundingClientRect().top - stickyTop() <= 2) active = 'contact';
-      marks.forEach(m => m.classList.toggle('on', m.dataset.s === active));
+      marks.forEach(m => {
+        const on = m.dataset.s === active;
+        m.classList.toggle('on', on);
+        if (on) m.setAttribute('aria-current', 'true'); else m.removeAttribute('aria-current');
+      });
     }
     function schedule(){ if (!raf) raf = requestAnimationFrame(update); }
 
@@ -478,8 +502,14 @@
     function go(idx){
       const st = vport._stage;
       if (idx === 'contact' || !st) {
+        // scroll the container directly - scrollIntoView also scrolls ancestor scrollers
+        // (including the window) and can leave the document offset out of bounds
         const t = vport.querySelector('[data-idx="' + idx + '"]');
-        if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+        const root = document.querySelector('.page[data-page="portrait"]');
+        if (t && root) {
+          const pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+          root.scrollTo({top: root.scrollTop + t.getBoundingClientRect().top - pad, behavior: SCROLL_BEHAVIOR});
+        }
         return;
       }
       const i = st.panels.findIndex(p => p.dataset.idx === idx);
@@ -487,9 +517,9 @@
       const root = document.querySelector('.page[data-page="portrait"]');
       const travel = st.track.offsetHeight - st.stage.offsetHeight;
       const trackTop = root.scrollTop + st.track.getBoundingClientRect().top - st.stickyTop();
-      root.scrollTo({top: trackTop + (i / st.last) * travel, behavior:'smooth'});
+      root.scrollTo({top: trackTop + (i / st.last) * travel, behavior:SCROLL_BEHAVIOR});
     }
-    document.querySelectorAll('.v-port .p-rail span').forEach(s => {
+    document.querySelectorAll('.v-port .p-rail button').forEach(s => {
       s.addEventListener('click', () => go(s.dataset.s));
     });
     const contactLink = document.querySelector('.v-port .p-top nav a');
@@ -501,7 +531,7 @@
       toTop.addEventListener('click', (e) => {
         e.preventDefault();
         const root = document.querySelector('.page[data-page="portrait"]');
-        if (root) root.scrollTo({top: 0, behavior: 'smooth'});
+        if (root) root.scrollTo({top: 0, behavior: SCROLL_BEHAVIOR});
       });
     }
   })();
