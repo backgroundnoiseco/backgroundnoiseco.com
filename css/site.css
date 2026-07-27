@@ -47,7 +47,9 @@
     padding:clamp(40px, max(calc(12.222px + 5.5556vw), calc(-62.857px + 14.286vw)), 80px)
             calc(var(--cap) + clamp(22px, max(calc(165.556px - 21.111vw), min(calc(0.75px + 3.125vw), 32px)), 60px))
             clamp(30px, max(calc(16.111px + 2.7778vw), calc(-82.857px + 14.286vw)), 60px);}
-  /* Project panel interpolates the old breakpoint steps: right pad 12@500 -> 22@860 -> 32@1000,
+  /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
+     (the old 12px floor left the title and description almost touching the frame edge on
+     narrow windows),
      left pad 48 (gutter+16, rail clearance) until 860 -> 32@1000, gap 16 -> 24 -> 40, and the
      info column max is a smoothed V (420@500 -> 280@860 -> 420@1000). All gutter-tied sides
      ride var(--cap) so they keep growing past the layout cap. */
@@ -56,7 +58,7 @@
     gap:clamp(16px, max(calc(4.889px + 2.2222vw), calc(-74.286px + 11.4286vw)), 40px);
     align-items:center;justify-content:center;
     padding:2cqb
-            calc(var(--cap) + clamp(12px, max(calc(-1.889px + 2.7778vw), calc(-39.4286px + 7.1429vw)), 32px))
+            calc(var(--cap) + clamp(28px, calc(25.44px + .656vw), 32px))
             2cqb
             calc(var(--cap) + clamp(32px, calc(146.286px - 11.4286vw), 48px));}
   /* The rings are an inline <svg> (not a background image) so their fill inherits colour

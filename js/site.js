@@ -118,7 +118,11 @@
         const range = document.createRange();
         range.selectNodeContents(role);
         const tr = range.getBoundingClientRect();
-        const avail = fr.right - tr.left - 12;
+        // stop at the panel's content edge, not the frame's - that way the CSS right
+        // padding is the single source of breathing room and this can't undercut it
+        const pr = slot.getBoundingClientRect();
+        const padR = parseFloat(getComputedStyle(slot).paddingRight) || 0;
+        const avail = Math.min(fr.right, pr.right - padR) - tr.left;
         if (tr.width > avail && avail > 0) {
           const cur = parseFloat(getComputedStyle(role).fontSize);
           role.style.fontSize = Math.max(14, cur * avail / tr.width).toFixed(1) + 'px';
