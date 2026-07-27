@@ -145,11 +145,11 @@
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
-  .v-port .sub-panel{grid-area:1/1;display:flex;justify-content:space-between;align-items:start;gap:24px;flex-wrap:nowrap;will-change:opacity;
+  .v-port .sub-panel{grid-area:1/1;display:flex;justify-content:space-between;align-items:stretch;gap:24px;flex-wrap:nowrap;will-change:opacity;
     opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
   /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
      stacked layout unchanged; only the description is resized to hold the bar's height. */
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 clamp(0px,calc(76.444px - 8.889vw),32px) clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
   .v-port .p-sub .meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:var(--ink);font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   .v-port .panel .kicker{font-family:var(--mono);font-size:clamp(9px,calc(6.222px + .5556vw),11px);letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(24px,calc(12.889px + 2.2222vw),32px);}
@@ -196,7 +196,7 @@
   .v-port .p-sub .feats{list-style:none;
     display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
     align-content:center;min-height:var(--bar-rule-h);
-    font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.02em;color:var(--ink);
+    font-family:var(--mono);font-size:clamp(9px,calc(5.4px + .923vw),12px);line-height:1.5;letter-spacing:.02em;color:var(--ink);
     /* same divider anchor as the hero's tagline, and deliberately the same margin/padding
        so the rule sits at one x-position across every bar row - otherwise it shifts
        sideways as you scroll from the hero to a project */
@@ -209,7 +209,10 @@
      scales with the frame like the title and CTA; measure-capped so it wraps to a block
      rather than stretching the info column to its 320px max. */
   .v-port .p-info .tag{font-family:"DM Serif Display",serif;font-weight:400;
-    font-size:min(20px,3.9cqb);line-height:1.25;letter-spacing:-.005em;
+    /* sized by frame height AND viewport width: at narrow widths the info column is only
+       ~157px, where a height-derived 20px ribbons into five lines. The vw term takes over
+       there (14px at 390), the cqb term still caps it on short frames, 20px overall. */
+    font-size:min(3.9cqb,calc(9.71px + 1.099vw),20px);line-height:1.25;letter-spacing:-.005em;
     margin:calc(var(--feat-pull, 12px) * -1) 0 0;max-width:24ch;color:inherit;
     /* same divider anchor the hero's tagline uses; padding in em and the rule in
        currentColor so both track the cqb font size and the panel's ink (the Porcupine
@@ -240,6 +243,14 @@
 
   /* Everything that used to step at 859/500 now interpolates in the base rules above.
      Only genuinely binary switches remain below. */
+  /* Two columns of nowrap mono stop fitting beside the metadata at ~530px (measured:
+     needs 367px, has 362px), so stack to one column below 540. align-items:stretch makes
+     every sub-panel's left block fill the row, so the divider rule stays the same length
+     on the hero and project rows even though their content heights now differ. */
+  @media (max-width:540px){
+    .v-port .p-sub .feats{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:minmax(0,1fr);
+      min-height:0;row-gap:clamp(2px,.6vw,6px);}
+  }
   @media (max-width:500px){
     .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}
     /* the type/spacing that used to snap here is now fluid in the base rules, interpolating
