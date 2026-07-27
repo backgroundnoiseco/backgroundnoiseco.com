@@ -187,6 +187,15 @@
   .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px,calc(4.444px + 1.111vw),14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
   .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px,calc(7.611px + .2778vw),10px);}
   .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px,calc(8.611px + .2778vw),11px);}
+  /* Feature list: the panel's only body copy (the description lives in the info bar).
+     Mono + muted markers to match the site's label language; sizes in cqb so it scales
+     with the frame like everything else in the panel. Sits tighter to the title than the
+     flex gap alone would allow, so title+features read as one block above the CTA. */
+  .v-port .p-info .feats{list-style:none;margin:calc(var(--feat-pull, 12px) * -1) 0 0;padding:0;
+    display:grid;row-gap:clamp(5px,1cqb,8px);
+    font-family:var(--mono);font-size:min(12px,2.4cqb);line-height:1.5;letter-spacing:.02em;}
+  .v-port .p-info .feats li{position:relative;padding-left:1.35em;}
+  .v-port .p-info .feats li::before{content:"+";position:absolute;left:0;top:0;opacity:.45;}
   .v-port .p-info .cta{margin-top:8px;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:min(11px,1.833cqb);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);padding:8px 14px;border:1px solid #2a2724;align-self:flex-start;width:auto;}
   .v-port .p-info a.cta::after{content:"→";}
   .v-port .p-info .short{display:none;}
