@@ -189,11 +189,12 @@
   .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px,calc(4.444px + 1.111vw),14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
   .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px,calc(7.611px + .2778vw),10px);}
   .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px,calc(8.611px + .2778vw),11px);}
-  /* Feature list lives in the info bar (the panel carries the description). Laid out 2x2
-     so it fills the bar's width rather than running as a tall stack, and stays inside the
-     content height the hero's sub-panel locks in (86px). */
+  /* Feature list lives in the info bar (the panel carries the description). Flows
+     column-first at 3 rows, so six items read as two balanced columns and fill the rule
+     height (3 rows = 70px inside the 77px rule). Adding a 7th item would silently start a
+     third column - keep the count a multiple of 3. */
   .v-port .p-sub .feats{list-style:none;
-    display:grid;grid-template-columns:repeat(2,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
+    display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
     align-content:center;min-height:var(--bar-rule-h);
     font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.02em;color:var(--ink);
     /* same divider anchor as the hero's tagline, and deliberately the same margin/padding
