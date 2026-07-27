@@ -73,7 +73,9 @@ The one thing still done in JS (`positionAll()` near the bottom) is the wide-scr
 
 ### Info bar metadata
 
-Hero shows `LOCATED / PLATFORMS` stacked (label over value). Each project shows `RELEASE / PLATFORM` the same way. The tagline + `<dl>` were moved out of the panels into the bar, so each project's copy lives once. **Beware global regex edits over `<dl>`** — the outro's contact list and a legacy-variant list are also `<dl>`s; a global strip during the redesign wiped them and had to be restored from backup.
+Right side: hero shows `LOCATED / PLATFORMS` stacked (label over value), each project shows `RELEASE / PLATFORM` the same way. Left side: the hero keeps its studio tagline (`.tag`, DM Serif), while **each project shows its four-item `.feats` list in a 2×2 grid** — the project *description* lives in the panel's `.p-info` instead. That split is deliberate: body copy sits next to the screenshot it describes, and the bar carries scannable specs.
+
+The bar's height is locked by the hero's `.sub-panel--hero` (~86px content). Anything placed in a project row must fit that or the bar will jump between panels — the 2×2 feature grid lands at 44px. **Beware global regex edits over `<dl>`** — the outro's contact list and a legacy-variant list are also `<dl>`s; a global strip during the redesign wiped them and had to be restored from backup.
 
 ### Concentric-rectangle frame decoration
 

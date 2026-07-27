@@ -146,7 +146,6 @@
     opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
   /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
      stacked layout unchanged; only the description is resized to hold the bar's height. */
-  .v-port .p-sub .sub-panel--project .tag{font-size:clamp(16px,calc(var(--hero-size) * 26 / 180),22px);}
   .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(18px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 clamp(0px,calc(76.444px - 8.889vw),32px) clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
   .v-port .p-sub .meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:var(--ink);font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
@@ -187,15 +186,21 @@
   .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px,calc(4.444px + 1.111vw),14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
   .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px,calc(7.611px + .2778vw),10px);}
   .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px,calc(8.611px + .2778vw),11px);}
-  /* Feature list: the panel's only body copy (the description lives in the info bar).
-     Mono + muted markers to match the site's label language; sizes in cqb so it scales
-     with the frame like everything else in the panel. Sits tighter to the title than the
-     flex gap alone would allow, so title+features read as one block above the CTA. */
-  .v-port .p-info .feats{list-style:none;margin:calc(var(--feat-pull, 12px) * -1) 0 0;padding:0;
-    display:grid;row-gap:clamp(5px,1cqb,8px);
-    font-family:var(--mono);font-size:min(12px,2.4cqb);line-height:1.5;letter-spacing:.02em;}
-  .v-port .p-info .feats li{position:relative;padding-left:1.35em;}
-  .v-port .p-info .feats li::before{content:"+";position:absolute;left:0;top:0;opacity:.45;}
+  /* Feature list lives in the info bar (the panel carries the description). Laid out 2x2
+     so it fills the bar's width rather than running as a tall stack, and stays inside the
+     content height the hero's sub-panel locks in (86px). */
+  .v-port .p-sub .feats{list-style:none;margin:0;padding:0;
+    display:grid;grid-template-columns:repeat(2,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
+    align-content:center;
+    font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.02em;color:var(--ink);}
+  .v-port .p-sub .feats li{position:relative;padding-left:1.35em;white-space:nowrap;}
+  .v-port .p-sub .feats li::before{content:"+";position:absolute;left:0;top:0;opacity:.45;}
+  /* Panel description: the body copy that used to sit in the bar. Sized in cqb so it
+     scales with the frame like the title and CTA; measure-capped so it wraps to a block
+     rather than stretching the info column to its 320px max. */
+  .v-port .p-info .tag{font-family:"DM Serif Display",serif;font-weight:400;
+    font-size:min(20px,3.9cqb);line-height:1.25;letter-spacing:-.005em;
+    margin:calc(var(--feat-pull, 12px) * -1) 0 0;max-width:24ch;color:inherit;}
   .v-port .p-info .cta{margin-top:8px;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:min(11px,1.833cqb);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);padding:8px 14px;border:1px solid #2a2724;align-self:flex-start;width:auto;}
   .v-port .p-info a.cta::after{content:"→";}
   .v-port .p-info .short{display:none;}
