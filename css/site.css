@@ -135,7 +135,10 @@
   /* Vertical padding here interpolates 28/40 (at 500px) -> 36/48 (capping ~600px) instead of
      stepping. .p-sub shares the sticky stage with .frame, so a jump in its height resizes
      the frame and makes every concentric ring jump at once. */
-  .v-port .p-sub{display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
+  /* --bar-rule-h is the hero tagline's rendered height (2 lines at line-height 1.2).
+     The project rows' feature list adopts it as a min-height so the divider rule is the
+     same length on every bar row instead of shrinking to its own content. */
+  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(var(--hero-size) * 42 / 180),32px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
             calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
             clamp(40px,calc(8.333vw - 1.67px),48px)
             calc(var(--cap) + clamp(32px, calc(51.111px - 2.2222vw), 40px));border-bottom:1px solid var(--hairline);}
@@ -146,7 +149,7 @@
     opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
   /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
      stacked layout unchanged; only the description is resized to hold the bar's height. */
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:clamp(18px,calc(var(--hero-size) * 42 / 180),32px);line-height:1.2;letter-spacing:-.005em;margin:0 0 clamp(0px,calc(76.444px - 8.889vw),32px) clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 clamp(0px,calc(76.444px - 8.889vw),32px) clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
   .v-port .p-sub .meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:var(--ink);font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   .v-port .panel .kicker{font-family:var(--mono);font-size:clamp(9px,calc(6.222px + .5556vw),11px);letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(24px,calc(12.889px + 2.2222vw),32px);}
@@ -191,7 +194,7 @@
      content height the hero's sub-panel locks in (86px). */
   .v-port .p-sub .feats{list-style:none;
     display:grid;grid-template-columns:repeat(2,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
-    align-content:center;
+    align-content:center;min-height:var(--bar-rule-h);
     font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.02em;color:var(--ink);
     /* same divider anchor as the hero's tagline, and deliberately the same margin/padding
        so the rule sits at one x-position across every bar row - otherwise it shifts
