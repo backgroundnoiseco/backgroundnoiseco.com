@@ -189,10 +189,16 @@
   /* Feature list lives in the info bar (the panel carries the description). Laid out 2x2
      so it fills the bar's width rather than running as a tall stack, and stays inside the
      content height the hero's sub-panel locks in (86px). */
-  .v-port .p-sub .feats{list-style:none;margin:0;padding:0;
+  .v-port .p-sub .feats{list-style:none;
     display:grid;grid-template-columns:repeat(2,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
     align-content:center;
-    font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.02em;color:var(--ink);}
+    font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.02em;color:var(--ink);
+    /* same divider anchor as the hero's tagline, and deliberately the same margin/padding
+       so the rule sits at one x-position across every bar row - otherwise it shifts
+       sideways as you scroll from the hero to a project */
+    margin:0 0 0 clamp(0px,calc(5vw - 25px),25px);
+    padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);
+    border-left:1px solid rgba(234,230,220,0.25);}
   .v-port .p-sub .feats li{position:relative;padding-left:1.35em;white-space:nowrap;}
   .v-port .p-sub .feats li::before{content:"+";position:absolute;left:0;top:0;opacity:.45;}
   /* Panel description: the body copy that used to sit in the bar. Sized in cqb so it
@@ -200,7 +206,11 @@
      rather than stretching the info column to its 320px max. */
   .v-port .p-info .tag{font-family:"DM Serif Display",serif;font-weight:400;
     font-size:min(20px,3.9cqb);line-height:1.25;letter-spacing:-.005em;
-    margin:calc(var(--feat-pull, 12px) * -1) 0 0;max-width:24ch;color:inherit;}
+    margin:calc(var(--feat-pull, 12px) * -1) 0 0;max-width:24ch;color:inherit;
+    /* same divider anchor the hero's tagline uses; padding in em and the rule in
+       currentColor so both track the cqb font size and the panel's ink (the Porcupine
+       panel inverts to dark navy, where the hero's fixed cream rule would read wrong) */
+    padding-left:.9em;border-left:1px solid color-mix(in srgb, currentColor 25%, transparent);}
   .v-port .p-info .cta{margin-top:8px;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:min(11px,1.833cqb);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);padding:8px 14px;border:1px solid #2a2724;align-self:flex-start;width:auto;}
   .v-port .p-info a.cta::after{content:"→";}
   .v-port .p-info .short{display:none;}
