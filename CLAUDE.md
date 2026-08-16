@@ -47,7 +47,9 @@ The live site is a **sliding-stage single-page** layout: the header, side rail, 
 1. `.p-top` — sticky header (`position: sticky; top: 0`), BGNoiseCo wordmark + Contact link. Stays pinned the whole way.
 2. `.p-rail` — fixed vertical side rail (`00 Title / 01 Shadowbox / 02 Unicorn Porcupine / 03 Contact`; Prosession hidden). A `<nav aria-label="Sections">` of real `<button>`s (keyboard reachable; the driver mirrors `.on` into `aria-current`). Rotated via `writing-mode: vertical-rl` + `rotate(180deg)`. Left offset is `calc(var(--gutter) - 18px)` so it tracks the content column; below the cap this resolves to the original `left: 14px`.
 
-   Because it runs vertically, its **length is bound by viewport height, not width** — so `font-size`, `letter-spacing` and `gap` take the `min()` of a width-based and an `svh`-based term, and a short window shrinks them. The longest label sets the run, so re-check the short-window fit if labels grow.
+   Because it runs vertically, its **length is bound by viewport height, not width**. Type scales with both (`--rail-fs` / `--rail-ls`), but the **gap is derived, not scaled**: the label run is `--rail-chars × (0.6em advance + letter-spacing)` for JetBrains Mono, and the gap absorbs whatever is left of `--rail-target`. So the rail holds one height (~483px) as the window narrows — the letters shrink and the spacing opens to compensate — instead of contracting with the type. `--rail-target` still shrinks on short windows (`100svh - 60px`), since that is a hard constraint, and a 12px gap floor takes over on very wide windows.
+
+   **`--rail-chars` must equal the labels' total character count** (currently 50 = 8 + 12 + 20 + 10). It is the one hand-maintained number here; if labels change and it is not updated, the rail's height drifts.
 3. `.stage-track` — the tall scroll runway (`height: var(--panels) * 100svh - header`). Contains the sticky `.stage` plus four `.snap` divs (`--n: 0..3`, positioned at `n * 100svh`) that provide the snap points.
 4. `.p-outro` / `.p-foot` — after the stage releases, these scroll in conventionally.
 
