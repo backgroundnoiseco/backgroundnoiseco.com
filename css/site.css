@@ -24,8 +24,12 @@
 
   /* sticky side rail — project counter */
   /* left tracks --gutter so the rail holds a constant offset from the content column at
-     every width. At the 32px gutter floor this resolves to the original left:14px. */
-  .v-port .p-rail{position:fixed;top:50%;left:calc(var(--gutter) - 18px);font-family:var(--mono);font-size:clamp(9px,calc(7.611px + .2778vw),10px);letter-spacing:clamp(2.25px,calc(1.208px + .2083vw),3px);text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:clamp(22px,calc(10.889px + 2.2222vw),30px);z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
+     every width. At the 32px gutter floor this resolves to the original left:14px.
+     The rail runs vertically, so its LENGTH is constrained by viewport height, not width -
+     font-size/letter-spacing/gap therefore take the min of a width-based and a height-based
+     term so a short window shrinks them. "02 Unicorn Porcupine" is the longest label and
+     sets the run; if labels get longer again, re-check the short-window fit. */
+  .v-port .p-rail{position:fixed;top:50%;left:calc(var(--gutter) - 18px);font-family:var(--mono);font-size:clamp(7px,min(calc(7.611px + .2778vw),calc(6.111px + .5556svh)),10px);letter-spacing:clamp(1.5px,min(calc(1.208px + .2083vw),calc(0.083px + .4167svh)),3px);text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;gap:clamp(12px,min(calc(10.889px + 2.2222vw),calc(-1.11px + 4.444svh)),30px);z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);}
   .v-port .p-rail button{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;writing-mode:inherit;color:inherit;transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
   .v-port .p-rail button:focus-visible{outline:1px solid var(--ink);outline-offset:3px;color:var(--ink);}
   .v-port .p-rail button.on{color:var(--ink);}
