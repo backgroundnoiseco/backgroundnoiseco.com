@@ -133,16 +133,18 @@
      left:100% lands on the end of the text rather than the end of the grid column. */
   /* Badge geometry is pinned at two keyframes and interpolated linearly between them, so
      nothing snaps at a breakpoint:
-        <= 500px viewport : width 1.45em, margin-left -.15em, top -2.35em
+        <= 500px viewport : width 1.45em, margin-left -.15em, top -1.5em
         >= 913px viewport : width  .80em, margin-left  .50em, top  -.83em
      (em = --hero-size, which is 15vw until it caps at 137px at the 913.33px keyframe.)
      Written in px/vw because CSS can't interpolate a unitless em multiplier: each property
-     is the min()/max() of the two straight lines meeting at those keyframes. These numbers
+     is the min()/max() of the two straight lines meeting at those keyframes. The mobile top
+     is -1.5em so the badge's bottom lands at the h1's top edge, the same relationship it has
+     on desktop - it clears the kicker horizontally, so it does not need to sit above it. These numbers
      derive from --hero-size alone (not --maxw), so recompute them only if it changes. */
   .v-port .panel .p-badge{position:absolute;left:100%;
     width:min(21.75vw,calc(107.72px + .206vw),109.6px);
     margin-left:min(max(-2.25vw,calc(-107.72px + 19.294vw)),68.5px);
-    top:min(max(-35.25vw,calc(-251.9px + 15.131vw)),-113.71px);
+    top:max(-22.5vw,calc(-111.04px - .2926vw),-113.71px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
