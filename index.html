@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=17">
+<link rel="stylesheet" href="css/site.css?v=18">
 </head>
 <body>
 
@@ -29,7 +29,7 @@
       <nav><a href="#">Contact</a></nav>
     </header>
 
-    <nav class="p-rail" aria-label="Sections"><button type="button" class="on" aria-current="true" data-s="hero">00 Title</button><button type="button" data-s="1">01 Shadowbox</button><button type="button" data-s="0">02 Porcupine</button><button type="button" data-s="2">03 Prosession</button><button type="button" data-s="contact">04 Contact</button></nav>
+    <nav class="p-rail" aria-label="Sections"><button type="button" class="on" aria-current="true" data-s="hero">00 Title</button><button type="button" data-s="1">01 Shadowbox</button><button type="button" data-s="0">02 Porcupine</button><template data-disabled="prosession"><button type="button" data-s="2">03 Prosession</button></template><button type="button" data-s="contact">03 Contact</button></nav>
 
     <main>
     <div class="stage-track">
@@ -82,6 +82,10 @@
         <a href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener" class="cta"><span class="full">View on App Store</span><span class="short">App Store</span></a>
       </div>
       </article>
+      <!-- Prosession hidden for now. To restore: unwrap these two templates, put the
+           rail button back and renumber Contact to 04, restore the 4th .snap, and set
+           --panels/animation-range/panel-slide/bar keyframes back to 4 panels. -->
+      <template data-disabled="prosession">
       <article class="panel panel--project" data-panel="3" data-idx="2" style="--i:3">
       <div class="p-phone">
         <span class="numbadge">N° 03</span>
@@ -94,6 +98,7 @@
         <span class="cta">Coming soon</span>
       </div>
       </article>
+      </template>
         </div>
         <section class="p-sub" aria-label="Details">
           <div class="sub-panel sub-panel--hero" style="--i:0">
@@ -122,6 +127,7 @@
             </ul>
             <div class="meta"><span>Release</span><b>2025</b><span>Platform</span><b>iOS</b></div>
           </div>
+          <template data-disabled="prosession">
           <div class="sub-panel sub-panel--project" style="--i:3">
             <ul class="feats">
               <li>Step sequencer</li>
@@ -133,12 +139,13 @@
             </ul>
             <div class="meta"><span>Release</span><b>Q3 2026</b><span>Platform</span><b>iOS</b></div>
           </div>
+          </template>
         </section>
       </div>
       <div class="snap" aria-hidden="true" style="--n:0"></div>
       <div class="snap" aria-hidden="true" style="--n:1"></div>
       <div class="snap" aria-hidden="true" style="--n:2"></div>
-      <div class="snap" aria-hidden="true" style="--n:3"></div>
+      <template data-disabled="prosession"><div class="snap" aria-hidden="true" style="--n:3"></div></template>
     </div>
 
     <section class="p-outro" data-idx="contact" aria-label="Contact">
@@ -162,7 +169,7 @@
   </div>
 </div>
 
-<script src="js/site.js?v=17"></script>
+<script src="js/site.js?v=18"></script>
 
 </body>
 </html>
