@@ -36,9 +36,9 @@
      the top edge and Contact hard on the bottom whatever the leftover is. padRail() then
      eats most of that leftover by lengthening the numbers themselves. */
   .v-port .p-rail button{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;writing-mode:inherit;color:inherit;transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
-  /* the zeros padRail() prepends are decoration, not content - the accessible name stays
-     the plain label via aria-label, so nothing reads "zero zero zero zero title". */
-  .v-port .p-rail button .pad{opacity:.4;}
+  /* the zeros padRail() prepends read as part of the number, so they take the button's own
+     colour and light up with it - no opacity of their own. They are hidden from the
+     accessible name (aria-label on the button) so nothing reads "zero zero zero title". */
   .v-port .p-rail button:focus-visible{outline:1px solid var(--ink);outline-offset:3px;color:var(--ink);}
   .v-port .p-rail button.on{color:var(--ink);}
   .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;}
