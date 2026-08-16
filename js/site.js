@@ -150,16 +150,15 @@
   // Portrait rail — grow the section numbers to fill the rail's leftover height.
   // The rail is anchored under the header and level with the info bar's divider, so its
   // height tracks the viewport while the labels don't; the surplus would otherwise sit as
-  // dead gaps between the sections. Every number takes the same count of leading zeros
-  // (00 -> 000 -> 0000) until only a small gap is left, so the numbers stay column-aligned
-  // and the rail reads as one continuous run.
+  // dead gaps between the sections. Each number takes leading zeros (00 -> 000 -> 0000)
+  // until only a couple of characters of gap are left, so the rail reads as one run.
   (function(){
     const rail = document.querySelector('.v-port .p-rail');
     if (!rail) return;
     const btns = [...rail.querySelectorAll('button')];
     if (btns.length < 2) return;
 
-    const GAP_CH = 3;   // characters of breathing room kept between sections
+    const GAP_CH = 2;   // characters of breathing room kept between sections
 
     // split each label so the zeros can be swapped without touching the accessible name
     const pads = btns.map(b => {
@@ -187,9 +186,12 @@
       const free = rail.getBoundingClientRect().height
                  - btns.reduce((s, b) => s + b.getBoundingClientRect().height, 0)
                  - (btns.length - 1) * GAP_CH * adv;
-      // every button grows by the same amount, so the budget is split btns.length ways
-      const n = Math.max(0, Math.floor(free / (btns.length * adv)));
-      if (n) { const z = '0'.repeat(n); pads.forEach(p => { p.textContent = z; }); }
+      // Spend the budget one whole character at a time and hand the remainder out singly
+      // rather than splitting four ways and flooring - a floored quarter throws away up to
+      // four characters, which lands back in the gaps and makes them drift wide.
+      const budget = Math.max(0, Math.floor(free / adv));
+      const each = Math.floor(budget / btns.length), spare = budget % btns.length;
+      pads.forEach((p, i) => { p.textContent = '0'.repeat(each + (i < spare ? 1 : 0)); });
     }
 
     // The rail's height has exactly two inputs - the viewport (svh) and the header, which
