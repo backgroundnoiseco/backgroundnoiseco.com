@@ -180,7 +180,7 @@
   .v-port .p-sub{--bar-tag-size:clamp(18px,calc(var(--hero-size) * 42 / 180),32px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
             calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
             var(--bar-pad-b)
-            calc(var(--cap) + clamp(32px, calc(51.111px - 2.2222vw), 40px));border-bottom:1px solid var(--hairline);}
+            calc(var(--cap) + clamp(40px, calc(59.111px - 2.2222vw), 48px));border-bottom:1px solid var(--hairline);}
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
