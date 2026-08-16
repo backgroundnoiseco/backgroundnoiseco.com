@@ -53,11 +53,16 @@
   .v-port .panel{position:absolute;inset:0;z-index:2;transform:translateY(calc((var(--i) - var(--progress,0)) * 100%));will-change:transform;}
   /* Hero padding interpolates through the old breakpoint values instead of stepping:
      top 40@500 -> 60@860 -> 80@1000, bottom 30 -> 40 -> 60, horizontal is a smoothed V
-     (60@500 -> 22 valley @680 -> 32@1000, then rides the gutter via --cap). */
+     (60@500 -> 22 valley @680 -> 32@1000, then rides the gutter via --cap).
+     LEFT is separate and deliberately monotonic (60@500 -> 92@1000): it also absorbs what
+     used to be .hero-block's own padding-left. Summed, those two dipped to 48px around
+     680px wide, leaving only 19px between the hero text and the side rail. Keep this ramp
+     non-decreasing, or the text drifts back into the rail at mid widths. */
   .v-port .panel--hero{display:grid;align-items:center;
     padding:clamp(40px, max(calc(12.222px + 5.5556vw), calc(-62.857px + 14.286vw)), 80px)
             calc(var(--cap) + clamp(22px, max(calc(165.556px - 21.111vw), min(calc(0.75px + 3.125vw), 32px)), 60px))
-            clamp(30px, max(calc(16.111px + 2.7778vw), calc(-82.857px + 14.286vw)), 60px);}
+            clamp(30px, max(calc(16.111px + 2.7778vw), calc(-82.857px + 14.286vw)), 60px)
+            calc(var(--cap) + clamp(60px, calc(28px + 6.4vw), 92px));}
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
      (the old 12px floor left the title and description almost touching the frame edge on
      narrow windows),
@@ -126,7 +131,9 @@
   /* vw-based insets below all top out at their value at the 1000px viewport, where --maxw
      is reached — past that the content column is a fixed width, so anything still scaling
      with vw would slide the content sideways against the background band. */
-  .v-port .hero-block{padding-left:clamp(0px, min(calc(-71.667px + 14.3333vw), 6vw), 60px);}
+  /* indent folded into .panel--hero's padding-left so one ramp owns the hero text's
+     left edge - see the note there */
+  .v-port .hero-block{padding-left:0;}
   /* The badge lives inside the h1 and is sized/placed in em, so every offset is a fixed
      fraction of the hero font size — it holds the same position against the text at any
      --hero-size, and follows the glyphs if the wording changes. h1 shrink-wraps so
