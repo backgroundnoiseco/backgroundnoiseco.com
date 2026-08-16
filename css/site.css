@@ -283,13 +283,20 @@
 
   /* Everything that used to step at 859/500 now interpolates in the base rules above.
      Only genuinely binary switches remain below. */
-  /* Two columns of nowrap mono stop fitting beside the metadata at ~530px (measured:
-     needs 367px, has 362px), so stack to one column below 540. align-items:stretch makes
-     every sub-panel's left block fill the row, so the divider rule stays the same length
-     on the hero and project rows even though their content heights now differ. */
+  /* Two columns of nowrap mono stop fitting beside the metadata at ~522px (measured: needs
+     451px, has 448px), so stack to one column below 540. align-items:stretch makes every
+     sub-panel's left block fill the row, so the divider rule stays the same length on the
+     hero and project rows even though their content heights now differ.
+     The type is tightened here for one reason: **the six stacked rows must stay shorter
+     than .meta**, which is a constant 86px (fixed 11/13px type) and is what sets the bar's
+     height at every other width. Overshoot it and the bar's height jumps at this
+     breakpoint instead of interpolating - and because .p-sub shares the sticky stage with
+     .frame, that jump resizes every concentric ring at once. Budget at 540: 6 rows x 12px
+     + 5 x 2px = 82px. Raising the font cap, the line-height or the row-gap, or adding a
+     7th feature, spends past 86 and the jump comes back. */
   @media (max-width:540px){
     .v-port .p-sub .feats{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:minmax(0,1fr);
-      min-height:0;row-gap:clamp(2px,.6vw,6px);}
+      min-height:0;row-gap:2px;line-height:1.2;font-size:clamp(9px,calc(5.4px + .923vw),10px);}
   }
   @media (max-width:500px){
     .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}
