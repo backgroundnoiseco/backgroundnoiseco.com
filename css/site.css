@@ -25,25 +25,20 @@
   /* sticky side rail — project counter */
   /* left tracks --gutter so the rail holds a constant offset from the content column at
      every width. At the 32px gutter floor this resolves to the original left:14px.
-     The rail runs vertically, so its LENGTH is bound by viewport height, not width. Type
-     still scales with both (--rail-fs/--rail-ls), but the GAP is now derived rather than
-     scaled: the label run is chars * (0.6em advance + letter-spacing) for JetBrains Mono,
-     and the gap takes up whatever is left of --rail-target, so the rail holds one height as
-     the window narrows instead of contracting with the type. --rail-target still shrinks on
-     short windows (100svh - 60px) because that is a hard constraint; the 12px gap floor
-     wins on very wide windows, where the run alone nearly fills the target.
-     **--rail-chars must equal the total character count of the labels** (currently 50:
-     8 + 12 + 20 + 10). Update it if labels change or the run maths goes wrong. */
-  .v-port .p-rail{position:fixed;left:calc(var(--gutter) - 18px);top:calc(var(--p-top-h,60px) + 16px);bottom:var(--bar-pad-b);font-family:var(--mono);--rail-fs:clamp(6px,min(calc(7.611px + .2778vw),calc(1.97svh - 2.56px)),10px);--rail-ls:clamp(1.3px,min(calc(1.208px + .2083vw),calc(0.55svh - 0.9px)),3px);font-size:var(--rail-fs);letter-spacing:var(--rail-ls);gap:0;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:rotate(180deg);}
-  /* all but the last stretch; each carries a rule that eats its leftover space, so the
-     labels are joined by lines instead of floating with gaps. The last is content-sized so
-     it lands hard against the rail's bottom edge. */
-  .v-port .p-rail button:not(:last-child){flex:1;}
-  .v-port .p-rail button:not(:last-child)::after{content:"";flex:1;width:1px;margin:.9em 0;
-    background:currentColor;opacity:.3;}
-  /* the rail is rotated 180deg, which also flips each button's internal order - so the
-     button reverses too, putting its connector rule visually below its label. */
-  .v-port .p-rail button{display:flex;flex-direction:row-reverse;align-items:center;appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;writing-mode:inherit;color:inherit;transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
+     The rail runs vertically, so its LENGTH is bound by viewport height, not width: it is
+     anchored 16px under the header and level with the info bar's divider, so its height
+     follows the viewport while the type (--rail-fs/--rail-ls) scales with both axes.
+     Whatever height the labels don't use shows up as gaps between them; padRail() in
+     js/site.js absorbs that by growing every section number's leading zeros in step
+     (00 -> 000 -> 0000...), down to a small residual gap. */
+  .v-port .p-rail{position:fixed;left:calc(var(--gutter) - 18px);top:calc(var(--p-top-h,60px) + 16px);bottom:var(--bar-pad-b);font-family:var(--mono);--rail-fs:clamp(6px,min(calc(7.611px + .2778vw),calc(1.97svh - 2.56px)),10px);--rail-ls:clamp(1.3px,min(calc(1.208px + .2083vw),calc(0.55svh - 0.9px)),3px);font-size:var(--rail-fs);letter-spacing:var(--rail-ls);gap:0;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;justify-content:space-between;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:rotate(180deg);}
+  /* buttons are content-sized and space-between spreads the remainder, so 00 lands hard on
+     the top edge and Contact hard on the bottom whatever the leftover is. padRail() then
+     eats most of that leftover by lengthening the numbers themselves. */
+  .v-port .p-rail button{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;writing-mode:inherit;color:inherit;transition:color .3s;white-space:nowrap;pointer-events:auto;cursor:pointer;}
+  /* the zeros padRail() prepends are decoration, not content - the accessible name stays
+     the plain label via aria-label, so nothing reads "zero zero zero zero title". */
+  .v-port .p-rail button .pad{opacity:.4;}
   .v-port .p-rail button:focus-visible{outline:1px solid var(--ink);outline-offset:3px;color:var(--ink);}
   .v-port .p-rail button.on{color:var(--ink);}
   .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;}

@@ -147,6 +147,61 @@
     sync();
   })();
 
+  // Portrait rail — grow the section numbers to fill the rail's leftover height.
+  // The rail is anchored under the header and level with the info bar's divider, so its
+  // height tracks the viewport while the labels don't; the surplus would otherwise sit as
+  // dead gaps between the sections. Every number takes the same count of leading zeros
+  // (00 -> 000 -> 0000) until only a small gap is left, so the numbers stay column-aligned
+  // and the rail reads as one continuous run.
+  (function(){
+    const rail = document.querySelector('.v-port .p-rail');
+    if (!rail) return;
+    const btns = [...rail.querySelectorAll('button')];
+    if (btns.length < 2) return;
+
+    const GAP_CH = 3;   // characters of breathing room kept between sections
+
+    // split each label so the zeros can be swapped without touching the accessible name
+    const pads = btns.map(b => {
+      const label = b.textContent.trim();
+      b.setAttribute('aria-label', label);
+      b.textContent = label;
+      const pad = document.createElement('span');
+      pad.className = 'pad';
+      pad.setAttribute('aria-hidden', 'true');
+      b.insertBefore(pad, b.firstChild);
+      return pad;
+    });
+
+    // the rail is vertical-rl, so a text run measures along the box's HEIGHT
+    const probe = document.createElement('span');
+    probe.textContent = '0000000000';
+    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;';
+
+    function padRail(){
+      pads.forEach(p => { p.textContent = ''; });
+      rail.appendChild(probe);
+      const adv = probe.getBoundingClientRect().height / 10;   // advance + letter-spacing
+      rail.removeChild(probe);
+      if (!(adv > 0)) return;
+      const free = rail.getBoundingClientRect().height
+                 - btns.reduce((s, b) => s + b.getBoundingClientRect().height, 0)
+                 - (btns.length - 1) * GAP_CH * adv;
+      // every button grows by the same amount, so the budget is split btns.length ways
+      const n = Math.max(0, Math.floor(free / (btns.length * adv)));
+      if (n) { const z = '0'.repeat(n); pads.forEach(p => { p.textContent = z; }); }
+    }
+
+    // The rail's height has exactly two inputs - the viewport (svh) and the header, which
+    // JS measures into --p-top-h. Watch both directly rather than observing the rail: the
+    // zeros change its content on every call, and observing what you rewrite invites a loop.
+    window.addEventListener('resize', padRail);
+    const topNav = document.querySelector('.v-port .p-top');
+    if (topNav && typeof ResizeObserver !== 'undefined') new ResizeObserver(padRail).observe(topNav);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(padRail);
+    padRail();
+  })();
+
   // Portrait frame — concentric rectangles, drawn as a live <svg> element rather than a
   // data-URI background so the fill can inherit currentColor and tint per panel.
   (function(){
