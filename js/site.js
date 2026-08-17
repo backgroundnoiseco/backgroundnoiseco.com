@@ -10,6 +10,11 @@
   // Respect the OS reduced-motion preference for programmatic scrolls
   const SCROLL_BEHAVIOR = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
+  // The layout's two keyframe widths. Everything fluid on the page interpolates between
+  // them - in CSS via --kf-x (see the keyframe table at the top of css/site.css), and here
+  // for the one piece of positioning JS still owns. Keep these in sync with the CSS.
+  const KF0 = 360, KF1 = 1000;
+
   // Portrait stage — one scroll-progress value drives everything: the panels translate by
   // (index - progress) * 100%, and the rail reads the same number. No IntersectionObserver,
   // no second source of truth to drift out of sync.
@@ -91,12 +96,17 @@
         // Shift the pair so the phone's centre lands ~37% of width. Past the layout cap
         // (maxw + 64 = 1000) freeze the target at a constant offset left of centre, so the
         // pair stops drifting left as the window widens (37% of viewport keeps sliding left
-        // of the centred, capped content otherwise).
+        // of the centred, capped content otherwise). The two branches meet exactly at
+        // CAP_W (0.37 x 1000 === 1000/2 - 130), so there is no step there.
         const CAP_W = 1000;
         const phoneCenter = pRect.left + pRect.width / 2;
         const vw = window.innerWidth;
         const target = vw <= CAP_W ? vw * 0.37 : vw / 2 - CAP_W * 0.13;
-        const delta = vw < 860 ? 0 : Math.max(0, Math.round(target - phoneCenter));
+        // Ease the shift in across the SAME keyframes the CSS uses (--kf-x, 360 -> 1000)
+        // rather than switching it on at a threshold. This used to be `vw < 860 ? 0 : full`,
+        // which snapped the phone 100px sideways the moment you crossed 860.
+        const t = Math.min(1, Math.max(0, (vw - KF0) / (KF1 - KF0)));
+        const delta = Math.max(0, Math.round((target - phoneCenter) * t));
         phone.style.transform = 'translateX(' + delta + 'px)';
         if (info) info.style.transform = 'translateX(' + delta + 'px)';
       });
