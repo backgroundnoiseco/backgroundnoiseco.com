@@ -76,7 +76,7 @@
      Whatever height the labels don't use shows up as gaps between them; padRail() in
      js/site.js absorbs that by growing every section number's leading zeros in step
      (00 -> 000 -> 0000...), down to a small residual gap. */
-  .v-port .p-rail{position:fixed;left:calc(var(--gutter) - 18px);top:calc(var(--p-top-h,60px) + 16px);bottom:var(--bar-pad-b);font-family:var(--mono);--rail-fs:clamp(6px,min(calc(7.611px + .2778vw),calc(1.97svh - 2.56px)),10px);--rail-ls:clamp(1.3px,min(calc(1.208px + .2083vw),calc(0.55svh - 0.9px)),3px);font-size:var(--rail-fs);letter-spacing:var(--rail-ls);gap:0;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;justify-content:space-between;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:rotate(180deg);}
+  .v-port .p-rail{position:fixed;left:calc(var(--gutter) - 18px);top:calc(var(--p-top-h,60px) + 16px);bottom:var(--bar-pad-b);font-family:var(--mono);--rail-fs:clamp(6px,min(calc(8.61px + var(--kf-x) * 0.0021719),calc(1.97svh - 2.56px)),10px);--rail-ls:clamp(1.3px,min(calc(1.958px + var(--kf-x) * 0.0016281),calc(0.55svh - 0.9px)),3px);font-size:var(--rail-fs);letter-spacing:var(--rail-ls);gap:0;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;justify-content:space-between;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:rotate(180deg);}
   /* buttons are content-sized and space-between spreads the remainder, so 00 lands hard on
      the top edge and Contact hard on the bottom whatever the leftover is. padRail() then
      eats most of that leftover by lengthening the numbers themselves. */
@@ -135,13 +135,13 @@
      info column max is a smoothed V (420@500 -> 280@860 -> 420@1000). All gutter-tied sides
      ride var(--cap) so they keep growing past the layout cap. */
   .v-port .panel--project{display:grid;
-    grid-template-columns:minmax(0,260px) minmax(0, clamp(280px, max(calc(614.444px - 38.889vw), calc(100vw - 580px)), 420px));
-    gap:clamp(16px, max(calc(4.889px + 2.2222vw), calc(-74.286px + 11.4286vw)), 40px);
+    grid-template-columns:minmax(0,260px) minmax(0, clamp(280px, calc(280px + var(--kf-x) * 0.21875), 420px));
+    gap:clamp(16px, calc(16px + var(--kf-x) * 0.0375), 40px);
     align-items:center;justify-content:center;
     padding:2cqb
-            calc(var(--cap) + clamp(28px, calc(25.44px + .656vw), 32px))
+            calc(var(--cap) + clamp(28px, calc(28px + var(--kf-x) * 0.00625), 32px))
             2cqb
-            calc(var(--cap) + clamp(32px, calc(146.286px - 11.4286vw), 48px));}
+            calc(var(--cap) + clamp(32px, calc(48px + var(--kf-x) * -0.025), 48px));}
   /* The rings are an inline <svg> (not a background image) so their fill inherits colour
      from CSS. --rect-mix is 1 on the Porcupine panel and falls to 0 either side of it, so the
      tint interpolates across the transition rather than snapping. */
@@ -252,7 +252,7 @@
     opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
   /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
      stacked layout unchanged; only the description is resized to hold the bar's height. */
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px, calc(0px + var(--kf-x) * 0.0390625), 25px);padding:0 0 0 clamp(16px, calc(16px + var(--kf-x) * 0.00625), 20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
   .v-port .p-sub .meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:var(--ink);font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   /* size and gap live in vars on .panel--hero so .hero-block can cancel them out - see the
@@ -282,32 +282,32 @@
   .v-port .p-phone{position:relative;width:100%;max-width:min(240px,40cqb);justify-self:center;}
   .v-port .p-phone .shell{position:relative;border-radius:min(28px,4.667cqb);overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.04);}
   .v-port .p-phone .shell img{width:100%;height:auto;display:block;}
-  .v-port .p-phone .numbadge{position:absolute;top:clamp(-8px,calc(1.556px - 1.111vw),-4px);left:clamp(-8px,calc(1.556px - 1.111vw),-4px);font-family:var(--mono);font-size:clamp(8px,calc(5.222px + .5556vw),10px);letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:var(--ink);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;z-index:2;}
-  .v-port .p-phone .status{position:absolute;top:clamp(-7px,calc(.167px - .8333vw),-4px);right:clamp(-7px,calc(.167px - .8333vw),-4px);font-family:var(--mono);font-size:clamp(7.5px,calc(4.722px + .5556vw),9.5px);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:rgba(20,20,20,.9);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
+  .v-port .p-phone .numbadge{position:absolute;top:clamp(-8px, calc(-4px + var(--kf-x) * -0.00625), -4px);left:clamp(-8px, calc(-4px + var(--kf-x) * -0.00625), -4px);font-family:var(--mono);font-size:clamp(8px, calc(8px + var(--kf-x) * 0.003125), 10px);letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:var(--ink);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;z-index:2;}
+  .v-port .p-phone .status{position:absolute;top:clamp(-7px, calc(-4px + var(--kf-x) * -0.0046875), -4px);right:clamp(-7px, calc(-4px + var(--kf-x) * -0.0046875), -4px);font-family:var(--mono);font-size:clamp(7.5px, calc(7.5px + var(--kf-x) * 0.003125), 9.5px);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:rgba(20,20,20,.9);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
 
   /* right column — metadata stack */
-  .v-port .p-info{display:flex;flex-direction:column;gap:clamp(20px,calc(8.889px + 2.222vw),28px);max-width:320px;justify-self:start;}
+  .v-port .p-info{display:flex;flex-direction:column;gap:clamp(20px, calc(20px + var(--kf-x) * 0.0125), 28px);max-width:320px;justify-self:start;}
   .v-port .p-info .role{font-family:"Distortion",serif;font-weight:400;font-size:min(60px,10cqb);line-height:.9;letter-spacing:-.015em;text-transform:none;color:#a89a7d;margin:0;}
   .v-port .p-info .title{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;letter-spacing:-.005em;margin:0;color:inherit;font-weight:400;}
   .v-port .p-info .title .thin{font-weight:inherit;opacity:1;}
   .v-port .p-info .title em{font-style:italic;font-weight:inherit;}
-  .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:clamp(17px,calc(4.5px + 2.5vw),26px);line-height:1.2;margin:0;color:var(--ink);letter-spacing:-.005em;}
-  .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px,calc(4.444px + 1.111vw),14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
-  .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px,calc(7.611px + .2778vw),10px);}
-  .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px,calc(8.611px + .2778vw),11px);}
+  .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:clamp(17px, calc(17px + var(--kf-x) * 0.0140625), 26px);line-height:1.2;margin:0;color:var(--ink);letter-spacing:-.005em;}
+  .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px, calc(10px + var(--kf-x) * 0.00625), 14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
+  .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px, calc(9px + var(--kf-x) * 0.0015625), 10px);}
+  .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px, calc(10px + var(--kf-x) * 0.0015625), 11px);}
   /* Feature list lives in the info bar (the panel carries the description). Flows
      column-first at 3 rows, so six items read as two balanced columns and fill the rule
      height (3 rows = 70px inside the 77px rule). Adding a 7th item would silently start a
      third column - keep the count a multiple of 3. */
   .v-port .p-sub .feats{list-style:none;
-    display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:clamp(20px,3vw,40px);row-gap:8px;
+    display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:clamp(20px, calc(20px + var(--kf-x) * 0.015625), 30px);row-gap:8px;
     align-content:center;min-height:var(--bar-rule-h);
-    font-family:var(--mono);font-size:clamp(9px,calc(5.4px + .923vw),12px);line-height:1.5;letter-spacing:.02em;color:var(--ink);
+    font-family:var(--mono);font-size:clamp(9px, calc(9px + var(--kf-x) * 0.0046875), 12px);line-height:1.5;letter-spacing:.02em;color:var(--ink);
     /* same divider anchor as the hero's tagline, and deliberately the same margin/padding
        so the rule sits at one x-position across every bar row - otherwise it shifts
        sideways as you scroll from the hero to a project */
-    margin:0 0 0 clamp(0px,calc(5vw - 25px),25px);
-    padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);
+    margin:0 0 0 clamp(0px, calc(0px + var(--kf-x) * 0.0390625), 25px);
+    padding:0 0 0 clamp(16px, calc(16px + var(--kf-x) * 0.00625), 20px);
     border-left:1px solid rgba(234,230,220,0.25);}
   .v-port .p-sub .feats li{position:relative;padding-left:1.35em;white-space:nowrap;}
   .v-port .p-sub .feats li::before{content:"+";position:absolute;left:0;top:0;opacity:.45;}
@@ -318,7 +318,7 @@
     /* sized by frame height AND viewport width: at narrow widths the info column is only
        ~157px, where a height-derived 20px ribbons into five lines. The vw term takes over
        there (14px at 390), the cqb term still caps it on short frames, 20px overall. */
-    font-size:min(3.9cqb,calc(9.71px + 1.099vw),20px);line-height:1.25;letter-spacing:-.005em;
+    font-size:min(3.9cqb,calc(13.67px + var(--kf-x) * 0.0098906),20px);line-height:1.25;letter-spacing:-.005em;
     margin:calc(var(--feat-pull, 12px) * -1) 0 0;max-width:24ch;color:inherit;
     /* same divider anchor the hero's tagline uses; padding in em and the rule in
        currentColor so both track the cqb font size and the panel's ink (the Porcupine
@@ -333,11 +333,11 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:clamp(32px, calc(20.889px + 2.2222vw), 40px)
+  .v-port .p-outro{padding:clamp(32px, calc(32px + var(--kf-x) * 0.0125), 40px)
             calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.0125), 32px))
-            clamp(50px, calc(36.111px + 2.7778vw), 60px);border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
+            clamp(50px, calc(50px + var(--kf-x) * 0.015625), 60px);border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
   .v-port .p-outro .contact{padding-left:0;}
-  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:var(--mono);font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;align-items:baseline;}
+  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:var(--mono);font-size:clamp(11px, calc(11px + var(--kf-x) * 0.0046875), 14px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;align-items:baseline;}
   .v-port .p-outro .contact dt{}
   .v-port .p-outro .contact dd{margin:0;color:var(--ink);text-transform:none;letter-spacing:.02em;}
   .v-port .p-outro .contact a{color:inherit;text-decoration:none;}
@@ -367,7 +367,7 @@
      or adding a 7th feature, spends past 86 and the jump comes back. */
   @media (max-width:565px){
     .v-port .p-sub .feats{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:minmax(0,1fr);
-      min-height:0;row-gap:2px;line-height:1.2;font-size:clamp(9px,calc(5.4px + .923vw),10px);}
+      min-height:0;row-gap:2px;line-height:1.2;font-size:clamp(9px, calc(9px + var(--kf-x) * 0.0046875), 10px);}
   }
   @media (max-width:500px){
     .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}
