@@ -31,9 +31,9 @@
          property            360px      1000px          K
          --hero-size           54    ->    114     0.09375
          badge width           78    ->    109     0.0484375
-         badge margin-left     -8    ->     44     0.08125
-         badge top         -163.1    ->   -106     0.08921875
-         --kicker-fs            9    ->  14.25     0.00820313
+         badge margin-left     -8    ->     52     0.09375
+         badge top         -163.1    ->   -120     0.06734375
+         --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->   41.4     0.0334375
          --hero-drop           60    ->    100     0.0625  (+ svh guard, below)
          hero pad left         60    ->     92     0.05
@@ -52,8 +52,9 @@
      came back down. Anything that changes the frame's height belongs on these keyframes.
 
      Two invariants the keyframe values have to respect, both of which have bitten:
-       - badge top at 1000 must be -(badge width at 1000), give or take a few px, or
-         the badge sinks into the wordmark instead of sitting on its top edge.
+       - badge top at 1000 is now -120 against a 109px badge, so its bottom sits 11px
+         ABOVE the wordmark's top edge rather than on it. Keep it at or past -109: any
+         less negative and the badge starts sinking into the first line.
        - the hero panel has NO vertical padding, and must not be given any. It is a
          centred grid item, so padding cannot clear anything - all it does is shrink the
          content box. Once the block's margin box outgrows that box, grid centring stops
@@ -131,7 +132,7 @@
      own padding-left, and when it and the right padding both dipped mid-range the hero
      text ended up 19px from the side rail. */
   .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.0625), 100px),max(0px, calc(100svh - 565px)));
-    --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.00820313), 14.25px);
+    --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.0046875), 12px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.0334375), 41.4px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
     padding:0
@@ -239,8 +240,8 @@
      opens up, because the text keeps descending and the badge does not. */
   .v-port .panel .p-badge{position:absolute;left:100%;
     width:clamp(78px, calc(78px + var(--kf-x) * 0.0484375), 109px);
-    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.08125), 44px);
-    top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.08921875), -106px);
+    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.09375), 52px);
+    top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.06734375), -120px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
