@@ -40,7 +40,9 @@ The file in `fonts/` has been rebuilt with fontTools (all tables recompiled), wh
 
 ## Architecture (index.html)
 
-> **This section was rewritten for the "sliding stage" redesign** (was a vertical scroll-snap layout with one full-height section per project). If anything below doesn't match the code, trust the code and fix the doc. The redesign is still being polished — known gaps: no mobile-specific layout yet, the `N°`/status pill can collide on very short windows, and the wide-screen composition shift is still viewport-keyed JS (see below).
+> **This section was rewritten for the "sliding stage" redesign** (was a vertical scroll-snap layout with one full-height section per project). If anything below doesn't match the code, trust the code and fix the doc. The redesign is still being polished — known gaps: no mobile-specific layout yet, the `N°`/status pill collide once the frame drops below ~280px tall (a 520px-tall window; the gap is 94px at 760, 22px at 580, and goes negative from there — it tracks frame *height*, not width), and the wide-screen composition shift is still viewport-keyed JS (see below).
+
+**Verified out to 2560px wide** (and 2560×1440): the hero composition, the rail, and the project phone/info pair all hold a *constant* offset from the 936px content band at every width past the 1000px cap — nothing drifts against the background, and there's no horizontal overflow. Past-cap widths just grow the gutters.
 
 The live site is a **sliding-stage single-page** layout: the header, side rail, concentric-rectangle frame and info bar stay put while the hero and three project panels slide up through the frame as you scroll. Markup lives in a single `.v-port` container:
 
