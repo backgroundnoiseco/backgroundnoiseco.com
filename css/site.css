@@ -39,6 +39,17 @@
          hero pad left         60    ->     92     0.05
          hero pad right        60    ->     32    -0.04375
          --bar-tag-size        18    ->   26.6     0.0134375
+         info bar pad top      28    ->     36     0.0125
+         info bar pad right    24    ->     32     0.0125
+         --bar-pad-b           40    ->     48     0.0125
+         info bar pad left     48    ->     40    -0.0125
+
+     The info bar's VERTICAL padding is on this list for a reason that is not obvious:
+     .frame's height is the stage minus the bar, and the hero is centred in the frame, so
+     the bar's ramp moves the wordmark. While the bar still floored at its own 500px
+     anchor, the hero's travel had a kink there - and since the badge's `top` is a straight
+     line, the two summed to a badge that drifted up to ~600px wide and then reversed and
+     came back down. Anything that changes the frame's height belongs on these keyframes.
 
      Two invariants the keyframe values have to respect, both of which have bitten:
        - badge top at 1000 must be -(badge width at 1000), give or take a few px, or
@@ -47,11 +58,11 @@
          keyframes. The block is centred, so only the DIFFERENCE positions it; two
          independent ramps converge and walk the wordmark up as you resize.
      ====================================================================== */
-  .v-port{--kf-x:calc(100vw - 360px);--bar-pad-b:clamp(40px,calc(8.333vw - 1.67px),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.09375),114px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port{--kf-x:calc(100vw - 360px);--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.0125),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.09375),114px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
-  .v-port .p-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px));border-bottom:1px solid var(--hairline);}
+  .v-port .p-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.0125), 32px));border-bottom:1px solid var(--hairline);}
   .v-port .p-top .mark{font-family:"Distortion",serif;font-size:22px;letter-spacing:.02em;color:var(--ink);}
   .v-port .p-top nav{display:flex;gap:20px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
   .v-port .p-top nav a.on{color:var(--ink);}
@@ -230,10 +241,10 @@
   /* --bar-rule-h is the hero tagline's rendered height (2 lines at line-height 1.2).
      The project rows' feature list adopts it as a min-height so the divider rule is the
      same length on every bar row instead of shrinking to its own content. */
-  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(18px + var(--kf-x) * 0.0134375),26.6px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
-            calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
+  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(18px + var(--kf-x) * 0.0134375),26.6px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(28px + var(--kf-x) * 0.0125),36px)
+            calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.0125), 32px))
             var(--bar-pad-b)
-            calc(var(--cap) + clamp(40px, calc(59.111px - 2.2222vw), 48px));border-bottom:1px solid var(--hairline);}
+            calc(var(--cap) + clamp(40px, calc(48px + var(--kf-x) * -0.0125), 48px));border-bottom:1px solid var(--hairline);}
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
@@ -323,7 +334,7 @@
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
   .v-port .p-outro{padding:clamp(32px, calc(20.889px + 2.2222vw), 40px)
-            calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
+            calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.0125), 32px))
             clamp(50px, calc(36.111px + 2.7778vw), 60px);border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
   .v-port .p-outro .contact{padding-left:0;}
   .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:var(--mono);font-size:clamp(11px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;align-items:baseline;}
