@@ -31,7 +31,7 @@
          property            360px      1000px          K
          --hero-size           54    ->    114     0.09375
          badge width           78    ->    109     0.0484375
-         badge margin-left     -8    ->     52     0.09375
+         badge margin-left     -8    ->     96     0.1625
          badge top         -163.1    ->   -120     0.06734375
          --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->   41.4     0.0334375
@@ -240,7 +240,7 @@
      opens up, because the text keeps descending and the badge does not. */
   .v-port .panel .p-badge{position:absolute;left:100%;
     width:clamp(78px, calc(78px + var(--kf-x) * 0.0484375), 109px);
-    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.09375), 52px);
+    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.1625), 96px);
     top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.06734375), -120px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
