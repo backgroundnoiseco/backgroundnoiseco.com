@@ -13,7 +13,7 @@
   @font-face{font-family:"Distortion";src:url("data:font/woff2;base64,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") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 
   /* ============ v-portrait: editorial, phone-centric ============ */
-  .v-port{--bar-pad-b:clamp(40px,calc(8.333vw - 1.67px),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,15vw,124px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port{--bar-pad-b:clamp(40px,calc(8.333vw - 1.67px),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,15vw,112px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
@@ -150,25 +150,30 @@
      nothing snaps at a breakpoint. Written in px/vw because CSS can't interpolate a
      unitless em multiplier: each property is the min()/max() of the two straight lines
      meeting at those keyframes.
-        width       : 108.75px at 500px viewport -> 109.6px, capped
-        margin-left : -11.25px at 500px viewport ->  68.5px, capped
-        top         : -148.9px at 500px viewport ->    -97px, capped
-     `top` is measured from the h1's own top (the badge is absolute inside it). Its cap is
-     kept at a constant FRACTION of --hero-size (-97/124 = -0.781em) rather than a constant
-     px, so the badge holds its position against the wordmark. **That ties it to
-     --hero-size's max: change the max and this line has to be refitted** - the hero caps
-     where 15vw reaches it (124px -> 826.67px viewport), and the new cap value is
-     -0.781 x max, with the line refitted from the unchanged 500px keyframe.
-     width and margin-left are deliberately NOT refitted with it: they read as a fixed
-     badge and a fixed gap rather than as a proportion of the type, and they cap at 913px,
-     so between 826.67 and 913 the badge drifts a few px right while the text is already
-     static. That drift is smooth and was judged not worth the coupling.
+        width       : 108.75px at 500px viewport -> 109.26px, capped
+        margin-left : -11.25px at 500px viewport ->  36.34px, capped
+        top         : -148.9px at 500px viewport -> -87.47px, capped
+     **All three cap where --hero-size does** - at the viewport where 15vw reaches its max
+     (112px -> 746.67px). Past that the wordmark is frozen, so the badge must freeze too or
+     it slides out from under text that has stopped moving.
+
+     ** --hero-size's max is a maintenance trigger for this whole block. ** To change it:
+       - new cap viewport C = max / 0.15
+       - width and margin-left: keep their lines, move the caps to the value each line
+         reaches at C. Their SLOPES are deliberately left alone - refitting them to a
+         smaller max shrinks the badge and pulls it left at every width in between, which
+         is a visual change nobody asked for. Only the freeze point moves.
+       - top: refit properly. It is measured from the h1's own top (the badge is absolute
+         inside it), and the hero block is vertically centred, so a smaller wordmark starts
+         LOWER and a fixed px cap would leave the badge floating above it. Cap it at
+         -0.781 x max (the ratio the composition was tuned at) and refit the line through
+         the unchanged 500px keyframe: m = (cap + 148.9)/(C - 500), b = -148.9 - 500m.
      Consequence of the top curve: on narrow windows the gap between badge and hero text
      opens up, because the text keeps descending and the badge does not. */
   .v-port .panel .p-badge{position:absolute;left:100%;
-    width:min(21.75vw,calc(107.72px + .206vw),109.6px);
-    margin-left:min(max(-2.25vw,calc(-107.72px + 19.294vw)),68.5px);
-    top:clamp(-163.1px,calc(-228.34px + 15.888vw),-97px);
+    width:min(21.75vw,calc(107.72px + .206vw),109.26px);
+    margin-left:min(max(-2.25vw,calc(-107.72px + 19.294vw)),36.34px);
+    top:clamp(-163.1px,calc(-273.42px + 24.9032vw),-87.47px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
@@ -179,7 +184,7 @@
   /* --bar-rule-h is the hero tagline's rendered height (2 lines at line-height 1.2).
      The project rows' feature list adopts it as a min-height so the divider rule is the
      same length on every bar row instead of shrinking to its own content. */
-  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(var(--hero-size) * 42 / 180),29px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
+  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(var(--hero-size) * 42 / 180),27px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
             calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
             var(--bar-pad-b)
             calc(var(--cap) + clamp(40px, calc(59.111px - 2.2222vw), 48px));border-bottom:1px solid var(--hairline);}
