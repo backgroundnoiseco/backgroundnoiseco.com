@@ -13,7 +13,7 @@
   @font-face{font-family:"Distortion";src:url("data:font/woff2;base64,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") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
 
   /* ============ v-portrait: editorial, phone-centric ============ */
-  .v-port{--bar-pad-b:clamp(40px,calc(8.333vw - 1.67px),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,15vw,80px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port{--bar-pad-b:clamp(40px,calc(8.333vw - 1.67px),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,15vw,88px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
@@ -66,10 +66,24 @@
      used to be .hero-block's own padding-left. Summed, those two dipped to 48px around
      680px wide, leaving only 19px between the hero text and the side rail. Keep this ramp
      non-decreasing, or the text drifts back into the rail at mid widths. */
-  .v-port .panel--hero{display:grid;align-items:center;
-    padding:clamp(40px, max(calc(12.222px + 5.5556vw), calc(-62.857px + 14.286vw)), 80px)
+  /* The block is centred and far shorter than the frame, so the vertical padding does not
+     clear anything - its ONLY effect is that align-items:center puts the block's centre at
+     (frame height + padTop - padBottom) / 2. So the DIFFERENCE is the whole vertical
+     position, and it has to be constant or the hero drifts as you resize. It used to be
+     two independent ramps that converged (20px apart at 1000px, 10px at the 500px floor),
+     which walked the wordmark 7px UP between 840 and 620 before it began descending for
+     the real reason - the type shrinking below 533. --hero-v-offset is now that difference,
+     fixed at 20px, and padBottom is derived from padTop rather than fitted separately.
+     Raise it to sit the hero lower, lower it to sit higher; it does not interact with
+     anything else. */
+  .v-port .panel--hero{display:grid;align-items:center;--hero-v-offset:20px;
+    --hero-pad-t:clamp(40px, max(calc(12.222px + 5.5556vw), calc(-62.857px + 14.286vw)), 80px);
+    --kicker-fs:clamp(9px,calc(6.222px + .5556vw),11px);
+    --kicker-mb:clamp(24px,calc(12.889px + 2.2222vw),32px);
+    --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
+    padding:var(--hero-pad-t)
             calc(var(--cap) + clamp(22px, max(calc(165.556px - 21.111vw), min(calc(0.75px + 3.125vw), 32px)), 60px))
-            clamp(30px, max(calc(16.111px + 2.7778vw), calc(-82.857px + 14.286vw)), 60px)
+            calc(var(--hero-pad-t) - var(--hero-v-offset))
             calc(var(--cap) + clamp(60px, calc(28px + 6.4vw), 92px));}
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
      (the old 12px floor left the title and description almost touching the frame edge on
@@ -141,7 +155,14 @@
      with vw would slide the content sideways against the background band. */
   /* indent folded into .panel--hero's padding-left so one ramp owns the hero text's
      left edge - see the note there */
-  .v-port .hero-block{padding-left:0;}
+  /* Centring the BLOCK is not the same as centring the wordmark. With the kicker sitting
+     above it, h1's top lands at (centre + kickerBlock/2 - h1Height/2), so the h1 rises
+     whenever the kicker's type or gap shrinks - which is exactly what fluid sizing makes
+     them do. A margin-bottom equal to the kicker's own occupied height cancels that term
+     out (the algebra: with M = kickerBlock the +kickerBlock/2 and -M/2 terms disappear),
+     leaving the h1 itself centred, kicker hanging above, footprint unchanged. This and
+     --hero-v-offset are what keep the wordmark still while the window resizes. */
+  .v-port .hero-block{padding-left:0;margin-bottom:var(--kicker-block);}
   /* The badge lives inside the h1 and is sized/placed in em, so every offset is a fixed
      fraction of the hero font size — it holds the same position against the text at any
      --hero-size, and follows the glyphs if the wording changes. h1 shrink-wraps so
@@ -150,38 +171,29 @@
      nothing snaps at a breakpoint. Written in px/vw because CSS can't interpolate a
      unitless em multiplier: each property is the min()/max() of the two straight lines
      meeting at those keyframes.
-        width       : 108.75px at 500px viewport -> 108.98px, capped at 613px
-        margin-left : -11.25px at 500px viewport ->  10.62px, capped at 613px
-        top         : -148.9px at 500px viewport -> -62.48px, capped at 627px
-     The wordmark itself freezes earlier, at 533px (80px max / 0.15). The badge finishes
-     travelling 80-95px after that, so it drifts ~15px right and ~9px up against text that
-     has already stopped. That is deliberate: refitting the LINES to end at 533 instead
-     would move the badge at every width below it, and the drift is smooth and small. Only
-     the caps are retuned per size change - `top`'s to -0.781 x max, the ratio the
-     composition was tuned at, since the hero block is vertically centred and a smaller
-     wordmark starts lower.
+     The keyframes are the 400px viewport (hero = 60px there, 15vw still above its floor)
+     and C, the viewport where the hero freezes (max / 0.15 = 586.67px at max 88):
+        width       :  87.00px at 400px -> 70.40px at C   (1.45em -> 0.80em)
+        margin-left :  -9.00px at 400px -> 44.00px at C   (-0.15em -> 0.50em)
+        top         : -163.10px at 400px -> -68.73px at C  (-> -0.781em)
+     Below 400px the branches are pure em and need no refit: 1.45em = 21.75vw and
+     -0.15em = -2.25vw, because em is 15vw there. `top` holds its -163.1px floor.
 
-     ** THIS BLOCK IS AT ITS LIMIT. ** The lines are anchored at a 500px keyframe, and the
-     hero now freezes at 533. Any further reduction of --hero-size's max puts the freeze
-     point at or below that keyframe and the fit inverts. Going smaller means re-pinning
-     the lower keyframe (400px is the natural next one - the 21.75vw / -2.25vw branches
-     below it are pure em and do not change) and refitting all three lines properly.
-     While doing that, note the badge has not been rescaled across four reductions: it is
-     ~109px against 80px type, i.e. 1.36em where it was drawn at 0.80em. A proper refit
-     would take it to ~64px with a ~40px gap.
-
-     ** --hero-size's max is a maintenance trigger for this whole block. ** To change it:
-       - new freeze point C = max / 0.15
-       - width and margin-left: keep their lines and caps. Their SLOPES are deliberately
-         left alone - refitting them to a smaller max shrinks the badge and pulls it left
-         at every width in between, which is a visual change nobody asked for.
-       - top: retune its cap to -0.781 x max, the ratio the composition was tuned at.
+     ** --hero-size's max is a maintenance trigger for this whole block. ** To change it,
+     recompute C = max / 0.15 and refit all three lines through the 400px keyframe to the
+     em endpoints above: m = (endC - end400) / (C - 400), b = end400 - 400m. Keeping the
+     em endpoints is what makes the badge scale WITH the wordmark - an earlier round froze
+     width and margin instead, and after four size reductions the badge had drifted to
+     1.36em against type drawn for 0.80em.
+     `top` is measured from the h1's own top and the hero block is vertically centred, so
+     a smaller wordmark starts lower - that is why its cap is a ratio of the max and not a
+     constant. Its 400px anchor is the floor value, so the two meet cleanly.
      Consequence of the top curve: on narrow windows the gap between badge and hero text
      opens up, because the text keeps descending and the badge does not. */
   .v-port .panel .p-badge{position:absolute;left:100%;
-    width:min(21.75vw,calc(107.72px + .206vw),108.98px);
-    margin-left:min(max(-2.25vw,calc(-107.72px + 19.294vw)),10.62px);
-    top:clamp(-163.1px,calc(-488.82px + 67.9835vw),-62.48px);
+    width:min(21.75vw,max(calc(122.57px - 8.8929vw),70.4px));
+    margin-left:min(max(-2.25vw,calc(-122.57px + 28.3929vw)),44px);
+    top:clamp(-163.1px,calc(-365.33px + 50.5564vw),-68.73px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
@@ -192,7 +204,7 @@
   /* --bar-rule-h is the hero tagline's rendered height (2 lines at line-height 1.2).
      The project rows' feature list adopts it as a min-height so the divider rule is the
      same length on every bar row instead of shrinking to its own content. */
-  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(var(--hero-size) * 42 / 180),19px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
+  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(var(--hero-size) * 42 / 180),21px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(7.222vw - 8.11px),36px)
             calc(var(--cap) + clamp(24px, calc(12.889px + 2.2222vw), 32px))
             var(--bar-pad-b)
             calc(var(--cap) + clamp(40px, calc(59.111px - 2.2222vw), 48px));border-bottom:1px solid var(--hairline);}
@@ -206,7 +218,9 @@
   .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px,calc(5vw - 25px),25px);padding:0 0 0 clamp(16px,calc(10.444px + 1.111vw),20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
   .v-port .p-sub .meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:var(--ink);font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
-  .v-port .panel .kicker{font-family:var(--mono);font-size:clamp(9px,calc(6.222px + .5556vw),11px);letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(24px,calc(12.889px + 2.2222vw),32px);}
+  /* size and gap live in vars on .panel--hero so .hero-block can cancel them out - see the
+     --kicker-block note there. line-height is stated explicitly because that calc needs it. */
+  .v-port .panel .kicker{font-family:var(--mono);font-size:var(--kicker-fs);line-height:1.55;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--kicker-mb);}
   .v-port .panel h1{font-family:"Distortion",serif;font-size:var(--hero-size);line-height:.82;margin:0;color:var(--ink);letter-spacing:-.015em;font-weight:400;position:relative;width:max-content;max-width:100%;}
   .v-port .panel h1 em{font-style:normal;display:block;padding:0 .1em 0 .3em;}
   .v-port .panel h1 em .dim{color:var(--dim);}
