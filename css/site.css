@@ -82,8 +82,12 @@
      the margin box is what gets centred. */
   .v-port .panel--hero{display:grid;align-items:center;--hero-v-offset:20px;--hero-drop:40px;
     --hero-pad-t:clamp(40px, max(calc(12.222px + 5.5556vw), calc(-62.857px + 14.286vw)), 80px);
-    --kicker-fs:clamp(9px,calc(6.222px + .5556vw),11px);
-    --kicker-mb:clamp(24px,calc(12.889px + 2.2222vw),32px);
+    /* The kicker is keyed to --hero-size, not to vw, so it scales and re-spaces WITH the
+       wordmark instead of on its own schedule - the ratios are its old desktop values over
+       the hero max (11/88 and 32/88). Its .3em letter-spacing follows for free. The 8px
+       floor is legibility only; it engages below a 64px hero. */
+    --kicker-fs:max(8px,calc(var(--hero-size) * 0.125));
+    --kicker-mb:calc(var(--hero-size) * 0.3636);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
     padding:var(--hero-pad-t)
             calc(var(--cap) + clamp(22px, max(calc(165.556px - 21.111vw), min(calc(0.75px + 3.125vw), 32px)), 60px))
@@ -181,7 +185,12 @@
      still above its floor) and C, the viewport where the hero freezes (max / 0.15 =
      586.67px at max 88):
         margin-left :  -9.00px at 400px -> 44.00px at C   (-0.15em -> 0.50em)
-        top         : -163.10px at 400px -> -68.73px at C  (-> -0.781em)
+        top         : -163.10px at 400px ->   -106px at C
+     top's cap is NOT an em ratio - it is -(badge width), so the badge's BOTTOM edge lands
+     on the wordmark's top edge, which is the relationship the composition was drawn with.
+     It has to be retuned whenever the badge's width cap changes, or the badge sinks into
+     the text: fitting it as an em ratio while width was pinned at 109px put its bottom
+     40px inside the first line.
      Below 400px those branches are pure em and need no refit: -0.15em = -2.25vw, because
      em is 15vw there. `top` holds its -163.1px floor.
 
@@ -202,7 +211,7 @@
   .v-port .panel .p-badge{position:absolute;left:100%;
     width:min(21.75vw,109px);
     margin-left:min(max(-2.25vw,calc(-122.57px + 28.3929vw)),44px);
-    top:clamp(-163.1px,calc(-365.33px + 50.5564vw),-68.73px);
+    top:clamp(-163.1px,calc(-285.46px + 30.5893vw),-106px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
