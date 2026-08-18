@@ -134,6 +134,19 @@
      Left padding must stay non-decreasing - it also absorbs what used to be .hero-block's
      own padding-left, and when it and the right padding both dipped mid-range the hero
      text ended up 19px from the side rail. */
+  /* Floating snake - ported from the rng1 app's FloatingSnakeView. Fills the space to the
+     right of the wordmark, which is where the badge used to sit; its media query is the
+     exact complement of the badge's, so precisely one of the two is on screen at any width.
+     z-index 1 puts it BEHIND the hero text (panel children are z-index 2), so it can pass
+     under the wordmark instead of colliding with it. Absolutely positioned, so it stays out
+     of the panel's grid and cannot affect the centring - **the selector needs .panel--hero
+     in it** to outweigh `.v-port .panel > *`, which sets position:relative further down and
+     otherwise turns this into a second grid row that pushes the wordmark off centre. */
+  /* height:100% rather than top:0;bottom:0 - <canvas> is a REPLACED element, so with
+     height:auto it falls back to its intrinsic size and ignores the stretch. */
+  .v-port .panel--hero .hero-snake{position:absolute;top:0;height:100%;right:0;z-index:1;pointer-events:none;
+    width:clamp(180px, calc(180px + var(--kf-x) * 0.375), 420px);}
+  @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
   .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.0625), 100px),max(0px, calc(100svh - 565px)));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.0046875), 12px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.0334375), 41.4px);

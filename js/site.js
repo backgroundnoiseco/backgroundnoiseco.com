@@ -56,6 +56,7 @@
       const st = root.scrollTop;
       const p = Math.min(Math.max((st - trackStart) / travel, 0), 1) * last;
       vport.style.setProperty('--progress', p);
+      if (vport._onProgress) vport._onProgress(p);   // snake idles when the hero leaves
       let active = panels[Math.round(p)].dataset.idx;
       if (st >= outroLine) active = 'contact';
       if (active === lastActive) return;
@@ -300,3 +301,85 @@
     }
   })();
 
+  // Floating snake - port of FloatingSnakeView from the rng1 app. 30 squares chase a
+  // multi-sine path, each rotating on its own seeded speed, head teal -> tail purple.
+  // Constants are the app's shipped values (speed .5, head 50, tail 10, delay .2,
+  // rotation 50, lfo 5; wiggle and depth are 0 there, so both terms are omitted here).
+  (function(){
+    const cv = document.querySelector('.v-port .hero-snake');
+    const vport = document.querySelector('.v-port');
+    if (!cv || !cv.getContext || !vport) return;
+    const ctx = cv.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const N = 30, SPEED = 0.5, HEAD = 50, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
+    const HEAD_RGB = [0, 255, 204], TAIL_RGB = [204, 0, 255];
+    const DEG = Math.PI / 180;
+
+    // Geometry is cached, never read per frame - same rule as the stage driver.
+    let w = 0, h = 0;
+    function measure(){
+      const r = cv.getBoundingClientRect();
+      w = r.width; h = r.height;
+      if (!w || !h) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (reduce) draw(0);
+    }
+
+    const seed = i => (((i * 7 + 3) % 13) + 1) * 0.1;
+
+    function posAt(t, cx, cy, rx, ry){
+      // the LFO modulates phase, not speed - that is what keeps the path from looping
+      const l1 = Math.sin(t * LFO * 0.05) * 2,
+            l2 = Math.sin(t * LFO * 0.07 + 1) * 2,
+            l3 = Math.sin(t * LFO * 0.06 + 2) * 2;
+      return [
+        cx + rx * (0.5 * Math.sin(t * SPEED * 0.7 + l1)
+                 + 0.3 * Math.sin(t * SPEED * 1.3 + 1.5 + l2)
+                 + 0.2 * Math.cos(t * SPEED * 0.5 + 0.8 + l3)),
+        // y uses slower terms so it dwells at the extremes
+        cy + ry * 1.5 * (0.6 * Math.sin(t * SPEED * 0.4 + 0.5 + l1)
+                       + 0.25 * Math.cos(t * SPEED * 0.7 + 2 + l2)
+                       + 0.15 * Math.sin(t * SPEED * 0.3 + 1.2 + l3))
+      ];
+    }
+
+    function draw(t){
+      if (!w || !h) return;
+      ctx.clearRect(0, 0, w, h);
+      const cx = w / 2, cy = h / 2, rx = w * 0.38, ry = h * 0.3;
+      for (let i = N - 1; i >= 0; i--) {          // tail first, so the head lands on top
+        const p = i / (N - 1);
+        const xy = posAt(t - i * DELAY, cx, cy, rx, ry);
+        const size = TAIL + (HEAD - TAIL) * (1 - p);
+        const s = seed(i);
+        ctx.save();
+        ctx.translate(xy[0], xy[1]);
+        ctx.rotate((t * ROT * (0.4 + s * 1.2) + i * 47 + s * 360) * DEG);
+        ctx.fillStyle = 'rgb(' + Math.round(HEAD_RGB[0] + (TAIL_RGB[0] - HEAD_RGB[0]) * p) + ','
+                               + Math.round(HEAD_RGB[1] + (TAIL_RGB[1] - HEAD_RGB[1]) * p) + ','
+                               + Math.round(HEAD_RGB[2] + (TAIL_RGB[2] - HEAD_RGB[2]) * p) + ')';
+        ctx.fillRect(-size / 2, -size / 2, size, size);
+        ctx.restore();
+      }
+    }
+
+    let raf = 0;
+    function frame(){ raf = requestAnimationFrame(frame); draw(performance.now() / 1000); }
+    function start(){ if (!raf && !reduce && w) raf = requestAnimationFrame(frame); }
+    function stop(){ if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+
+    // Only run while the hero panel is on screen. The driver hands us the same --progress
+    // everything else reads, so this needs no observer and no second source of truth.
+    vport._onProgress = p => { p < 1 ? start() : stop(); };
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measure).observe(cv);
+    else window.addEventListener('resize', measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure();
+    start();
+  })();

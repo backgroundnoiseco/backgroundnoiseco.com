@@ -90,6 +90,16 @@ This replaced a set of independently-fitted ramps that each froze at their own w
 
 `.hero-block` also carries `margin-bottom: var(--kicker-block)`, which cancels the kicker's height out of the centring so the **h1 itself** is centred rather than the block. Without it the wordmark rises whenever the kicker's type or gap shrinks. Below 360px the whole composition is frozen; the h1 box starts to overflow its panel around 327px.
 
+### Floating snake (hero decoration)
+
+`<canvas class="hero-snake">` in the hero panel, drawn by the last IIFE in `js/site.js` — a port of `FloatingSnakeView.swift` from the rng1 app (`~/Desktop/everything/bgnoiseco/rng1`). 30 squares chase a multi-sine path, each rotating on its own seeded speed, head teal → tail purple. The constants are the app's shipped values (speed .5, head 50, tail 10, delay .2, rotation 50, lfo 5); the app's `wiggle` and `depthScale` are both 0 there, so those terms are omitted rather than carried as dead code.
+
+- **It is the badge's complement**: shown above 565px, hidden at or below, so exactly one of the two occupies that space at any width. It fills the gap at the right of the wordmark that hiding the badge left behind.
+- **`position: absolute` needs `.panel--hero` in the selector** to outweigh `.v-port .panel > *`, which sets `position: relative` further down the file. Without it the canvas becomes a second grid row and pushes the wordmark off centre.
+- **`height: 100%`, not `top:0; bottom:0`** — `<canvas>` is a replaced element, so with `height:auto` it falls back to its intrinsic size and ignores the stretch.
+- It idles when the hero scrolls away: the stage driver calls `vport._onProgress(p)` with the same `--progress` everything else reads, and the loop stops above `p >= 1`. No IntersectionObserver, no second source of truth. It also stops on `visibilitychange`, and honours `prefers-reduced-motion` by drawing one static frame.
+- Canvas size is cached and only re-measured on a `ResizeObserver` — same no-layout-reads-per-frame rule as the stage driver.
+
 ### Project panels & fit-to-frame
 
 Each `.panel--project` is a two-column grid (`phone / info`), centered. There are **no rotated vertical titles anymore** — the project name is `.p-info .role`, rendered in the Distortion display face. Everything sizes to the frame via container units (`.frame` is `container-type: size`): the phone caps at `min(240px, 40cqb)`, and the title/CTA/shell-radius are `min(<max>px, <coef>cqb)` where the coefficient is `<max> × 40/240` — so the whole panel scales together with frame height, purely in CSS, no JS. Left padding is `calc(var(--gutter) + 16px)` so content clears the rail.
