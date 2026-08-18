@@ -315,6 +315,7 @@
     // Debug boxes: load with ?snakebox to outline the canvas, the range the segment
     // CENTRES can reach, and the visual extent once the head square's size is added.
     const DEBUG = new URLSearchParams(location.search).has('snakebox');
+    const V_INSET = 24;   // clearance kept from the frame's top and bottom edges
 
     const N = 30, SPEED = 0.5, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
     // The app hardcodes head 50. Here the head IS the badge, so the first drawn square
@@ -397,7 +398,13 @@
     function draw(t){
       if (!w || !h) return;
       ctx.clearRect(0, 0, w, h);
-      const cx = w / 2, cy = h / 2, rx = w * 0.38, ry = h * 0.3;
+      // rx keeps the app's 0.38w. ry is DERIVED rather than the app's 0.3h: the vertical
+      // reach is 3*ry + HEAD (the y term carries a 1.5 multiplier, so +/-1.5*ry), and at
+      // 0.3h that came to more than the canvas is tall - the snake was being clipped at
+      // the top and bottom edges. Solving 3*ry + HEAD = h - 2*V_INSET instead leaves
+      // exactly V_INSET of clearance from the header and the info bar at any height.
+      const cx = w / 2, cy = h / 2, rx = w * 0.38,
+            ry = Math.max(0, (h - 2 * V_INSET - HEAD) / 3);
       if (DEBUG) {
         // the canvas itself - what `right`/`width` in the CSS actually give you
         box(0, 0, w - 1, h - 1, 'rgba(255,255,255,0.30)', 'canvas');
