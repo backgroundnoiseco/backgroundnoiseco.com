@@ -308,6 +308,7 @@
   (function(){
     const cv = document.querySelector('.v-port .hero-snake');
     const vport = document.querySelector('.v-port');
+    const badge = document.querySelector('.v-port .panel--hero .p-badge');
     if (!cv || !cv.getContext || !vport) return;
     const ctx = cv.getContext('2d');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -317,11 +318,23 @@
     const DEG = Math.PI / 180;
 
     // Geometry is cached, never read per frame - same rule as the stage driver.
-    let w = 0, h = 0;
+    // The badge rides the snake's head. Its offset basis is cached here, never read per
+    // frame: with the transform cleared, how far the badge's centre sits from the canvas's
+    // top-left. Both live inside .panel--hero, so the panel's own translateY affects them
+    // equally and cancels out of the difference.
+    let w = 0, h = 0, baseX = 0, baseY = 0;
     function measure(){
       const r = cv.getBoundingClientRect();
       w = r.width; h = r.height;
-      if (!w || !h) return;
+      if (badge) {
+        badge.style.transform = '';
+        if (w && h) {
+          const b = badge.getBoundingClientRect();
+          baseX = b.left - r.left + b.width / 2;
+          baseY = b.top - r.top + b.height / 2;
+        }
+      }
+      if (!w || !h) return;               // canvas hidden (<=565): badge keeps its CSS spot
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       cv.width = Math.round(w * dpr);
       cv.height = Math.round(h * dpr);
@@ -351,7 +364,14 @@
       if (!w || !h) return;
       ctx.clearRect(0, 0, w, h);
       const cx = w / 2, cy = h / 2, rx = w * 0.38, ry = h * 0.3;
-      for (let i = N - 1; i >= 0; i--) {          // tail first, so the head lands on top
+      // The badge IS the head, so segment 0 is never drawn - the badge is moved onto it
+      // instead and the squares read as the body trailing behind.
+      if (badge) {
+        const head = posAt(t, cx, cy, rx, ry);
+        badge.style.transform = 'translate(' + (head[0] - baseX).toFixed(1) + 'px,'
+                                             + (head[1] - baseY).toFixed(1) + 'px)';
+      }
+      for (let i = N - 1; i >= 1; i--) {          // tail first, so the neck lands on top
         const p = i / (N - 1);
         const xy = posAt(t - i * DELAY, cx, cy, rx, ry);
         const size = TAIL + (HEAD - TAIL) * (1 - p);
@@ -371,6 +391,7 @@
     function frame(){ raf = requestAnimationFrame(frame); draw(performance.now() / 1000); }
     function start(){ if (!raf && !reduce && w) raf = requestAnimationFrame(frame); }
     function stop(){ if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+
 
     // Only run while the hero panel is on screen. The driver hands us the same --progress
     // everything else reads, so this needs no observer and no second source of truth.
