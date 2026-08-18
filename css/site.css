@@ -289,7 +289,13 @@
        descendant draws under its ancestor's inline content but still above the
        .hero-block background, and .hero-block (z-index 2) as a whole still sits above
        the snake canvas (z-index 1). Net order: body, then badge, then wordmark. */
-    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:none;}
+    /* Clickable: it links to Unicorn Porcupine on the App Store. aria-hidden +
+       tabindex=-1 on purpose - it lives inside the h1, so an exposed link would graft
+       its label onto the heading's accessible name. The same link is already keyboard
+       reachable as the Porcupine panel's CTA, so nothing is lost by making this one a
+       pointer-only shortcut. Where a glyph overlaps the badge the h1's inline content
+       wins the hit (the badge sits at z-index -1, below it); the rest is clickable. */
+    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:auto;cursor:pointer;}
   /* Below 565 there is no snake, so the badge is a standalone sticker again and keeps its
      original size pair (78 -> 140, i.e. 78-98px across that range). Above 565 it is the
      snake's head and takes the smaller 64 -> 100 pair, sized to sit in the chain.
