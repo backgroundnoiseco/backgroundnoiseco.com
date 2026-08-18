@@ -144,7 +144,14 @@
      otherwise turns this into a second grid row that pushes the wordmark off centre. */
   /* height:100% rather than top:0;bottom:0 - <canvas> is a REPLACED element, so with
      height:auto it falls back to its intrinsic size and ignores the stretch. */
-  .v-port .panel--hero .hero-snake{position:absolute;top:0;height:100%;right:0;z-index:1;pointer-events:none;
+  /* right is inset by --cap, NOT 0. Absolute offsets resolve against the panel's padding
+     box, which spans the full frame, so right:0 pinned the canvas to the SCREEN edge -
+     it drifted into the right gutter as the window widened (32px past the band at 1000,
+     252px at 1440, 492px at 1920), the same drift everything else on the page freezes
+     out. --cap is the band's own inset, so this keeps the snake inside the lit band and
+     holds it at a constant offset from the composition at every width; +24px brings it
+     off the edge. */
+  .v-port .panel--hero .hero-snake{position:absolute;top:0;height:100%;right:calc(var(--cap) + 24px);z-index:1;pointer-events:none;
     width:clamp(240px, calc(240px + var(--kf-x) * 0.5625), 600px);}
   /* The canvas is right-anchored, so its WIDTH is what sets how far left the snake can
      swim. The path only uses the middle ~76% of it (radiusX is 0.38w about the centre),
