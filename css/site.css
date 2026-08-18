@@ -278,7 +278,11 @@
     width:clamp(64px, calc(64px + var(--kf-x) * 0.05625), 100px);
     margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.48125), 300px);
     top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.04078125), -137px);
-    aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
+    /* z-index -1 so the badge paints BELOW the h1's glyphs - a negative-z positioned
+       descendant draws under its ancestor's inline content but still above the
+       .hero-block background, and .hero-block (z-index 2) as a whole still sits above
+       the snake canvas (z-index 1). Net order: body, then badge, then wordmark. */
+    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:none;}
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
   .v-port .panel .p-badge svg{width:100%;height:100%;display:block;font-size:15px;letter-spacing:normal;}
