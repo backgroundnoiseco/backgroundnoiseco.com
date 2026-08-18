@@ -152,7 +152,7 @@
      holds it at a constant offset from the composition at every width; +24px brings it
      off the edge. */
   .v-port .panel--hero .hero-snake{position:absolute;top:0;height:100%;right:calc(var(--cap) + 24px);z-index:1;pointer-events:none;
-    width:clamp(240px, calc(240px + var(--kf-x) * 0.5625), 600px);}
+    width:clamp(205px, calc(205px + var(--kf-x) * 0.546875), 555px);}
   /* The canvas is right-anchored, so its WIDTH is what sets how far left the snake can
      swim. The path only uses the middle ~76% of it (radiusX is 0.38w about the centre),
      so the leftmost reach sits ~0.12w inside the canvas's left edge - widen it well past
