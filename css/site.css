@@ -96,7 +96,12 @@
      accessible name (aria-label on the button) so nothing reads "zero zero zero title". */
   .v-port .p-rail button:focus-visible{outline:1px solid var(--ink);outline-offset:3px;color:var(--ink);}
   .v-port .p-rail button.on{color:var(--ink);}
-  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;}
+  /* Same offset shadow as the Porcupine title, for the same reason: when this label is
+     active the gutter behind it is carrying --ringOverlay's pale pink, and teal on that is
+     1.67:1 - the glyphs (and their leading zeros, which take the button's colour) all but
+     vanish. The shadow is a darkened teal rather than the title's plum so it reads as this
+     label's own edge. */
+  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;text-shadow:1px 1px 0 #0e5b58;}
 
   /* ===== stage: pinned frame, panels slide through it =====
      .stage-track is N*100svh tall minus the header, so each panel step is exactly one
