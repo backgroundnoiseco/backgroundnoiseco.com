@@ -239,21 +239,23 @@
       const insets = [];
       for (let inset = 0; W - 2 * inset >= MIN_SIDE && H - 2 * inset >= MIN_SIDE; inset += STEP) insets.push(inset);
       // ring colour ramps warm-white (outermost) -> pink (innermost); the CSS fill blends this
-      // toward black by --rect-mix so it only shows on the Porcupine panel. Colour is keyed to
-      // each ring's pixel depth against a FIXED reference (RAMP_PX), NOT its index-over-count —
-      // so a given ring keeps its colour when the window (and thus the ring count) changes.
-      // 240px = 6 steps, the innermost depth at desktop, so the centre still reaches full pink
-      // there; narrower windows simply don't ramp as deep (consistent, no recolour on resize).
+      // toward black by --rect-mix so it only shows on the Porcupine panel.
+      // t is index-over-count: every ring is one even step toward the centre colour, so the
+      // ramp always spans WHITE -> PINK however many rings there are. On mobile that matters -
+      // with only a few rings the old fixed-depth ramp left them all pale and the project
+      // title washed out against them.
+      // TRADE-OFF, deliberately re-accepted: this was previously keyed to pixel depth against
+      // a fixed 240px reference precisely so a given ring KEPT its colour as the window (and
+      // thus the ring count) changed. Index-over-count means rings do recolour on resize.
       // WHITE and --ringOverlay in the CSS are this same hue lifted toward white, so the
       // ramp stays one family - change PINK and both have to be re-derived, or the outer
       // rings drift magenta while the centre reads red. (Tried retargeting all three onto
       // the badge's #e84264; this magenta-leaning pink was kept instead.)
       const WHITE = [252, 205, 226], PINK = [231, 81, 157];
-      const RAMP_PX = 240;
       let out = '';
       insets.forEach((inset, i) => {
         const w = W - 2 * inset, h = H - 2 * inset;
-        const t = Math.min(inset / RAMP_PX, 1);
+        const t = insets.length > 1 ? i / (insets.length - 1) : 1;
         const c = WHITE.map((v, k) => Math.round(v + (PINK[k] - v) * t)).join(',');
         out += '<rect x="'+inset+'" y="'+inset+'" width="'+w+'" height="'+h+'" style="--c:rgb('+c+')" fill-opacity="0.15"/>';
       });
