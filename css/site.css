@@ -108,7 +108,7 @@
          local +y  ->  screen RIGHT      i.e. screen = (localY, -localX)
      So down-and-right on screen is local (-a, +a). Guessing 180deg (-0.5,-0.5) put it down
      and LEFT. Probe before changing this rather than reasoning from the transform. */
-  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;text-shadow:-0.5px 0.5px 0 #0e5b58;}
+  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;text-shadow:-0.5px 0.5px 0 rgba(14,91,88,.45);}
 
   /* ===== stage: pinned frame, panels slide through it =====
      .stage-track is N*100svh tall minus the header, so each panel step is exactly one
@@ -355,9 +355,11 @@
   /* Offset shadow under the Porcupine title. It is the only --ink text sitting on the pink
      rings, and at 2.78:1 it was getting lost - the offset gives the glyph edges definition
      without darkening the letterform itself. 0.5px is one device pixel on a 2x display, the
-     smallest offset that still renders as an edge. Not rotated, so positive = down-right. Colour is the ring pink darkened, not the old
+     smallest offset that still renders as an edge; the colour carries 45% alpha so it reads
+     as a soft edge rather than a hard second copy of the glyph. Not rotated, so positive =
+     down-right. Colour is the ring pink darkened, not the old
      #a8b0bd grey-blue, which was tuned for the teal panel this layout replaced. */
-  .v-port .panel[data-idx="0"] .p-info .role{color:var(--ink);text-shadow:0.5px 0.5px 0 #682447;}
+  .v-port .panel[data-idx="0"] .p-info .role{color:var(--ink);text-shadow:0.5px 0.5px 0 rgba(104,36,71,.45);}
   .v-port .panel[data-idx="0"] .p-info .role .acc{color:#e7519d;}
   .v-port .panel[data-idx="1"] .p-info .role{color:var(--dim);}
   .v-port .panel[data-idx="0"] .p-info .cta,.v-port .panel[data-idx="0"] .p-info .cta *{color:#1fcbc4;}
