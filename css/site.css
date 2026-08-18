@@ -101,10 +101,14 @@
      1.67:1 - the glyphs (and their leading zeros, which take the button's colour) all but
      vanish. The shadow is a darkened teal rather than the title's plum so it reads as this
      label's own edge. */
-  /* NOTE the negative offsets. .p-rail carries transform:rotate(180deg), so a text-shadow
-     renders at the NEGATIVE of what is written here - 1px 1px pointed up-left on screen.
-     -0.5px -0.5px is down-and-right once rotated, matching the title. */
-  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;text-shadow:-0.5px -0.5px 0 #0e5b58;}
+  /* The offsets here are NOT screen-space. .p-rail composes writing-mode:vertical-rl with
+     transform:rotate(180deg), and the two together rotate the shadow's coordinate system by
+     90deg, not 180. Measured with a single-axis probe:
+         local +x  ->  screen UP
+         local +y  ->  screen RIGHT      i.e. screen = (localY, -localX)
+     So down-and-right on screen is local (-a, +a). Guessing 180deg (-0.5,-0.5) put it down
+     and LEFT. Probe before changing this rather than reasoning from the transform. */
+  .v-port .p-rail button[data-s="0"].on{color:#1fcbc4;text-shadow:-0.5px 0.5px 0 #0e5b58;}
 
   /* ===== stage: pinned frame, panels slide through it =====
      .stage-track is N*100svh tall minus the header, so each panel step is exactly one
