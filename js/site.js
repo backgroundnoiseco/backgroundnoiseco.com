@@ -312,9 +312,6 @@
     if (!cv || !cv.getContext || !vport) return;
     const ctx = cv.getContext('2d');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Debug boxes: load with ?snakebox to outline the canvas, the range the segment
-    // CENTRES can reach, and the visual extent once the head square's size is added.
-    const DEBUG = new URLSearchParams(location.search).has('snakebox');
     const V_INSET = 24;   // clearance kept from the frame's top and bottom edges
 
     const N = 30, SPEED = 0.5, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
@@ -385,16 +382,6 @@
       ];
     }
 
-    function box(x, y, bw, bh, stroke, label){
-      ctx.save();
-      ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.strokeStyle = stroke;
-      ctx.strokeRect(x + 0.5, y + 0.5, bw, bh);
-      ctx.setLineDash([]); ctx.fillStyle = stroke;
-      ctx.font = '10px ui-monospace, Menlo, monospace';
-      ctx.fillText(label + '  ' + Math.round(bw) + 'x' + Math.round(bh), x + 4, y + 12);
-      ctx.restore();
-    }
-
     function draw(t){
       if (!w || !h) return;
       ctx.clearRect(0, 0, w, h);
@@ -405,15 +392,6 @@
       // exactly V_INSET of clearance from the header and the info bar at any height.
       const cx = w / 2, cy = h / 2, rx = w * 0.38,
             ry = Math.max(0, (h - 2 * V_INSET - HEAD) / 3);
-      if (DEBUG) {
-        // the canvas itself - what `right`/`width` in the CSS actually give you
-        box(0, 0, w - 1, h - 1, 'rgba(255,255,255,0.30)', 'canvas');
-        // where segment CENTRES can reach: the three sine terms sum to +/-1 of each radius
-        box(cx - rx, cy - ry * 1.5, rx * 2, ry * 3, 'rgba(31,203,196,0.55)', 'centres');
-        // what you actually see, once half a head square is added all round
-        box(cx - rx - HEAD / 2, cy - ry * 1.5 - HEAD / 2,
-            rx * 2 + HEAD, ry * 3 + HEAD, 'rgba(232,66,100,0.6)', 'visual');
-      }
       // The badge IS the head, so segment 0 is never drawn - the badge is moved onto it
       // instead and the squares read as the body trailing behind.
       if (badge) {
