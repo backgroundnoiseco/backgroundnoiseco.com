@@ -35,7 +35,7 @@
          badge top         -163.1    ->   -137     0.04078125 (mobile only, <=565)
          --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->   41.4     0.0334375
-         --hero-drop           60    ->     70     0.015625 (+ svh guard, below)
+         --hero-drop           60    ->     20    -0.0625   (+ svh guard, below)
          hero pad left         60    ->     92     0.05
          hero pad right        60    ->     32    -0.04375
          --bar-tag-size        18    ->     23     0.0078125
@@ -171,7 +171,7 @@
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.015625), 70px),max(0px, calc(100svh - 565px)));
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(20px, calc(60px + var(--kf-x) * -0.0625), 60px),max(0px, calc(100svh - 565px)));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.0046875), 12px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.0334375), 41.4px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
