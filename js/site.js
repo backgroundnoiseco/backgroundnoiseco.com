@@ -313,7 +313,12 @@
     const ctx = cv.getContext('2d');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const N = 30, SPEED = 0.5, HEAD = 50, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
+    const N = 30, SPEED = 0.5, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
+    // The app hardcodes head 50. Here the head IS the badge, so the first drawn square
+    // takes the badge's rendered width instead - otherwise the body halves in size the
+    // moment it leaves the badge. Cached in measure() with everything else; 50 is only
+    // the fallback for a page with no badge.
+    let HEAD = 50;
     // Body runs from the badge's own pink at the head to --ink at the tail, so the
     // badge reads as the head of one object rather than a sticker on top of it.
     const HEAD_RGB = [232, 66, 100], TAIL_RGB = [234, 230, 220];
@@ -334,6 +339,12 @@
           const b = badge.getBoundingClientRect();
           baseX = b.left - r.left + b.width / 2;
           baseY = b.top - r.top + b.height / 2;
+          // The badge is a disc, so a square matching its WIDTH is circumscribed and reads
+          // oversized. Inscribe it instead - side = diameter / sqrt(2) - so the square's
+          // corners come out exactly to the badge's radius.
+          // offsetWidth, not the rect: getBoundingClientRect returns the ROTATED bounding
+          // box, which is inflated by up to 1.41x and changes with the spin angle.
+          HEAD = badge.offsetWidth / Math.SQRT2;
         }
       }
       if (!w || !h) return;               // canvas hidden (<=565): badge keeps its CSS spot
