@@ -314,7 +314,9 @@
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const N = 30, SPEED = 0.5, HEAD = 50, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
-    const HEAD_RGB = [0, 255, 204], TAIL_RGB = [204, 0, 255];
+    // Body runs from the badge's own pink at the head to --ink at the tail, so the
+    // badge reads as the head of one object rather than a sticker on top of it.
+    const HEAD_RGB = [232, 66, 100], TAIL_RGB = [234, 230, 220];
     const DEG = Math.PI / 180;
 
     // Geometry is cached, never read per frame - same rule as the stage driver.
@@ -368,8 +370,11 @@
       // instead and the squares read as the body trailing behind.
       if (badge) {
         const head = posAt(t, cx, cy, rx, ry);
+        // same seeded rotation segment 0 would have had, so the badge spins as the head
+        const s0 = seed(0);
         badge.style.transform = 'translate(' + (head[0] - baseX).toFixed(1) + 'px,'
-                                             + (head[1] - baseY).toFixed(1) + 'px)';
+                                             + (head[1] - baseY).toFixed(1) + 'px) rotate('
+                              + ((t * ROT * (0.4 + s0 * 1.2) + s0 * 360) % 360).toFixed(1) + 'deg)';
       }
       for (let i = N - 1; i >= 1; i--) {          // tail first, so the neck lands on top
         const p = i / (N - 1);
