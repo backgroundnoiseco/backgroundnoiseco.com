@@ -329,22 +329,30 @@
     // frame: with the transform cleared, how far the badge's centre sits from the canvas's
     // top-left. Both live inside .panel--hero, so the panel's own translateY affects them
     // equally and cancels out of the difference.
-    let w = 0, h = 0, baseX = 0, baseY = 0;
+    let w = 0, h = 0, baseX = 0, baseY = 0, tx = 0, ty = 0;
     function measure(){
       const r = cv.getBoundingClientRect();
       w = r.width; h = r.height;
       if (badge) {
-        badge.style.transform = '';
         if (w && h) {
+          // Do NOT clear the transform to measure. ResizeObserver fires continuously while
+          // the window is dragged, and clearing it each time snapped the badge back to its
+          // CSS spot for a frame before the next rAF re-applied it - which read as violent
+          // flicker between the mobile position and the snake. Instead subtract the
+          // translate we last wrote: rotation is about the element's centre, so the rect's
+          // CENTRE is unaffected by it and only the translate has to come back out.
           const b = badge.getBoundingClientRect();
-          baseX = b.left - r.left + b.width / 2;
-          baseY = b.top - r.top + b.height / 2;
+          baseX = b.left - r.left + b.width / 2 - tx;
+          baseY = b.top - r.top + b.height / 2 - ty;
           // The badge is a disc, so a square matching its WIDTH is circumscribed and reads
           // oversized. Inscribe it instead - side = diameter / sqrt(2) - so the square's
           // corners come out exactly to the badge's radius.
           // offsetWidth, not the rect: getBoundingClientRect returns the ROTATED bounding
           // box, which is inflated by up to 1.41x and changes with the spin angle.
           HEAD = badge.offsetWidth / Math.SQRT2;
+        } else {
+          badge.style.transform = '';   // snake hidden (<=565): hand the badge back to CSS
+          tx = ty = 0;
         }
       }
       if (!w || !h) return;               // canvas hidden (<=565): badge keeps its CSS spot
@@ -383,8 +391,8 @@
         const head = posAt(t, cx, cy, rx, ry);
         // same seeded rotation segment 0 would have had, so the badge spins as the head
         const s0 = seed(0);
-        badge.style.transform = 'translate(' + (head[0] - baseX).toFixed(1) + 'px,'
-                                             + (head[1] - baseY).toFixed(1) + 'px) rotate('
+        tx = head[0] - baseX; ty = head[1] - baseY;
+        badge.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) rotate('
                               + ((t * ROT * (0.4 + s0 * 1.2) + s0 * 360) % 360).toFixed(1) + 'deg)';
       }
       for (let i = N - 1; i >= 1; i--) {          // tail first, so the neck lands on top
