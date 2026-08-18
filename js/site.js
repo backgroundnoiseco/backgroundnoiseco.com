@@ -244,11 +244,11 @@
       // so a given ring keeps its colour when the window (and thus the ring count) changes.
       // 240px = 6 steps, the innermost depth at desktop, so the centre still reaches full pink
       // there; narrower windows simply don't ramp as deep (consistent, no recolour on resize).
-      // PINK is the badge's own #e84264. WHITE and --ringOverlay in the CSS are the same
-      // hue lifted toward white by the ratios the old pair used, so the ramp stays one
-      // family - change PINK and both should be re-derived, or the outer rings drift
-      // magenta while the centre reads red.
-      const WHITE = [252, 201, 209], PINK = [232, 66, 100];
+      // WHITE and --ringOverlay in the CSS are this same hue lifted toward white, so the
+      // ramp stays one family - change PINK and both have to be re-derived, or the outer
+      // rings drift magenta while the centre reads red. (Tried retargeting all three onto
+      // the badge's #e84264; this magenta-leaning pink was kept instead.)
+      const WHITE = [252, 205, 226], PINK = [231, 81, 157];
       const RAMP_PX = 240;
       let out = '';
       insets.forEach((inset, i) => {
