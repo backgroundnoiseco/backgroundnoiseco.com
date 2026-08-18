@@ -163,7 +163,13 @@
      out. --cap is the band's own inset, so this keeps the snake inside the lit band and
      holds it at a constant offset from the composition at every width; +24px brings it
      off the edge. */
+  /* translateZ(0) is a Safari fix, not decoration. The canvas repaints every frame and
+     its left edge falls right on the last glyph of the wordmark; sharing .panel's
+     compositing layer, Safari re-rasterised that glyph on every repaint and the 'd'
+     shimmered. Promoting the canvas to its own layer keeps its repaints off the text.
+     backface-visibility pins the promotion on older WebKit. */
   .v-port .panel--hero .hero-snake{position:absolute;top:0;height:100%;right:calc(var(--cap) + 24px);z-index:1;pointer-events:none;
+    transform:translateZ(0);backface-visibility:hidden;
     width:clamp(205px, calc(205px + var(--kf-x) * 0.546875), 555px);}
   /* The canvas is right-anchored, so its WIDTH is what sets how far left the snake can
      swim. The path only uses the middle ~76% of it (radiusX is 0.38w about the centre),
