@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=90">
+<link rel="stylesheet" href="css/site.css?v=91">
 </head>
 <body>
 
@@ -41,15 +41,13 @@
         <div class="kicker">◎ Creative Software</div>
         <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em><span class="p-badge" aria-hidden="true">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Plain square, sized so it matches the snake's head segment exactly: the
+               head square is offsetWidth / sqrt(2), which is 70.71 of this 100 viewBox.
+               (Was a 6-rect starburst - restore by re-adding rotate(15..75) copies.) -->
           <g fill="currentColor" transform="translate(50 50)">
-            <rect x="-36" y="-36" width="72" height="72"/>
-            <rect x="-36" y="-36" width="72" height="72" transform="rotate(15)"/>
-            <rect x="-36" y="-36" width="72" height="72" transform="rotate(30)"/>
-            <rect x="-36" y="-36" width="72" height="72" transform="rotate(45)"/>
-            <rect x="-36" y="-36" width="72" height="72" transform="rotate(60)"/>
-            <rect x="-36" y="-36" width="72" height="72" transform="rotate(75)"/>
+            <rect x="-35.36" y="-35.36" width="70.71" height="70.71"/>
           </g>
-          <g transform="translate(50 50) rotate(8)" fill="#fff" font-family="Inter Tight,Helvetica,Arial,sans-serif" font-weight="700" text-anchor="middle" letter-spacing=".04em">
+          <g transform="translate(50 50)" fill="#fff" font-family="Inter Tight,Helvetica,Arial,sans-serif" font-weight="700" text-anchor="middle" letter-spacing=".04em">
             <text font-size="9" y="-10">UNICORN</text>
             <text font-size="9" y="0">PORCUPINE</text>
             <line x1="-14" y1="6" x2="14" y2="6" stroke="#fff" stroke-width="1" opacity=".8"/>
@@ -170,7 +168,7 @@
   </div>
 </div>
 
-<script src="js/site.js?v=90"></script>
+<script src="js/site.js?v=91"></script>
 
 </body>
 </html>
