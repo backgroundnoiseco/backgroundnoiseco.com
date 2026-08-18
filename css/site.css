@@ -184,7 +184,7 @@
   /* The rings are an inline <svg> (not a background image) so their fill inherits colour
      from CSS. --rect-mix is 1 on the Porcupine panel and falls to 0 either side of it, so the
      tint interpolates across the transition rather than snapping. */
-  .v-port .frame{--rect-mix:clamp(0,calc(1 - max(var(--progress,0) - 2, 2 - var(--progress,0))),1);--gutterC:#000;--gutterDark:rgba(0,0,0,.3);--ringOverlay:color-mix(in srgb, rgba(255,226,238,1) calc(var(--rect-mix) * 100%), rgba(0,0,0,0));}
+  .v-port .frame{--rect-mix:clamp(0,calc(1 - max(var(--progress,0) - 2, 2 - var(--progress,0))),1);--gutterC:#000;--gutterDark:rgba(0,0,0,.3);--ringOverlay:color-mix(in srgb, rgba(255,224,228,1) calc(var(--rect-mix) * 100%), rgba(0,0,0,0));}
   /* The gutter (past --cap) reads DARKER than the band, not brighter - it used to be the
      band colour plus full grain, which lifted it. Two things hold it down now: --gutterC is
      #000 rather than the band's #0a0a0a, and --gutterDark lays a flat black wash over the
