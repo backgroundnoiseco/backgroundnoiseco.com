@@ -340,7 +340,11 @@
   /* Porcupine info-block colour treatment, pulled from the app's screenshot palette */
   .v-port .panel[data-idx="0"]{--section-bg:#1fcbc4;}
   .v-port .panel[data-idx="0"] .p-info,.v-port .panel[data-idx="0"] .p-info *{color:#141b26;}
-  .v-port .panel[data-idx="0"] .p-info .role{color:var(--ink);}
+  /* Offset shadow under the Porcupine title. It is the only --ink text sitting on the pink
+     rings, and at 2.78:1 it was getting lost - the offset gives the glyph edges definition
+     without darkening the letterform itself. Colour is the ring pink darkened, not the old
+     #a8b0bd grey-blue, which was tuned for the teal panel this layout replaced. */
+  .v-port .panel[data-idx="0"] .p-info .role{color:var(--ink);text-shadow:1px 1px 0 #682447;}
   .v-port .panel[data-idx="0"] .p-info .role .acc{color:#e7519d;}
   .v-port .panel[data-idx="1"] .p-info .role{color:var(--dim);}
   .v-port .panel[data-idx="0"] .p-info .cta,.v-port .panel[data-idx="0"] .p-info .cta *{color:#1fcbc4;}
