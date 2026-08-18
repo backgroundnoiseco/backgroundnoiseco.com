@@ -240,22 +240,28 @@
       for (let inset = 0; W - 2 * inset >= MIN_SIDE && H - 2 * inset >= MIN_SIDE; inset += STEP) insets.push(inset);
       // ring colour ramps warm-white (outermost) -> pink (innermost); the CSS fill blends this
       // toward black by --rect-mix so it only shows on the Porcupine panel.
-      // t is index-over-count: every ring is one even step toward the centre colour, so the
-      // ramp always spans WHITE -> PINK however many rings there are. On mobile that matters -
-      // with only a few rings the old fixed-depth ramp left them all pale and the project
-      // title washed out against them.
-      // TRADE-OFF, deliberately re-accepted: this was previously keyed to pixel depth against
-      // a fixed 240px reference precisely so a given ring KEPT its colour as the window (and
-      // thus the ring count) changed. Index-over-count means rings do recolour on resize.
+      // Two ramps, split at the same 565px boundary the rest of the mobile layout uses:
+      //   > 565  pixel depth against a fixed RAMP_PX. A given ring KEEPS its colour as the
+      //          window (and so the ring count) changes - no recolouring while you resize.
+      //          240px = 6 steps, the innermost depth at desktop, so the centre reaches full
+      //          pink there.
+      //   <= 565 index over count, i.e. every ring one even step toward the centre colour.
+      //          Mobile only fits ~5 rings, and under the fixed-depth ramp its innermost
+      //          stopped at rgb(238,122,180) - pale enough that the project title washed out
+      //          against it. Spreading the ramp over however many rings exist takes it to
+      //          full pink. The cost is that rings recolour on resize, which is why this is
+      //          NOT used at desktop widths, where there is no contrast problem to solve.
       // WHITE and --ringOverlay in the CSS are this same hue lifted toward white, so the
       // ramp stays one family - change PINK and both have to be re-derived, or the outer
       // rings drift magenta while the centre reads red. (Tried retargeting all three onto
       // the badge's #e84264; this magenta-leaning pink was kept instead.)
       const WHITE = [252, 205, 226], PINK = [231, 81, 157];
+      const RAMP_PX = 240, evenSteps = window.innerWidth <= 565;
       let out = '';
       insets.forEach((inset, i) => {
         const w = W - 2 * inset, h = H - 2 * inset;
-        const t = insets.length > 1 ? i / (insets.length - 1) : 1;
+        const t = evenSteps ? (insets.length > 1 ? i / (insets.length - 1) : 1)
+                            : Math.min(inset / RAMP_PX, 1);
         const c = WHITE.map((v, k) => Math.round(v + (PINK[k] - v) * t)).join(',');
         out += '<rect x="'+inset+'" y="'+inset+'" width="'+w+'" height="'+h+'" style="--c:rgb('+c+')" fill-opacity="0.15"/>';
       });
