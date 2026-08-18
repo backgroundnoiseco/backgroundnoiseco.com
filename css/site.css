@@ -290,6 +290,14 @@
        .hero-block background, and .hero-block (z-index 2) as a whole still sits above
        the snake canvas (z-index 1). Net order: body, then badge, then wordmark. */
     aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:none;}
+  /* Below 565 there is no snake, so the badge is a standalone sticker again and keeps its
+     original size pair (78 -> 140, i.e. 78-98px across that range). Above 565 it is the
+     snake's head and takes the smaller 64 -> 100 pair, sized to sit in the chain.
+     **This has to come AFTER the rule above** - same specificity, so source order is what
+     decides; sitting up with the snake's media query it silently lost. */
+  @media (max-width:565px){
+    .v-port .panel .p-badge{width:clamp(78px, calc(78px + var(--kf-x) * 0.096875), 140px);}
+  }
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
   .v-port .panel .p-badge svg{width:100%;height:100%;display:block;font-size:15px;letter-spacing:normal;}
