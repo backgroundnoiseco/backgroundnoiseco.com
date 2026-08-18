@@ -30,7 +30,7 @@
 
          property            360px      1000px          K
          --hero-size           54    ->    100     0.071875
-         badge width           78    ->    109     0.0484375
+         badge width           78    ->    140     0.096875
          badge margin-left     -8    ->    330     0.528125
          badge top         -163.1    ->   -137     0.04078125
          --kicker-fs            9    ->     12     0.0046875
@@ -52,9 +52,12 @@
      came back down. Anything that changes the frame's height belongs on these keyframes.
 
      Two invariants the keyframe values have to respect, both of which have bitten:
-       - badge top at 1000 is now -120 against a 109px badge, so its bottom sits 11px
-         ABOVE the wordmark's top edge rather than on it. Keep it at or past -109: any
-         less negative and the badge starts sinking into the first line.
+       - badge top and badge width interact: the badge is aspect-ratio 1, so its BOTTOM
+         edge is top + width. At -137 against a 140px badge the bottom lands +3px past the
+         wordmark's top edge - i.e. resting on it, the relationship the composition was
+         drawn with. Widen the badge without moving top and it grows downward into the
+         first line; make top more negative to compensate and the badge starts rising as
+         the window widens, which is the drift that was just removed. Pick one.
        - the hero panel has NO vertical padding, and must not be given any. It is a
          centred grid item, so padding cannot clear anything - all it does is shrink the
          content box. Once the block's margin box outgrows that box, grid centring stops
@@ -247,7 +250,7 @@
      Consequence of the `top` pair: on narrow windows the gap between badge and wordmark
      opens up, because the text keeps descending and the badge does not. */
   .v-port .panel .p-badge{position:absolute;left:100%;
-    width:clamp(78px, calc(78px + var(--kf-x) * 0.0484375), 109px);
+    width:clamp(78px, calc(78px + var(--kf-x) * 0.096875), 140px);
     margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.528125), 330px);
     top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.04078125), -137px);
     aspect-ratio:1;color:#e84264;z-index:2;pointer-events:none;}
