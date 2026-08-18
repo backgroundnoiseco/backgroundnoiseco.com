@@ -135,8 +135,8 @@
      own padding-left, and when it and the right padding both dipped mid-range the hero
      text ended up 19px from the side rail. */
   /* Floating snake - ported from the rng1 app's FloatingSnakeView. Fills the space to the
-     right of the wordmark, which is where the badge used to sit; its media query is the
-     exact complement of the badge's, so precisely one of the two is on screen at any width.
+     right of the wordmark, in the same region as the badge - the two now coexist at every
+     width, with the badge painting over the snake.
      z-index 1 puts it BEHIND the hero text (panel children are z-index 2), so it can pass
      under the wordmark instead of colliding with it. Absolutely positioned, so it stays out
      of the panel's grid and cannot affect the centring - **the selector needs .panel--hero
@@ -262,15 +262,13 @@
        multipliers make the badge SHRINK as the window widens.
      Consequence of the `top` pair: on narrow windows the gap between badge and wordmark
      opens up, because the text keeps descending and the badge does not. */
-  /* MOBILE ONLY - hidden above 565px, the same boundary the info bar's feature list
-     switches at. Anchoring it to the end of the wordmark never settled at desktop
-     widths: past the 1000px cap everything freezes its offset from the 936px band
-     while the window keeps growing, so the badge slid left as a share of the window
-     no matter what the pair was set to. Only 360 -> 565 of the pairs below is ever
-     rendered now; the values they reach at 565 are size 98px, margin-left 91px,
-     top -155px. The 1000px endpoints are notional - if the badge ever returns at
-     desktop widths, re-derive them rather than trusting them. */
-  @media (min-width:566px){ .v-port .panel .p-badge{display:none;} }
+  /* Shown at every width, and it shares the hero's right-hand space with .hero-snake:
+     the badge is z-index 2 and the snake z-index 1, so the badge paints over it.
+     Its whole keyframe range is live again, so the 1000px endpoints below are real.
+     Known behaviour, not a bug: past the 1000px cap the badge slides left as a SHARE
+     of the window, because it hangs off the end of the wordmark while everything
+     freezes its offset from the 936px band. No single pair fixes that - see the
+     margin-left note. */
   .v-port .panel .p-badge{position:absolute;left:100%;
     width:clamp(78px, calc(78px + var(--kf-x) * 0.096875), 140px);
     margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.48125), 300px);
