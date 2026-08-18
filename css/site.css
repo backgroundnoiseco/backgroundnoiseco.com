@@ -313,7 +313,12 @@
        reachable as the Porcupine panel's CTA, so nothing is lost by making this one a
        pointer-only shortcut. Where a glyph overlaps the badge the h1's inline content
        wins the hit (the badge sits at z-index -1, below it); the rest is clickable. */
-    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:auto;cursor:pointer;}
+    /* will-change is a Safari fix, not premature optimisation. JS rewrites this element's
+       transform every frame while it sits at z-index -1 BEHIND the wordmark, so WebKit
+       was re-rasterising the glyphs above it each frame - the 'd' at the end of
+       'background', the one it passes under most, visibly shimmered. Giving it its own
+       layer keeps its motion off the text. */
+    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:auto;cursor:pointer;will-change:transform;}
   /* Below 565 there is no snake, so the badge is a standalone sticker again and keeps its
      original size pair (78 -> 140, i.e. 78-98px across that range). Above 565 it is the
      snake's head and takes the smaller 64 -> 100 pair, sized to sit in the chain.
