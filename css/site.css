@@ -35,8 +35,8 @@
          badge top         -163.1    ->   -137     0.04078125 (mobile only, <=565)
          --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->   41.4     0.0334375
-         --hero-drop           60    ->     20    -0.0625   (+ svh guard, below)
-         hero pad left         60    ->     92     0.05
+         --hero-drop           60    ->     36    -0.0375   (+ svh guard, below)
+         hero pad left         60    ->    102     0.065625
          hero pad right        60    ->     32    -0.04375
          --bar-tag-size        18    ->     23     0.0078125
          info bar pad top      28    ->     36     0.0125
@@ -136,7 +136,7 @@
      really a height one.
      The vertical bias lives in --hero-drop instead: a margin, which participates in
      centring, never clips, and has no floor to hit. It shifts the block by HALF its value.
-     Its keyframe pair is capped by `100svh - 565px` - the one place a height term is
+     Its keyframe pair is capped by `100svh - 580px` - the one place a height term is
      needed on the width keyframes. 565 is header + info bar (242) + the block's own height
      at the large keyframe (314), plus ~9px slack, so the cap is exactly the room left
      over. Without it a 100px drop
@@ -177,14 +177,14 @@
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(20px, calc(60px + var(--kf-x) * -0.0625), 60px),max(0px, calc(100svh - 565px)));
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(36px, calc(60px + var(--kf-x) * -0.0375), 60px),max(0px, calc(100svh - 580px)));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.0046875), 12px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.0334375), 41.4px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
     padding:0
             calc(var(--cap) + clamp(32px, calc(60px + var(--kf-x) * -0.04375), 60px))
             0
-            calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.05), 92px));}
+            calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.065625), 102px));}
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
      (the old 12px floor left the title and description almost touching the frame edge on
      narrow windows),
