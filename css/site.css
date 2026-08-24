@@ -313,12 +313,12 @@
        reachable as the Porcupine panel's CTA, so nothing is lost by making this one a
        pointer-only shortcut. Where a glyph overlaps the badge the h1's inline content
        wins the hit (the badge sits at z-index -1, below it); the rest is clickable. */
-    /* will-change is a Safari fix, not premature optimisation. JS rewrites this element's
-       transform every frame while it sits at z-index -1 BEHIND the wordmark, so WebKit
-       was re-rasterising the glyphs above it each frame - the 'd' at the end of
-       'background', the one it passes under most, visibly shimmered. Giving it its own
-       layer keeps its motion off the text. */
-    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:auto;cursor:pointer;will-change:transform;}
+    /* NO will-change here. Tried it to stop the wordmark shimmering and it made things
+       worse: promoting a NEGATIVE-z descendant forces WebKit to layerize the ancestor h1
+       to preserve paint order (badge under glyphs), and that layer clips to the h1's box -
+       which is exactly where the last glyph's ink sits. That produced a seam through the
+       'd' and sometimes dropped its right edge entirely. */
+    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:auto;cursor:pointer;}
   /* Below 565 there is no snake, so the badge is a standalone sticker again and keeps its
      original size pair (78 -> 140, i.e. 78-98px across that range). Above 565 it is the
      snake's head and takes the smaller 64 -> 100 pair, sized to sit in the chain.
@@ -353,7 +353,12 @@
   /* size and gap live in vars on .panel--hero so .hero-block can cancel them out - see the
      --kicker-block note there. line-height is stated explicitly because that calc needs it. */
   .v-port .panel .kicker{font-family:var(--mono);font-size:var(--kicker-fs);line-height:1.55;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--kicker-mb);}
-  .v-port .panel h1{font-family:"Distortion",serif;font-size:var(--hero-size);line-height:.82;margin:0;color:var(--ink);letter-spacing:-.015em;font-weight:400;position:relative;width:max-content;max-width:100%;}
+  /* padding-right is load-bearing, not spacing. Distortion's last glyph ends EXACTLY on
+     the h1's box edge - measured 0.00px of margin - so any compositing layer bounded by
+     that box clips the final column of the 'd' under subpixel rounding. In em so it
+     tracks the type. The h1 is left-aligned, so this widens the box without moving the
+     text. */
+  .v-port .panel h1{padding-right:0.05em;font-family:"Distortion",serif;font-size:var(--hero-size);line-height:.82;margin:0;color:var(--ink);letter-spacing:-.015em;font-weight:400;position:relative;width:max-content;max-width:100%;}
   .v-port .panel h1 em{font-style:normal;display:block;padding:0 .1em 0 .3em;}
   .v-port .panel h1 em .dim{color:var(--dim);}
   .v-port .panel h1 em .acc{color:#a89a7d;}
