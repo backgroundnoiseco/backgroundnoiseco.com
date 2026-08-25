@@ -33,8 +33,8 @@
          badge width           82    ->    136     0.19014085
          --kicker-fs            9    ->     10     0.00352113
          --kicker-mb           20    ->     32     0.04225352
-         --hero-drop           60    ->     52    -0.02816901   (+ svh guard, below)
-         hero pad left         60    ->    102     0.14788732
+         --hero-drop           60    ->     68     0.02816901   (+ svh guard, below)
+         hero pad left         60    ->     88     0.09859155
          hero pad right        60    ->     32    -0.09859155
          --bar-tag-size        18    ->     19     0.00352113
          info bar pad top      28    ->     36     0.02816901
@@ -175,14 +175,14 @@
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(52px, calc(60px + var(--kf-x) * -0.02816901), 60px),max(0px, calc(100svh - 580px)));
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.02816901), 68px),max(0px, calc(100svh - 580px)));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.00352113), 10px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.0422535), 32px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
     padding:0
             calc(var(--cap) + clamp(32px, calc(60px + var(--kf-x) * -0.09859154), 60px))
             0
-            calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.14788732), 102px));}
+            calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.09859155), 88px));}
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
      (the old 12px floor left the title and description almost touching the frame edge on
      narrow windows),
