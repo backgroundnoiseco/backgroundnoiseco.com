@@ -30,7 +30,7 @@
 
          property            360px      1000px          K
          --hero-size           54    ->    118     0.1
-         badge width           96    ->    170     0.115625
+         badge width           82    ->    136     0.084375
          --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->     32     0.01875
          --hero-drop           60    ->     36    -0.0375   (+ svh guard, below)
@@ -280,7 +280,7 @@
      Only `width` is a keyframe pair now; top and right are constants, so the badge's size
      no longer drags its position around. */
   .v-port .panel--hero .p-badge{position:absolute;top:40px;right:calc(var(--cap) + 40px);
-    width:clamp(96px, calc(96px + var(--kf-x) * 0.115625), 170px);
+    width:clamp(82px, calc(82px + var(--kf-x) * 0.084375), 136px);
     aspect-ratio:1;color:#e84264;z-index:1;pointer-events:auto;cursor:pointer;}
 
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
