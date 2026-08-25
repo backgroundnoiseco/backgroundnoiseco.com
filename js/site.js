@@ -95,11 +95,13 @@
         const pRect = phone.getBoundingClientRect();
         if (pRect.width <= 0) return;
         // Shift the pair so the phone's centre lands ~37% of width. Past the layout cap
-        // (maxw + 64 = 1000) freeze the target at a constant offset left of centre, so the
+        // (maxw + 64 = 884) freeze the target at a constant offset left of centre, so the
         // pair stops drifting left as the window widens (37% of viewport keeps sliding left
         // of the centred, capped content otherwise). The two branches meet exactly at
-        // CAP_W (0.37 x 1000 === 1000/2 - 130), so there is no step there.
-        const CAP_W = 1000;
+        // CAP_W (0.37 x 884 === 884/2 - 884 x 0.13), so there is no step there.
+        // KEEP IN SYNC with --maxw + 64 in css/site.css - it is the width at which the
+        // content band stops growing, which is what the freeze is for.
+        const CAP_W = 884;
         const phoneCenter = pRect.left + pRect.width / 2;
         const vw = window.innerWidth;
         const target = vw <= CAP_W ? vw * 0.37 : vw / 2 - CAP_W * 0.13;
