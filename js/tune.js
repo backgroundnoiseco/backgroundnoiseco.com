@@ -89,7 +89,7 @@
       lines.join('\n') +
       `\n──────────────────────────────────────────\n` +
       `drag wordmark · drag badge · drag badge's ▘ corner\n` +
-      `shift = 10× slower · R = reset`;
+      `shift = 10× slower · R = reset · H = hide`;
   }
 
   // --- dragging ------------------------------------------------------------
@@ -122,6 +122,12 @@
     state.drop    = Math.max(0, s.drop + dy * 2);   // margin moves the centred box by half
   });
 
+  // The badge is a real link to the App Store. Dragging it fires a click on release, so
+  // swallow clicks in the capture phase for as long as the overlay is loaded - otherwise
+  // every attempt to position it opens a new tab.
+  badge.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); }, true);
+  badge.style.cursor = 'move';
+
   drag(badge, (dx, dy, s) => {
     state.badgeRight = Math.max(0, s.badgeRight - dx);  // anchored from the RIGHT
     state.badgeTop   = s.badgeTop + dy;
@@ -136,7 +142,23 @@
     state.badgeRight = s.badgeRight;
   }, 'nwse-resize');
 
+  // Collapsed state is a chip rather than nothing, so there is always a way back.
+  let hidden = false;
+  const chip = document.createElement('div');
+  chip.textContent = 'tune ▸';
+  chip.style.cssText = `position:fixed;left:12px;bottom:12px;z-index:99999;display:none;
+    font:11px/1 ui-monospace,Menlo,monospace;color:#1fcbc4;background:rgba(10,10,10,.94);
+    border:1px solid #333;padding:6px 9px;border-radius:4px;cursor:pointer`;
+  chip.addEventListener('click', () => setHidden(false));
+  document.body.appendChild(chip);
+  function setHidden(v){
+    hidden = v;
+    ui.style.display   = v ? 'none' : '';
+    chip.style.display = v ? 'block' : 'none';
+  }
+
   addEventListener('keydown', e => {
+    if (e.key === 'h' || e.key === 'H') { setHidden(!hidden); return; }
     if (e.key === 'r' || e.key === 'R') {
       panel.style.paddingLeft = block.style.marginTop = '';
       badge.style.top = badge.style.right = badge.style.width = '';
