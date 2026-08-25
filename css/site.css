@@ -29,12 +29,12 @@
      only derived number, and it is local to its own line.
 
          property            360px      1318px          K
-         --hero-size           54    ->     85     0.03198558
+         --hero-size           54    ->     85     0.03235908
          badge width           82    ->    136     0.05636743
          badge right past cap  80    ->    417     0.35177453   (ring-step x2 -> x10.425)
          --kicker-fs            9    ->     10     0.00104384
          --kicker-mb           20    ->     32     0.01252609
-         --hero-drop           60    ->    369     0.3228324    (+ svh guard, below)
+         --hero-drop           60    ->    369     0.32254697   (+ svh guard, below)
          hero pad left         60    ->     89     0.0302714
          hero pad right        60    ->     32    -0.02922755
          --bar-tag-size        18    ->     19     0.00104384
@@ -74,7 +74,7 @@
          --hero-drop (a margin, which participates in centring and never clips) - it
          shifts the block by HALF its value.
      ====================================================================== */
-  .v-port{--kf-x:calc(100vw - 360px);--ring-step:40px;--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.00835073),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.03198558),85px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:1254px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port{--kf-x:calc(100vw - 360px);--ring-step:40px;--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.00835073),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.03235908),85px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:1254px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
@@ -183,7 +183,7 @@
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.3228324), 369px),max(0px, calc(100svh - 580px)));
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.32254697), 369px),max(0px, calc(100svh - 580px)));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.00104384), 10px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.01252609), 32px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));

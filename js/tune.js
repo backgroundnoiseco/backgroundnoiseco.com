@@ -16,6 +16,16 @@
   const vport = document.querySelector('.v-port');
   const panel = document.querySelector('.panel--hero');
   const block = document.querySelector('.hero-block');
+  // The badge ships disabled inside <template data-disabled="badge">. The overlay exists to
+  // position it, so unwrap it here rather than making every reference below optional - same
+  // move ensureSnake() makes for the canvas, just eagerly, since the badge is never optional
+  // to this tool. On a page where it is already unwrapped this is a no-op.
+  (function unwrapBadge(){
+    const tpl = document.querySelector('.v-port template[data-disabled="badge"]');
+    if (tpl && !document.querySelector('.v-port .p-badge')) {
+      tpl.parentNode.insertBefore(tpl.content.cloneNode(true), tpl);
+    }
+  })();
   const badge = document.querySelector('.p-badge');
   const h1     = document.querySelector('.panel--hero h1');
   const kicker = document.querySelector('.panel--hero .kicker');

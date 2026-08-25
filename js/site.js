@@ -478,10 +478,11 @@
     vport._bootSnake();
   })();
 
-  // Dev-only tuning overlay. Loaded ONLY when ?tune is in the URL, so the live page never
-  // fetches or parses it. See js/tune.js.
-  if (new URLSearchParams(location.search).has('tune')) {
-    const s = document.createElement('script');
-    s.src = 'js/tune.js';
-    document.body.appendChild(s);
-  }
+  // Dev-only tuning overlay - CURRENTLY OFF. js/tune.js is kept for later; uncomment the
+  // block below to bring it back, then load any page with ?tune. It was gated on the query
+  // string anyway, so the live page never fetched it either way.
+  // if (new URLSearchParams(location.search).has('tune')) {
+  //   const s = document.createElement('script');
+  //   s.src = 'js/tune.js';
+  //   document.body.appendChild(s);
+  // }
