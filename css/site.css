@@ -34,7 +34,7 @@
          badge right past cap  80    ->    417     0.35177453   (ring-step x2 -> x10.425)
          --kicker-fs            9    ->     10     0.00104384
          --kicker-mb           20    ->     32     0.01252609
-         --hero-drop           60    ->    400     0.35490605   (+ svh guard, below)
+         --hero-drop           60    ->    424     0.38001044   (+ svh guard, below)
          hero pad left         60    ->     89     0.0302714
          hero pad right        60    ->     32    -0.02922755
          --bar-tag-size        18    ->     19     0.00104384
@@ -142,17 +142,17 @@
      really a height one.
      The vertical bias lives in --hero-drop instead: a margin, which participates in
      centring, never clips, and has no floor to hit. It shifts the block by HALF its value.
-     Its keyframe pair is capped by `100svh - 549px` - the one place a height term is
+     Its keyframe pair is capped by `100svh - 525px` - the one place a height term is
      needed on the width keyframes - so the drop is the room left over after the header,
      the info bar and the block's own height. Without it the block re-overflows its content
      box on short windows and the reversal above comes straight back. The cap is
      width-independent, so it cannot itself bend the width curve: min(rising pair, constant)
      is still non-decreasing.
-     THE GUARD IS WHAT BINDS ON A NORMAL LAPTOP - it takes over below ~980px tall, where it
-     pins the block's bottom a constant ~84px above the frame's. Raising the 400px ceiling
+     THE GUARD IS WHAT BINDS ON A NORMAL LAPTOP - it takes over below ~950px tall, where it
+     pins the block's bottom a constant ~72px above the frame's. Raising the 424px ceiling
      alone moves nothing on those windows; to move the hero vertically, shift the ceiling
-     and the 549 constant by the SAME amount in opposite directions, or the two height
-     regimes drift apart. Both currently sit 15.5px below where they were (369/580).
+     and the 525 constant by the SAME amount in opposite directions, or the two height
+     regimes drift apart. The block moves half of whatever you shift them by.
      Left padding must stay non-decreasing - it also absorbs what used to be .hero-block's
      own padding-left, and when it and the right padding both dipped mid-range the hero
      text ended up 19px from the side rail. */
@@ -187,7 +187,7 @@
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.35490605), 400px),max(0px, calc(100svh - 549px)));
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.38001044), 424px),max(0px, calc(100svh - 525px)));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.00104384), 10px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.01252609), 32px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
