@@ -92,6 +92,10 @@ This replaced a set of independently-fitted ramps that each froze at their own w
 
 `.hero-block` also carries `margin-bottom: var(--kicker-block)`, which cancels the kicker's height out of the centring so the **h1 itself** is centred rather than the block. Without it the wordmark rises whenever the kicker's type or gap shrinks. Below 360px the whole composition is frozen; the h1 box starts to overflow its panel around 327px.
 
+### Floating snake (hero decoration) — currently DISABLED
+
+> **Disabled.** The canvas is wrapped in `<template data-disabled="snake">` in `index.html`: passing under the wordmark made its last glyph flicker in Safari, and layer-promotion attempts on both the canvas and the badge didn't clear it (promoting the badge made it worse — see the badge note above). The badge is a static sticker at every width again, on one size pair. To restore, unwrap the template — the JS finds the canvas by class and no-ops when it's absent, and all the CSS is still in place.
+
 ### Floating snake (hero decoration)
 
 `<canvas class="hero-snake">` in the hero panel, drawn by the last IIFE in `js/site.js` — a port of `FloatingSnakeView.swift` from the rng1 app (`~/Desktop/everything/bgnoiseco/rng1`). 30 squares chase a multi-sine path, each rotating on its own seeded speed. The app hardcodes a 50px head; here the head **is** the badge, so the first drawn square takes `badge.offsetWidth / √2` — inscribed in the badge's disc so its corners come out exactly to the badge's radius. Read with `offsetWidth`, never `getBoundingClientRect`: the badge spins, and the rect returns the *rotated* bounding box, inflated by up to 1.41× and varying with the angle. Recoloured for this site: head is the badge's own `#e84264`, tail is `--ink` (`#eae6dc`), so the badge reads as the head of one object rather than a sticker sitting on top of it. (The app's original is teal → purple.) The constants are the app's shipped values (speed .5, head 50, tail 10, delay .2, rotation 50, lfo 5); the app's `wiggle` and `depthScale` are both 0 there, so those terms are omitted rather than carried as dead code.

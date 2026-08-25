@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=120">
+<link rel="stylesheet" href="css/site.css?v=121">
 </head>
 <body>
 
@@ -36,7 +36,10 @@
       <div class="stage">
         <div class="frame">
       <article class="panel panel--hero" data-panel="0" data-idx="hero" style="--i:0">
-        <canvas class="hero-snake" aria-hidden="true"></canvas>
+        <!-- Snake disabled: it made the wordmark's last glyph flicker in Safari whenever
+             it passed under. To restore, unwrap this template - js/site.js finds the
+             canvas by class and no-ops when it is absent, and the CSS is left in place. -->
+        <template data-disabled="snake"><canvas class="hero-snake" aria-hidden="true"></canvas></template>
         <div class="hero-block">
         <div class="kicker">◎ Creative Software</div>
         <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em><a class="p-badge" href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
@@ -173,7 +176,7 @@
   </div>
 </div>
 
-<script src="js/site.js?v=120"></script>
+<script src="js/site.js?v=121"></script>
 
 </body>
 </html>
