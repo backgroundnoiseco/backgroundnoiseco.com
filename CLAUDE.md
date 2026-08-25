@@ -137,7 +137,7 @@ The contact email (in `.p-outro`) is stored as two base64 chunks in `data-a` / `
 
 Dev-only. Load any page with **`?tune`** and `js/site.js` injects `js/tune.js`; without the flag the file is never fetched, so the live page pays nothing for it.
 
-Drag the wordmark, drag the badge, or drag the badge's corner grip to resize it. The panel prints finished CSS declarations to paste back — `--hero-drop`, the hero's left padding, the badge's width, and the badge's `top`/`right` expressed in `--ring-step` multiples so it stays anchored to a concentric rectangle.
+Drag the wordmark, drag the badge, or drag the badge's corner grip to resize it. Three colour-coded side grips resize type by horizontal drag — **yellow** `--hero-size`, **blue** `--kicker-fs`, **purple** `--bar-tag-size`. Each sets the variable on the element that declares it, so the cascade is unchanged. The panel prints finished CSS declarations to paste back — `--hero-drop`, the hero's left padding, the badge's width, and the badge's `top`/`right` expressed in `--ring-step` multiples so it stays anchored to a concentric rectangle.
 
 Two things it handles that are easy to get wrong by hand:
 

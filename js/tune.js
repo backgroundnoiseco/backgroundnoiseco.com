@@ -17,7 +17,11 @@
   const panel = document.querySelector('.panel--hero');
   const block = document.querySelector('.hero-block');
   const badge = document.querySelector('.p-badge');
-  if (!vport || !panel || !block || !badge) return;
+  const h1     = document.querySelector('.panel--hero h1');
+  const kicker = document.querySelector('.panel--hero .kicker');
+  const barTag = document.querySelector('.sub-panel--hero .tag');
+  const bar    = document.querySelector('.p-sub');
+  if (!vport || !panel || !block || !badge || !h1 || !kicker || !barTag || !bar) return;
 
   const KF0 = 360;
   const num = v => parseFloat(v) || 0;
@@ -33,6 +37,9 @@
     badgeTop:   num(cs(badge).top),
     badgeRight: num(cs(badge).right) - cap(),
     badgeW:     badge.offsetWidth,
+    heroSize:   num(cs(h1).fontSize),
+    kickerFs:   num(cs(kicker).fontSize),
+    barTag:     num(cs(barTag).fontSize),
   };
 
   function apply(){
@@ -41,6 +48,10 @@
     badge.style.top    = state.badgeTop.toFixed(1) + 'px';
     badge.style.right  = `calc(${cap()}px + ${state.badgeRight.toFixed(1)}px)`;
     badge.style.width  = state.badgeW.toFixed(1) + 'px';
+    // each var is set on the element that declares it, so the cascade is unchanged
+    vport.style.setProperty('--hero-size',    state.heroSize.toFixed(1) + 'px');
+    panel.style.setProperty('--kicker-fs',    state.kickerFs.toFixed(2) + 'px');
+    bar.style.setProperty('--bar-tag-size',   state.barTag.toFixed(2) + 'px');
     report();
   }
 
@@ -63,6 +74,15 @@
     // small-keyframe values are read straight off the stylesheet's own floors
     const p0 = 60, d0 = 60, bw0 = 82;
     const lines = atMax ? [
+      `--hero-size  (54 -> ${state.heroSize.toFixed(0)})`,
+      `   clamp(54px, calc(54px + var(--kf-x) * ${K(54,state.heroSize,span)}), ${state.heroSize.toFixed(0)}px)`,
+      ``,
+      `--kicker-fs  (9 -> ${state.kickerFs.toFixed(1)})`,
+      `   clamp(9px, calc(9px + var(--kf-x) * ${K(9,state.kickerFs,span)}), ${state.kickerFs.toFixed(1)}px)`,
+      ``,
+      `--bar-tag-size (18 -> ${state.barTag.toFixed(1)})`,
+      `   clamp(18px, calc(18px + var(--kf-x) * ${K(18,state.barTag,span)}), ${state.barTag.toFixed(1)}px)`,
+      ``,
       `--hero-drop  (60 -> ${state.drop.toFixed(0)})`,
       `   min(clamp(60px, calc(60px + var(--kf-x) * ${K(d0,state.drop,span)}), ${state.drop.toFixed(0)}px),`,
       `       max(0px, calc(100svh - 580px)))`,
@@ -76,6 +96,9 @@
       `hero pad left  ${state.padLeft.toFixed(1)}`,
       `--hero-drop    ${state.drop.toFixed(1)}`,
       `badge width    ${state.badgeW.toFixed(1)}`,
+      `--hero-size    ${state.heroSize.toFixed(1)}`,
+      `--kicker-fs    ${state.kickerFs.toFixed(2)}`,
+      `--bar-tag-size ${state.barTag.toFixed(2)}`,
     ];
     ui.textContent =
       `${which}\n` +
@@ -88,7 +111,8 @@
       `──────────────────────────────────────────\n` +
       lines.join('\n') +
       `\n──────────────────────────────────────────\n` +
-      `drag wordmark · drag badge · drag badge's ▘ corner\n` +
+      `drag wordmark/badge to move · corner grip = badge size\n` +
+      `side grips: yellow = hero · blue = kicker · purple = bar tagline\n` +
       `shift = 10× slower · R = reset · H = hide`;
   }
 
@@ -133,6 +157,21 @@
     state.badgeTop   = s.badgeTop + dy;
   });
 
+  // Type grips. A drag on the text itself is already taken (that moves the block), so each
+  // resizable run gets its own handle pinned to its right edge. Sensitivity is per-element
+  // because a 1px step means something very different to a 91px wordmark and a 9px kicker.
+  function typeGrip(el, key, perPx, colour){
+    if (cs(el).position === 'static') el.style.position = 'relative';
+    const g = document.createElement('div');
+    g.style.cssText = `position:absolute;right:-9px;top:50%;width:14px;height:14px;
+      margin-top:-7px;background:${colour};border:1px solid #06302e;cursor:ew-resize;z-index:6`;
+    el.appendChild(g);
+    drag(g, (dx, dy, s) => { state[key] = Math.max(6, s[key] + dx * perPx); }, 'ew-resize');
+  }
+  typeGrip(h1,     'heroSize', 0.2,  '#e8c84a');
+  typeGrip(kicker, 'kickerFs', 0.05, '#7ad4ff');
+  typeGrip(barTag, 'barTag',   0.08, '#b9a6ff');
+
   const grip = document.createElement('div');
   grip.style.cssText = `position:absolute;left:-7px;top:-7px;width:16px;height:16px;
     background:#1fcbc4;border:1px solid #06302e;cursor:nwse-resize;z-index:5`;
@@ -161,11 +200,16 @@
     if (e.key === 'h' || e.key === 'H') { setHidden(!hidden); return; }
     if (e.key === 'r' || e.key === 'R') {
       panel.style.paddingLeft = block.style.marginTop = '';
+      vport.style.removeProperty('--hero-size');
+      panel.style.removeProperty('--kicker-fs');
+      bar.style.removeProperty('--bar-tag-size');
       badge.style.top = badge.style.right = badge.style.width = '';
       Object.assign(state, {
         padLeft: num(cs(panel).paddingLeft) - cap(), drop: num(cs(block).marginTop),
         badgeTop: num(cs(badge).top), badgeRight: num(cs(badge).right) - cap(),
-        badgeW: badge.offsetWidth });
+        badgeW: badge.offsetWidth,
+        heroSize: num(cs(h1).fontSize), kickerFs: num(cs(kicker).fontSize),
+        barTag: num(cs(barTag).fontSize) });
       apply();
     }
   });
