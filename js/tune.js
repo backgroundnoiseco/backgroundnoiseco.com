@@ -55,6 +55,9 @@
     bar.style.setProperty('--bar-tag-size',   state.barTag.toFixed(2) + 'px');
     vport.style.setProperty('--maxw',         state.maxw.toFixed(0) + 'px');
     if (bandGrip) bandGrip.style.right = cap() + 'px';   // ride the band's own edge
+    // .frame does not change size when --maxw does, so its ResizeObserver never fires and
+    // the rings would keep their old geometry. Re-render them by hand.
+    if (vport._renderRects) vport._renderRects();
     report();
   }
 
@@ -65,6 +68,15 @@
     border:1px solid #333;padding:10px 12px;white-space:pre;pointer-events:auto;
     border-radius:4px;box-shadow:0 6px 30px rgba(0,0,0,.6)`;
   document.body.appendChild(ui);
+
+  // --maxw lives here rather than on the band edge: that edge is exactly where you need to
+  // grab the browser window itself, so an interactive handle there fights the OS.
+  const maxwRow = document.createElement('div');
+  maxwRow.style.cssText = `cursor:ew-resize;user-select:none;padding:3px 6px;margin:-2px -6px 6px;
+    background:rgba(232,150,60,.14);border:1px solid rgba(232,150,60,.5);border-radius:3px;
+    color:#e8963c;white-space:pre`;
+  const body = document.createElement('div');
+  ui.appendChild(maxwRow); ui.appendChild(body);
 
   function K(v0, v1, span){ return ((v1 - v0) / span).toFixed(8).replace(/0+$/,'').replace(/\.$/,''); }
 
@@ -105,13 +117,15 @@
       `--bar-tag-size ${state.barTag.toFixed(2)}`,
     ];
     const span0 = SPAN_AT_LOAD;
-    ui.textContent =
+    maxwRow.textContent =
+      `◀▶ --maxw ${state.maxw.toFixed(0)}   band ${C}   span ${span}` +
+      (Math.abs(span - span0) > 0.5
+        ? `\n   ⚠ span ${span0} → ${span}: rescale every K ×${(span0/span).toFixed(6)}`
+        : ``);
+    body.textContent =
       `${which}\n` +
       `viewport ${w} · band ${Math.min(w,C)} · ring step ${S}\n` +
-      `--maxw ${state.maxw.toFixed(0)}  → band ${C}  span ${span}\n` +
-      (Math.abs(span - span0) > 0.5
-        ? `⚠ span changed ${span0} → ${span}: rescale every --kf-x K by ×${(span0/span).toFixed(6)}\n`
-        : ``) +
+
       `──────────────────────────────────────────\n` +
       `badge top    ${state.badgeTop.toFixed(1)}px  = ring-step × ${(state.badgeTop/S).toFixed(2)}\n` +
       `badge right  ${state.badgeRight.toFixed(1)}px  = ring-step × ${(state.badgeRight/S).toFixed(2)}\n` +
@@ -122,7 +136,7 @@
       `\n──────────────────────────────────────────\n` +
       `drag wordmark/badge to move · corner grip = badge size\n` +
       `side grips: yellow = hero · blue = kicker · purple = bar tagline\n` +
-      `orange rule on the band edge = --maxw\n` +
+      `drag the orange row above = --maxw\n` +
       `shift = 10× slower · R = reset · H = hide panel · G = hide handles` +
       (gripsHidden ? `  [handles hidden]` : ``);
   }
@@ -151,6 +165,10 @@
       target.addEventListener('pointerup', up);
     });
   }
+
+  drag(maxwRow, (dx, dy, s) => {
+    state.maxw = Math.max(240, Math.round(s.maxw + dx * 2));   // band is centred: 2x pointer
+  }, 'ew-resize');
 
   drag(block, (dx, dy, s) => {
     state.padLeft = Math.max(0, s.padLeft + dx);
@@ -182,13 +200,9 @@
   let bandGrip = null;
   if (frame) {
     bandGrip = document.createElement('div');
-    bandGrip.style.cssText = `position:absolute;top:0;height:100%;right:${cap()}px;width:9px;
-      margin-right:-4px;background:rgba(232,150,60,.55);border-left:1px solid #e8963c;
-      border-right:1px solid #e8963c;cursor:ew-resize;z-index:4`;
+    bandGrip.style.cssText = `position:absolute;top:0;height:100%;right:${cap()}px;width:1px;
+      background:rgba(232,150,60,.5);pointer-events:none;z-index:4`;
     frame.appendChild(bandGrip); grips.push(bandGrip);
-    drag(bandGrip, (dx, dy, s) => {
-      state.maxw = Math.max(240, Math.round(s.maxw + dx * 2));
-    }, 'ew-resize');
   }
   function typeGrip(el, key, perPx, colour){
     if (cs(el).position === 'static') el.style.position = 'relative';

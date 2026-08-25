@@ -283,6 +283,10 @@
       svg.innerHTML = out;
     }
     new ResizeObserver(render).observe(frame);
+    // Exposed for the ?tune overlay: changing --maxw resizes the BAND but not .frame, so the
+    // observer never fires and the rings would keep the old geometry while the band moved.
+    const vp = document.querySelector('.v-port');
+    if (vp) vp._renderRects = render;
   })();
 
 // Portrait rail + Contact nav — click to scroll to section
