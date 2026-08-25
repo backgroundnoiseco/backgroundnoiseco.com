@@ -26,7 +26,12 @@
   const KF0 = 360;
   const num = v => parseFloat(v) || 0;
   const cs  = el => getComputedStyle(el);
-  const cap = () => num(cs(vport).getPropertyValue('--cap'));
+  // NOT getPropertyValue('--cap'): an unregistered custom property computes to its own
+  // token stream, so --cap comes back as the literal "calc(max(32px,...) - 32px)" and
+  // parseFloat gives NaN -> 0. That silently made every cap-relative readout absolute,
+  // and the printed calc(var(--cap) + N) declarations then double-counted the gutter.
+  // Mirror the stylesheet's arithmetic instead: cap = max(32, (W - maxw)/2) - 32.
+  const cap = () => Math.max(0, (vport.clientWidth - num(cs(vport).getPropertyValue('--maxw'))) / 2 - 32);
   const step = () => num(cs(vport).getPropertyValue('--ring-step')) || 40;
   const bandCap = () => num(cs(vport).getPropertyValue('--maxw')) + 64;
 
@@ -88,7 +93,7 @@
                 : atMin ? `EDITING THE ${KF0}px KEYFRAME`
                 : `⚠ BETWEEN KEYFRAMES (${w}px) — widen to ${C}+ or narrow to ${KF0} first`;
     // small-keyframe values are read straight off the stylesheet's own floors
-    const p0 = 60, d0 = 60, bw0 = 82;
+    const p0 = 60, d0 = 60, bw0 = 82, br0 = 80;   // br0 = ring-step x 2, ring 3's inset
     const lines = atMax ? [
       `--hero-size  (54 -> ${state.heroSize.toFixed(0)})`,
       `   clamp(54px, calc(54px + var(--kf-x) * ${K(54,state.heroSize,span)}), ${state.heroSize.toFixed(0)}px)`,
@@ -130,7 +135,13 @@
       `badge top    ${state.badgeTop.toFixed(1)}px  = ring-step × ${(state.badgeTop/S).toFixed(2)}\n` +
       `badge right  ${state.badgeRight.toFixed(1)}px  = ring-step × ${(state.badgeRight/S).toFixed(2)}\n` +
       `   top:calc(var(--ring-step) * ${(state.badgeTop/S).toFixed(2)});\n` +
-      `   right:calc(var(--cap) + var(--ring-step) * ${(state.badgeRight/S).toFixed(2)});\n` +
+      // `right` is a keyframe PAIR, not a constant. A flat inset measured at the wide end is
+      // far more than a 360px screen is wide, so pasting one back puts the badge off-screen
+      // on mobile - print the interpolated form, same as every other wide-keyframe value.
+      (atMax
+        ? `   right:calc(var(--cap) + clamp(calc(var(--ring-step) * ${(br0/S).toFixed(2)}),\n` +
+          `     calc(var(--ring-step) * ${(br0/S).toFixed(2)} + var(--kf-x) * ${K(br0,state.badgeRight,span)}), calc(var(--ring-step) * ${(state.badgeRight/S).toFixed(2)})));\n`
+        : `   right: 360px endpoint - widen past ${C} to emit the pair\n`) +
       `──────────────────────────────────────────\n` +
       lines.join('\n') +
       `\n──────────────────────────────────────────\n` +
