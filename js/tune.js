@@ -138,9 +138,9 @@
       `side grips: yellow = hero · blue = kicker · purple = bar tagline\n` +
       `drag the orange row above = --maxw\n` +
       `shift = 10× slower · R = reset\n` +
-      `H = hide panel · G = hide handles · B = hide badge` +
+      `H = hide panel · G = hide handles · B = badge / snake / none` +
       (gripsHidden ? `\n[handles hidden]` : ``) +
-      (badgeHidden ? `\n[badge hidden]` : ``);
+      `\ndecoration: ${DECOR[decor]}`;
   }
 
   // --- dragging ------------------------------------------------------------
@@ -242,14 +242,32 @@
     chip.style.display = v ? 'block' : 'none';
   }
 
-  // Hiding the badge is a view toggle, not a state change - it never touches the values, so
-  // what the panel reports stays true whether you can see it or not.
-  let badgeHidden = false;
-  function setBadge(v){
-    badgeHidden = v;
-    badge.style.display = v ? 'none' : '';
+  // B cycles the hero's decoration: badge -> snake -> none. A view toggle only; it never
+  // touches the tuned values, so what the panel reports stays true in every mode.
+  // The snake ships disabled inside <template data-disabled="snake">, so the first switch
+  // into it unwraps the template and asks site.js to boot it.
+  const DECOR = ['badge', 'snake', 'none'];
+  let decor = 0;
+  let snakeReady = false;
+  function ensureSnake(){
+    if (snakeReady) return true;
+    const tpl = document.querySelector('.v-port template[data-disabled="snake"]');
+    if (tpl && !document.querySelector('.v-port .hero-snake')) {
+      tpl.parentNode.insertBefore(tpl.content.cloneNode(true), tpl);
+    }
+    snakeReady = !!(vport._bootSnake && vport._bootSnake());
+    return snakeReady;
+  }
+  function setDecor(i){
+    decor = (i + DECOR.length) % DECOR.length;
+    const mode = DECOR[decor];
+    if (mode === 'snake') ensureSnake();
+    const cv = document.querySelector('.v-port .hero-snake');
+    badge.style.display = mode === 'badge' ? '' : 'none';
+    if (cv) cv.style.display = mode === 'snake' ? '' : 'none';
     report();
   }
+  const badgeHidden = () => DECOR[decor] !== 'badge';
 
   let gripsHidden = false;
   function setGrips(v){
@@ -263,9 +281,9 @@
   addEventListener('keydown', e => {
     if (e.key === 'h' || e.key === 'H') { setHidden(!hidden); return; }
     if (e.key === 'g' || e.key === 'G') { setGrips(!gripsHidden); return; }
-    if (e.key === 'b' || e.key === 'B') { setBadge(!badgeHidden); return; }
+    if (e.key === 'b' || e.key === 'B') { setDecor(decor + 1); return; }
     if (e.key === 'r' || e.key === 'R') {
-      setBadge(false);   // offsetWidth reads 0 while hidden, which would poison the reseed
+      setDecor(0);   // offsetWidth reads 0 while hidden, which would poison the reseed
       panel.style.paddingLeft = block.style.marginTop = '';
       vport.style.removeProperty('--hero-size');
       vport.style.removeProperty('--maxw');

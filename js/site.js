@@ -335,134 +335,146 @@
   // Constants are the app's shipped values (speed .5, head 50, tail 10, delay .2,
   // rotation 50, lfo 5; wiggle and depth are 0 there, so both terms are omitted here).
   (function(){
-    const cv = document.querySelector('.v-port .hero-snake');
     const vport = document.querySelector('.v-port');
-    const badge = document.querySelector('.v-port .panel--hero .p-badge');
-    if (!cv || !cv.getContext || !vport) return;
-    const ctx = cv.getContext('2d');
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const V_INSET = 24;   // clearance kept from the frame's top and bottom edges
+    if (!vport) return;
+    // Exposed as _bootSnake so the ?tune overlay can start it after unwrapping the
+    // <template data-disabled="snake">. On the live page the template is never unwrapped,
+    // boot() finds no canvas and returns false, and nothing else runs.
+    vport._bootSnake = function boot(){
+      const cv = document.querySelector('.v-port .hero-snake');
+      const badge = document.querySelector('.v-port .panel--hero .p-badge');
+      if (!cv || !cv.getContext) return false;
+      const ctx = cv.getContext('2d');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const V_INSET = 24;   // clearance kept from the frame's top and bottom edges
 
-    const N = 30, SPEED = 0.5, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
-    // The app hardcodes head 50. Here the head IS the badge, so the first drawn square
-    // takes the badge's rendered width instead - otherwise the body halves in size the
-    // moment it leaves the badge. Cached in measure() with everything else; 50 is only
-    // the fallback for a page with no badge.
-    let HEAD = 50;
-    // Body runs from the badge's own pink at the head to --ink at the tail, so the
-    // badge reads as the head of one object rather than a sticker on top of it.
-    const HEAD_RGB = [232, 66, 100], TAIL_RGB = [234, 230, 220];
-    const DEG = Math.PI / 180;
+      const N = 30, SPEED = 0.5, TAIL = 10, DELAY = 0.2, ROT = 50, LFO = 5;
+      // The app hardcodes head 50. Here the head IS the badge, so the first drawn square
+      // takes the badge's rendered width instead - otherwise the body halves in size the
+      // moment it leaves the badge. Cached in measure() with everything else; 50 is only
+      // the fallback for a page with no badge.
+      let HEAD = 50;
+      // Body runs from the badge's own pink at the head to --ink at the tail, so the
+      // badge reads as the head of one object rather than a sticker on top of it.
+      const HEAD_RGB = [232, 66, 100], TAIL_RGB = [234, 230, 220];
+      const DEG = Math.PI / 180;
 
-    // Geometry is cached, never read per frame - same rule as the stage driver.
-    // The badge rides the snake's head. Its offset basis is cached here, never read per
-    // frame: with the transform cleared, how far the badge's centre sits from the canvas's
-    // top-left. Both live inside .panel--hero, so the panel's own translateY affects them
-    // equally and cancels out of the difference.
-    let w = 0, h = 0, baseX = 0, baseY = 0, tx = 0, ty = 0;
-    function measure(){
-      const r = cv.getBoundingClientRect();
-      w = r.width; h = r.height;
-      if (badge) {
-        if (w && h) {
-          // Do NOT clear the transform to measure. ResizeObserver fires continuously while
-          // the window is dragged, and clearing it each time snapped the badge back to its
-          // CSS spot for a frame before the next rAF re-applied it - which read as violent
-          // flicker between the mobile position and the snake. Instead subtract the
-          // translate we last wrote: rotation is about the element's centre, so the rect's
-          // CENTRE is unaffected by it and only the translate has to come back out.
-          const b = badge.getBoundingClientRect();
-          baseX = b.left - r.left + b.width / 2 - tx;
-          baseY = b.top - r.top + b.height / 2 - ty;
-          // The badge is a disc, so a square matching its WIDTH is circumscribed and reads
-          // oversized. Inscribe it instead - side = diameter / sqrt(2) - so the square's
-          // corners come out exactly to the badge's radius.
-          // offsetWidth, not the rect: getBoundingClientRect returns the ROTATED bounding
-          // box, which is inflated by up to 1.41x and changes with the spin angle.
-          HEAD = badge.offsetWidth / Math.SQRT2;
-        } else {
-          badge.style.transform = '';   // snake hidden (<=565): hand the badge back to CSS
-          tx = ty = 0;
+      // Geometry is cached, never read per frame - same rule as the stage driver.
+      // The badge rides the snake's head. Its offset basis is cached here, never read per
+      // frame: with the transform cleared, how far the badge's centre sits from the canvas's
+      // top-left. Both live inside .panel--hero, so the panel's own translateY affects them
+      // equally and cancels out of the difference.
+      let w = 0, h = 0, baseX = 0, baseY = 0, tx = 0, ty = 0;
+      function measure(){
+        const r = cv.getBoundingClientRect();
+        w = r.width; h = r.height;
+        if (badge) {
+          if (w && h) {
+            // Do NOT clear the transform to measure. ResizeObserver fires continuously while
+            // the window is dragged, and clearing it each time snapped the badge back to its
+            // CSS spot for a frame before the next rAF re-applied it - which read as violent
+            // flicker between the mobile position and the snake. Instead subtract the
+            // translate we last wrote: rotation is about the element's centre, so the rect's
+            // CENTRE is unaffected by it and only the translate has to come back out.
+            const b = badge.getBoundingClientRect();
+            baseX = b.left - r.left + b.width / 2 - tx;
+            baseY = b.top - r.top + b.height / 2 - ty;
+            // The badge is a disc, so a square matching its WIDTH is circumscribed and reads
+            // oversized. Inscribe it instead - side = diameter / sqrt(2) - so the square's
+            // corners come out exactly to the badge's radius.
+            // offsetWidth, not the rect: getBoundingClientRect returns the ROTATED bounding
+            // box, which is inflated by up to 1.41x and changes with the spin angle.
+            // offsetWidth is 0 while the badge is display:none, so fall back to its computed
+            // width and finally to the app's own 50 - a 0 head would erase the whole taper.
+            HEAD = (badge.offsetWidth || parseFloat(getComputedStyle(badge).width) || 50) / Math.SQRT2;
+          } else {
+            badge.style.transform = '';   // snake hidden (<=565): hand the badge back to CSS
+            tx = ty = 0;
+          }
+        }
+        if (!w || !h) return;               // canvas hidden (<=565): badge keeps its CSS spot
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        cv.width = Math.round(w * dpr);
+        cv.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (reduce) draw(0);
+      }
+
+      const seed = i => (((i * 7 + 3) % 13) + 1) * 0.1;
+
+      function posAt(t, cx, cy, rx, ry){
+        // the LFO modulates phase, not speed - that is what keeps the path from looping
+        const l1 = Math.sin(t * LFO * 0.05) * 2,
+              l2 = Math.sin(t * LFO * 0.07 + 1) * 2,
+              l3 = Math.sin(t * LFO * 0.06 + 2) * 2;
+        return [
+          cx + rx * (0.5 * Math.sin(t * SPEED * 0.7 + l1)
+                   + 0.3 * Math.sin(t * SPEED * 1.3 + 1.5 + l2)
+                   + 0.2 * Math.cos(t * SPEED * 0.5 + 0.8 + l3)),
+          // y uses slower terms so it dwells at the extremes
+          cy + ry * 1.5 * (0.6 * Math.sin(t * SPEED * 0.4 + 0.5 + l1)
+                         + 0.25 * Math.cos(t * SPEED * 0.7 + 2 + l2)
+                         + 0.15 * Math.sin(t * SPEED * 0.3 + 1.2 + l3))
+        ];
+      }
+
+      function draw(t){
+        if (!w || !h) return;
+        ctx.clearRect(0, 0, w, h);
+        // rx keeps the app's 0.38w. ry is DERIVED rather than the app's 0.3h: the vertical
+        // reach is 3*ry + HEAD (the y term carries a 1.5 multiplier, so +/-1.5*ry), and at
+        // 0.3h that came to more than the canvas is tall - the snake was being clipped at
+        // the top and bottom edges. Solving 3*ry + HEAD = h - 2*V_INSET instead leaves
+        // exactly V_INSET of clearance from the header and the info bar at any height.
+        const cx = w / 2, cy = h / 2, rx = w * 0.38,
+              ry = Math.max(0, (h - 2 * V_INSET - HEAD) / 3);
+        // The badge IS the head, so segment 0 is never drawn - the badge is moved onto it
+        // instead and the squares read as the body trailing behind. With no visible badge
+        // the snake draws its own head, or it reads as a tail with nothing leading it.
+        const badgeVisible = badge && badge.offsetParent !== null;
+        if (badgeVisible) {
+          const head = posAt(t, cx, cy, rx, ry);
+          // same seeded rotation segment 0 would have had, so the badge spins as the head
+          const s0 = seed(0);
+          tx = head[0] - baseX; ty = head[1] - baseY;
+          badge.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) rotate('
+                                + ((t * ROT * (0.4 + s0 * 1.2) + s0 * 360) % 360).toFixed(1) + 'deg)';
+        }
+        for (let i = N - 1; i >= (badgeVisible ? 1 : 0); i--) {   // tail first
+          const p = i / (N - 1);
+          const xy = posAt(t - i * DELAY, cx, cy, rx, ry);
+          const size = TAIL + (HEAD - TAIL) * (1 - p);
+          const s = seed(i);
+          ctx.save();
+          ctx.translate(xy[0], xy[1]);
+          ctx.rotate((t * ROT * (0.4 + s * 1.2) + i * 47 + s * 360) * DEG);
+          ctx.fillStyle = 'rgb(' + Math.round(HEAD_RGB[0] + (TAIL_RGB[0] - HEAD_RGB[0]) * p) + ','
+                                 + Math.round(HEAD_RGB[1] + (TAIL_RGB[1] - HEAD_RGB[1]) * p) + ','
+                                 + Math.round(HEAD_RGB[2] + (TAIL_RGB[2] - HEAD_RGB[2]) * p) + ')';
+          ctx.fillRect(-size / 2, -size / 2, size, size);
+          ctx.restore();
         }
       }
-      if (!w || !h) return;               // canvas hidden (<=565): badge keeps its CSS spot
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      cv.width = Math.round(w * dpr);
-      cv.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (reduce) draw(0);
-    }
 
-    const seed = i => (((i * 7 + 3) % 13) + 1) * 0.1;
-
-    function posAt(t, cx, cy, rx, ry){
-      // the LFO modulates phase, not speed - that is what keeps the path from looping
-      const l1 = Math.sin(t * LFO * 0.05) * 2,
-            l2 = Math.sin(t * LFO * 0.07 + 1) * 2,
-            l3 = Math.sin(t * LFO * 0.06 + 2) * 2;
-      return [
-        cx + rx * (0.5 * Math.sin(t * SPEED * 0.7 + l1)
-                 + 0.3 * Math.sin(t * SPEED * 1.3 + 1.5 + l2)
-                 + 0.2 * Math.cos(t * SPEED * 0.5 + 0.8 + l3)),
-        // y uses slower terms so it dwells at the extremes
-        cy + ry * 1.5 * (0.6 * Math.sin(t * SPEED * 0.4 + 0.5 + l1)
-                       + 0.25 * Math.cos(t * SPEED * 0.7 + 2 + l2)
-                       + 0.15 * Math.sin(t * SPEED * 0.3 + 1.2 + l3))
-      ];
-    }
-
-    function draw(t){
-      if (!w || !h) return;
-      ctx.clearRect(0, 0, w, h);
-      // rx keeps the app's 0.38w. ry is DERIVED rather than the app's 0.3h: the vertical
-      // reach is 3*ry + HEAD (the y term carries a 1.5 multiplier, so +/-1.5*ry), and at
-      // 0.3h that came to more than the canvas is tall - the snake was being clipped at
-      // the top and bottom edges. Solving 3*ry + HEAD = h - 2*V_INSET instead leaves
-      // exactly V_INSET of clearance from the header and the info bar at any height.
-      const cx = w / 2, cy = h / 2, rx = w * 0.38,
-            ry = Math.max(0, (h - 2 * V_INSET - HEAD) / 3);
-      // The badge IS the head, so segment 0 is never drawn - the badge is moved onto it
-      // instead and the squares read as the body trailing behind.
-      if (badge) {
-        const head = posAt(t, cx, cy, rx, ry);
-        // same seeded rotation segment 0 would have had, so the badge spins as the head
-        const s0 = seed(0);
-        tx = head[0] - baseX; ty = head[1] - baseY;
-        badge.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) rotate('
-                              + ((t * ROT * (0.4 + s0 * 1.2) + s0 * 360) % 360).toFixed(1) + 'deg)';
-      }
-      for (let i = N - 1; i >= 1; i--) {          // tail first, so the neck lands on top
-        const p = i / (N - 1);
-        const xy = posAt(t - i * DELAY, cx, cy, rx, ry);
-        const size = TAIL + (HEAD - TAIL) * (1 - p);
-        const s = seed(i);
-        ctx.save();
-        ctx.translate(xy[0], xy[1]);
-        ctx.rotate((t * ROT * (0.4 + s * 1.2) + i * 47 + s * 360) * DEG);
-        ctx.fillStyle = 'rgb(' + Math.round(HEAD_RGB[0] + (TAIL_RGB[0] - HEAD_RGB[0]) * p) + ','
-                               + Math.round(HEAD_RGB[1] + (TAIL_RGB[1] - HEAD_RGB[1]) * p) + ','
-                               + Math.round(HEAD_RGB[2] + (TAIL_RGB[2] - HEAD_RGB[2]) * p) + ')';
-        ctx.fillRect(-size / 2, -size / 2, size, size);
-        ctx.restore();
-      }
-    }
-
-    let raf = 0;
-    function frame(){ raf = requestAnimationFrame(frame); draw(performance.now() / 1000); }
-    function start(){ if (!raf && !reduce && w) raf = requestAnimationFrame(frame); }
-    function stop(){ if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+      let raf = 0;
+      function frame(){ raf = requestAnimationFrame(frame); draw(performance.now() / 1000); }
+      function start(){ if (!raf && !reduce && w) raf = requestAnimationFrame(frame); }
+      function stop(){ if (raf) { cancelAnimationFrame(raf); raf = 0; } }
 
 
-    // Only run while the hero panel is on screen. The driver hands us the same --progress
-    // everything else reads, so this needs no observer and no second source of truth.
-    vport._onProgress = p => { p < 1 ? start() : stop(); };
-    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      // Only run while the hero panel is on screen. The driver hands us the same --progress
+      // everything else reads, so this needs no observer and no second source of truth.
+      vport._onProgress = p => { p < 1 ? start() : stop(); };
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
 
-    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measure).observe(cv);
-    else window.addEventListener('resize', measure);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-    measure();
-    start();
+      if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measure).observe(cv);
+      else window.addEventListener('resize', measure);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+      measure();
+      start();
+      return true;
+    };
+    vport._bootSnake();
   })();
 
   // Dev-only tuning overlay. Loaded ONLY when ?tune is in the URL, so the live page never
