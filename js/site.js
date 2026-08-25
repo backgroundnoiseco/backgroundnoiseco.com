@@ -13,7 +13,7 @@
   // The layout's two keyframe widths. Everything fluid on the page interpolates between
   // them - in CSS via --kf-x (see the keyframe table at the top of css/site.css), and here
   // for the one piece of positioning JS still owns. Keep these in sync with the CSS.
-  const KF0 = 360, KF1 = 1000;
+  const KF0 = 360, KF1 = 884;
 
   // Portrait stage — one scroll-progress value drives everything: the panels translate by
   // (index - progress) * 100%, and the rail reads the same number. No IntersectionObserver,

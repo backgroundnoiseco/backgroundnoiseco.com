@@ -79,9 +79,9 @@ A single JS driver computes `progress` = fraction through the track × `(panels 
 
 ### Hero composition: two keyframes, one shared pair
 
-Every size and position in the hero — `--hero-size`, the badge's width/margin-left/top, the kicker's size and gap, all four of the hero panel's paddings, and the info bar's `--bar-tag-size` — is stated at **two window widths, 360px and 1000px**, and interpolated linearly between them, clamped outside. There are no per-property breakpoints; the full table of endpoint values lives in the big comment at the top of `css/site.css`.
+Every size and position in the hero — `--hero-size`, the badge's width/margin-left/top, the kicker's size and gap, all four of the hero panel's paddings, and the info bar's `--bar-tag-size` — is stated at **two window widths, 360px and 884px**, and interpolated linearly between them, clamped outside. 884 is `--maxw + 64` — the width at which the content band stops growing — so every size reaches its maximum exactly when the layout does. There are no per-property breakpoints; the full table of endpoint values lives in the big comment at the top of `css/site.css`.
 
-The form is always `clamp(lo, calc(v0 + var(--kf-x) * K), hi)`, where `--kf-x` is `calc(100vw - 360px)` and `K = (v1 - v0) / 640`. CSS can't divide a length by a length, so `K` has to be a literal — it's the only derived number, and it's local to its own declaration. **To retune, change `v0`/`v1` in the declaration and recompute that one `K`.**
+The form is always `clamp(lo, calc(v0 + var(--kf-x) * K), hi)`, where `--kf-x` is `calc(100vw - 360px)` and `K = (v1 - v0) / 524` (524 = 884 − 360). CSS can't divide a length by a length, so `K` has to be a literal — it's the only derived number, and it's local to its own declaration. **To retune, change `v0`/`v1` in the declaration and recompute that one `K`.**
 
 This replaced a set of independently-fitted ramps that each froze at their own width (360, 400, 501, 1000), which is why every size change used to need four separate refits and why several of them silently drifted out of sync. Two invariants the endpoint values must respect, both of which have caused real bugs:
 
