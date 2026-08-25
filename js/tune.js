@@ -137,8 +137,10 @@
       `drag wordmark/badge to move · corner grip = badge size\n` +
       `side grips: yellow = hero · blue = kicker · purple = bar tagline\n` +
       `drag the orange row above = --maxw\n` +
-      `shift = 10× slower · R = reset · H = hide panel · G = hide handles` +
-      (gripsHidden ? `  [handles hidden]` : ``);
+      `shift = 10× slower · R = reset\n` +
+      `H = hide panel · G = hide handles · B = hide badge` +
+      (gripsHidden ? `\n[handles hidden]` : ``) +
+      (badgeHidden ? `\n[badge hidden]` : ``);
   }
 
   // --- dragging ------------------------------------------------------------
@@ -240,6 +242,15 @@
     chip.style.display = v ? 'block' : 'none';
   }
 
+  // Hiding the badge is a view toggle, not a state change - it never touches the values, so
+  // what the panel reports stays true whether you can see it or not.
+  let badgeHidden = false;
+  function setBadge(v){
+    badgeHidden = v;
+    badge.style.display = v ? 'none' : '';
+    report();
+  }
+
   let gripsHidden = false;
   function setGrips(v){
     gripsHidden = v;
@@ -252,7 +263,9 @@
   addEventListener('keydown', e => {
     if (e.key === 'h' || e.key === 'H') { setHidden(!hidden); return; }
     if (e.key === 'g' || e.key === 'G') { setGrips(!gripsHidden); return; }
+    if (e.key === 'b' || e.key === 'B') { setBadge(!badgeHidden); return; }
     if (e.key === 'r' || e.key === 'R') {
+      setBadge(false);   // offsetWidth reads 0 while hidden, which would poison the reseed
       panel.style.paddingLeft = block.style.marginTop = '';
       vport.style.removeProperty('--hero-size');
       vport.style.removeProperty('--maxw');
