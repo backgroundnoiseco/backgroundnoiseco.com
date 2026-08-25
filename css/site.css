@@ -66,7 +66,7 @@
          --hero-drop (a margin, which participates in centring and never clips) - it
          shifts the block by HALF its value.
      ====================================================================== */
-  .v-port{--kf-x:calc(100vw - 360px);--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.0125),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.1),118px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port{--kf-x:calc(100vw - 360px);--ring-step:40px;--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.0125),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.1),118px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:936px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
@@ -267,9 +267,11 @@
      margin-top is the deliberate bias on top of that - see --hero-drop. It survives the
      algebra above untouched: the mt/2 term is independent of the kicker cancellation. */
   .v-port .hero-block{padding-left:0;margin-top:var(--hero-drop);margin-bottom:var(--kicker-block);}
-  /* The badge is anchored to the SECOND concentric rectangle: the rings step inward from
-     the band edge in 40px increments, so ring 2's top-left corner is 40px down from the
-     frame top and 40px in from the band's right edge (--cap is the band's own inset). Its
+  /* The badge is anchored to the THIRD concentric rectangle - two --ring-step insets in
+     from the band's top-right corner (--cap is the band's own inset). --ring-step MUST stay
+     equal to STEP in js/site.js, which is what actually spaces the rings; move one and the
+     badge stops sitting on a ring. Retarget it by changing the multiplier: * 1 is ring 2,
+     * 3 is ring 4. Its
      containing block is .panel--hero, not the h1 - that is what makes those two offsets
      expressible at all, since the h1 is vertically centred and moves with the window.
      Moving it off the h1 also retired the old construct where an absolutely positioned,
@@ -279,7 +281,7 @@
      wordmark, while sitting above the frame's rings.
      Only `width` is a keyframe pair now; top and right are constants, so the badge's size
      no longer drags its position around. */
-  .v-port .panel--hero .p-badge{position:absolute;top:40px;right:calc(var(--cap) + 40px);
+  .v-port .panel--hero .p-badge{position:absolute;top:calc(var(--ring-step) * 2);right:calc(var(--cap) + var(--ring-step) * 2);
     width:clamp(82px, calc(82px + var(--kf-x) * 0.084375), 136px);
     aspect-ratio:1;color:#e84264;z-index:1;pointer-events:auto;cursor:pointer;}
 
