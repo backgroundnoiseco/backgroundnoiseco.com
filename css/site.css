@@ -31,7 +31,7 @@
          property            360px      1000px          K
          --hero-size           54    ->    118     0.1
          badge width           78    ->    140     0.096875
-         badge margin-left     -8    ->    300     0.48125
+         badge margin-left     -8    ->    272     0.4375
          badge top         -163.1    ->   -137     0.04078125
          --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->     32     0.01875
@@ -301,7 +301,7 @@
      margin-left note. */
   .v-port .panel .p-badge{position:absolute;left:100%;
     width:clamp(78px, calc(78px + var(--kf-x) * 0.096875), 140px);
-    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.48125), 300px);
+    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.4375), 272px);
     top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.04078125), -137px);
     /* z-index -1 so the badge paints BELOW the h1's glyphs - a negative-z positioned
        descendant draws under its ancestor's inline content but still above the
