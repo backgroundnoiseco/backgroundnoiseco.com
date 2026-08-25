@@ -40,6 +40,7 @@
     heroSize:   num(cs(h1).fontSize),
     kickerFs:   num(cs(kicker).fontSize),
     barTag:     num(cs(barTag).fontSize),
+    maxw:       num(cs(vport).getPropertyValue('--maxw')),
   };
 
   function apply(){
@@ -52,6 +53,8 @@
     vport.style.setProperty('--hero-size',    state.heroSize.toFixed(1) + 'px');
     panel.style.setProperty('--kicker-fs',    state.kickerFs.toFixed(2) + 'px');
     bar.style.setProperty('--bar-tag-size',   state.barTag.toFixed(2) + 'px');
+    vport.style.setProperty('--maxw',         state.maxw.toFixed(0) + 'px');
+    if (bandGrip) bandGrip.style.right = cap() + 'px';   // ride the band's own edge
     report();
   }
 
@@ -65,6 +68,7 @@
 
   function K(v0, v1, span){ return ((v1 - v0) / span).toFixed(8).replace(/0+$/,'').replace(/\.$/,''); }
 
+  const SPAN_AT_LOAD = bandCap() - KF0;
   function report(){
     const w = innerWidth, C = bandCap(), span = C - KF0, S = step();
     const atMax = w >= C, atMin = w <= KF0;
@@ -100,9 +104,14 @@
       `--kicker-fs    ${state.kickerFs.toFixed(2)}`,
       `--bar-tag-size ${state.barTag.toFixed(2)}`,
     ];
+    const span0 = SPAN_AT_LOAD;
     ui.textContent =
       `${which}\n` +
       `viewport ${w} · band ${Math.min(w,C)} · ring step ${S}\n` +
+      `--maxw ${state.maxw.toFixed(0)}  → band ${C}  span ${span}\n` +
+      (Math.abs(span - span0) > 0.5
+        ? `⚠ span changed ${span0} → ${span}: rescale every --kf-x K by ×${(span0/span).toFixed(6)}\n`
+        : ``) +
       `──────────────────────────────────────────\n` +
       `badge top    ${state.badgeTop.toFixed(1)}px  = ring-step × ${(state.badgeTop/S).toFixed(2)}\n` +
       `badge right  ${state.badgeRight.toFixed(1)}px  = ring-step × ${(state.badgeRight/S).toFixed(2)}\n` +
@@ -113,6 +122,7 @@
       `\n──────────────────────────────────────────\n` +
       `drag wordmark/badge to move · corner grip = badge size\n` +
       `side grips: yellow = hero · blue = kicker · purple = bar tagline\n` +
+      `orange rule on the band edge = --maxw\n` +
       `shift = 10× slower · R = reset · H = hide panel · G = hide handles` +
       (gripsHidden ? `  [handles hidden]` : ``);
   }
@@ -162,6 +172,24 @@
   // resizable run gets its own handle pinned to its right edge. Sensitivity is per-element
   // because a 1px step means something very different to a 91px wordmark and a 9px kicker.
   const grips = [];
+
+  // Band-width handle: a full-height rule sitting on the band's right edge. The band is
+  // centred, so dragging the edge out by dx widens it by 2dx - --maxw moves at twice the
+  // pointer. Changing this is the one edit that is NOT self-contained: the keyframe span is
+  // (maxw + 64) - 360, so every K in the stylesheet has to be rescaled by oldSpan/newSpan.
+  // The panel prints that factor rather than pretending the preview is the finished result.
+  const frame = document.querySelector('.v-port .frame');
+  let bandGrip = null;
+  if (frame) {
+    bandGrip = document.createElement('div');
+    bandGrip.style.cssText = `position:absolute;top:0;height:100%;right:${cap()}px;width:9px;
+      margin-right:-4px;background:rgba(232,150,60,.55);border-left:1px solid #e8963c;
+      border-right:1px solid #e8963c;cursor:ew-resize;z-index:4`;
+    frame.appendChild(bandGrip); grips.push(bandGrip);
+    drag(bandGrip, (dx, dy, s) => {
+      state.maxw = Math.max(240, Math.round(s.maxw + dx * 2));
+    }, 'ew-resize');
+  }
   function typeGrip(el, key, perPx, colour){
     if (cs(el).position === 'static') el.style.position = 'relative';
     const g = document.createElement('div');
@@ -213,6 +241,7 @@
     if (e.key === 'r' || e.key === 'R') {
       panel.style.paddingLeft = block.style.marginTop = '';
       vport.style.removeProperty('--hero-size');
+      vport.style.removeProperty('--maxw');
       panel.style.removeProperty('--kicker-fs');
       bar.style.removeProperty('--bar-tag-size');
       badge.style.top = badge.style.right = badge.style.width = '';
@@ -221,7 +250,8 @@
         badgeTop: num(cs(badge).top), badgeRight: num(cs(badge).right) - cap(),
         badgeW: badge.offsetWidth,
         heroSize: num(cs(h1).fontSize), kickerFs: num(cs(kicker).fontSize),
-        barTag: num(cs(barTag).fontSize) });
+        barTag: num(cs(barTag).fontSize),
+        maxw: num(cs(vport).getPropertyValue('--maxw')) });
       apply();
     }
   });

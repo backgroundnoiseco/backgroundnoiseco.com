@@ -277,13 +277,14 @@
      Moving it off the h1 also retired the old construct where an absolutely positioned,
      negative-z child sat inside the heading. That forced WebKit to split the h1's paint
      between the badge and the glyphs above it, and was behind the Safari seam on the last
-     glyph. z-index 1 keeps it behind .hero-block (z-index 2), so it still passes under the
-     wordmark, while sitting above the frame's rings.
+     glyph. z-index 3 now puts it ABOVE .hero-block (z-index 2), so it sits on top of the
+     wordmark rather than passing under it. Note it precedes .hero-block in the DOM, so an
+     equal z-index would put the text on top - it has to be strictly greater.
      Only `width` is a keyframe pair now; top and right are constants, so the badge's size
      no longer drags its position around. */
   .v-port .panel--hero .p-badge{position:absolute;top:calc(var(--ring-step) * 2);right:calc(var(--cap) + var(--ring-step) * 2);
     width:clamp(82px, calc(82px + var(--kf-x) * 0.19014086), 136px);
-    aspect-ratio:1;color:#e84264;z-index:1;pointer-events:auto;cursor:pointer;}
+    aspect-ratio:1;color:#e84264;z-index:3;pointer-events:auto;cursor:pointer;}
 
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
