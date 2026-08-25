@@ -14,34 +14,33 @@
 
   /* ============ v-portrait: editorial, phone-centric ============ */
   /* ===================== HERO COMPOSITION KEYFRAMES =====================
-     Two window widths - 360px (smallest) and 884px (largest, = --maxw + 64, the
-     width at which the content band stops growing) - and EVERY size and
-     position in the hero composition is
-     stated at both and interpolated linearly between, clamped outside. One shared
-     pair, no per-property breakpoints.
+     Two window widths - 360px (smallest) and 804px (largest, = --maxw + 64, the width
+     at which the content band stops growing) - and EVERY size and position in the hero
+     composition is stated at both and interpolated linearly between, clamped outside.
+     One shared pair, no per-property breakpoints.
 
      The form is always:   clamp(lo, calc(v0 + var(--kf-x) * K), hi)
        --kf-x = how far past the small keyframe the window is (negative below it)
-       K      = (v1 - v0) / 524            <- 524 is the span, 884 - 360
+       K      = (v1 - v0) / 444            <- 444 is the span, 804 - 360
        lo/hi  = min/max of v0 and v1       <- swapped when the value decreases
 
      To retune, change v0 and/or v1 in the declaration and recompute that one K.
      CSS cannot divide a length by a length, so K has to be a literal - it is the
      only derived number, and it is local to its own line.
 
-         property            360px       884px          K
-         --hero-size           54    ->    102     0.09160305
-         badge width           82    ->    136     0.10305344
-         --kicker-fs            9    ->     11     0.00381679
-         --kicker-mb           20    ->     32     0.02290076
-         --hero-drop           60    ->     52    -0.01526718   (+ svh guard, below)
-         hero pad left         60    ->    102     0.08015267
-         hero pad right        60    ->     32    -0.05343511
-         --bar-tag-size        18    ->     21     0.00572519
-         info bar pad top      28    ->     36     0.01526718
-         info bar pad right    24    ->     32     0.01526718
-         --bar-pad-b           40    ->     48     0.01526718
-         info bar pad left     48    ->     40    -0.01526718
+         property            360px       804px          K
+         --hero-size           54    ->    102     0.10810811
+         badge width           82    ->    136     0.12162162
+         --kicker-fs            9    ->     11     0.0045045
+         --kicker-mb           20    ->     32     0.02702703
+         --hero-drop           60    ->     52    -0.01801802   (+ svh guard, below)
+         hero pad left         60    ->    102     0.09459459
+         hero pad right        60    ->     32    -0.06306306
+         --bar-tag-size        18    ->     21     0.00675676
+         info bar pad top      28    ->     36     0.01801802
+         info bar pad right    24    ->     32     0.01801802
+         --bar-pad-b           40    ->     48     0.01801802
+         info bar pad left     48    ->     40    -0.01801802
 
      The info bar's VERTICAL padding is on this list for a reason that is not obvious:
      .frame's height is the stage minus the bar, and the hero is centred in the frame, so
@@ -67,11 +66,11 @@
          --hero-drop (a margin, which participates in centring and never clips) - it
          shifts the block by HALF its value.
      ====================================================================== */
-  .v-port{--kf-x:calc(100vw - 360px);--ring-step:40px;--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.01526718),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.09160305),102px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:820px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
+  .v-port{--kf-x:calc(100vw - 360px);--ring-step:40px;--bar-pad-b:clamp(40px,calc(40px + var(--kf-x) * 0.01801802),48px);--ink:#eae6dc;--dim:#9c9993;--muted:#777;--hairline:#181615;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--panels:3;--hero-size:clamp(54px,calc(54px + var(--kf-x) * 0.1081081),102px);background:#000;color:var(--ink);font-family:"Inter Tight",ui-sans-serif,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;--maxw:740px;--gutter:max(32px,calc((100% - var(--maxw)) / 2));--cap:calc(var(--gutter) - 32px);}
   .v-port .p-top,.v-port .frame,.v-port .p-sub,.v-port .p-outro,.v-port .p-foot{background:linear-gradient(to right,var(--gutterC,#000) 0,var(--gutterC,#000) var(--cap),var(--section-bg,#0a0a0a) var(--cap),var(--section-bg,#0a0a0a) calc(100% - var(--cap)),var(--gutterC,#000) calc(100% - var(--cap)),var(--gutterC,#000) 100%);}
   .v-port *{box-sizing:border-box;}
   .v-port a{color:inherit;text-decoration:none;}
-  .v-port .p-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.01526718), 32px));border-bottom:1px solid var(--hairline);}
+  .v-port .p-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.01801802), 32px));border-bottom:1px solid var(--hairline);}
   .v-port .p-top .mark{font-family:"Distortion",serif;font-size:22px;letter-spacing:.02em;color:var(--ink);}
   .v-port .p-top nav{display:flex;gap:20px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
   .v-port .p-top nav a.on{color:var(--ink);}
@@ -85,7 +84,7 @@
      Whatever height the labels don't use shows up as gaps between them; padRail() in
      js/site.js absorbs that by growing every section number's leading zeros in step
      (00 -> 000 -> 0000...), down to a small residual gap. */
-  .v-port .p-rail{position:fixed;left:calc(var(--gutter) - 18px);top:calc(var(--p-top-h,60px) + 16px);bottom:var(--bar-pad-b);font-family:var(--mono);--rail-fs:clamp(6px,min(calc(8.61px + var(--kf-x) * 0.0026527),calc(1.97svh - 2.56px)),10px);--rail-ls:clamp(1.3px,min(calc(1.958px + var(--kf-x) * 0.00198852),calc(0.55svh - 0.9px)),3px);font-size:var(--rail-fs);letter-spacing:var(--rail-ls);gap:0;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;justify-content:space-between;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:rotate(180deg);}
+  .v-port .p-rail{position:fixed;left:calc(var(--gutter) - 18px);top:calc(var(--p-top-h,60px) + 16px);bottom:var(--bar-pad-b);font-family:var(--mono);--rail-fs:clamp(6px,min(calc(8.61px + var(--kf-x) * 0.00313066),calc(1.97svh - 2.56px)),10px);--rail-ls:clamp(1.3px,min(calc(1.958px + var(--kf-x) * 0.00234681),calc(0.55svh - 0.9px)),3px);font-size:var(--rail-fs);letter-spacing:var(--rail-ls);gap:0;text-transform:uppercase;color:#555;display:flex;flex-direction:row-reverse;justify-content:space-between;z-index:6;pointer-events:none;writing-mode:vertical-rl;transform:rotate(180deg);}
   /* buttons are content-sized and space-between spreads the remainder, so 00 lands hard on
      the top edge and Contact hard on the bottom whatever the leftover is. padRail() then
      eats most of that leftover by lengthening the numbers themselves. */
@@ -169,21 +168,21 @@
      backface-visibility pins the promotion on older WebKit. */
   .v-port .panel--hero .hero-snake{position:absolute;top:0;height:100%;right:calc(var(--cap) + 24px);z-index:1;pointer-events:none;
     transform:translateZ(0);backface-visibility:hidden;
-    width:clamp(205px, calc(205px + var(--kf-x) * 0.66793893), 555px);}
+    width:clamp(205px, calc(205px + var(--kf-x) * 0.78828829), 555px);}
   /* The canvas is right-anchored, so its WIDTH is what sets how far left the snake can
      swim. The path only uses the middle ~76% of it (radiusX is 0.38w about the centre),
      so the leftmost reach sits ~0.12w inside the canvas's left edge - widen it well past
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(52px, calc(60px + var(--kf-x) * -0.01526718), 60px),max(0px, calc(100svh - 580px)));
-    --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.00381679), 11px);
-    --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.02290076), 32px);
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(52px, calc(60px + var(--kf-x) * -0.01801802), 60px),max(0px, calc(100svh - 580px)));
+    --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.0045045), 11px);
+    --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.02702702), 32px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));
     padding:0
-            calc(var(--cap) + clamp(32px, calc(60px + var(--kf-x) * -0.05343511), 60px))
+            calc(var(--cap) + clamp(32px, calc(60px + var(--kf-x) * -0.06306306), 60px))
             0
-            calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.08015267), 102px));}
+            calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.09459459), 102px));}
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
      (the old 12px floor left the title and description almost touching the frame edge on
      narrow windows),
@@ -191,13 +190,13 @@
      info column max is a smoothed V (420@500 -> 280@860 -> 420@1000). All gutter-tied sides
      ride var(--cap) so they keep growing past the layout cap. */
   .v-port .panel--project{display:grid;
-    grid-template-columns:minmax(0,260px) minmax(0, clamp(280px, calc(280px + var(--kf-x) * 0.26717557), 420px));
-    gap:clamp(16px, calc(16px + var(--kf-x) * 0.04580153), 40px);
+    grid-template-columns:minmax(0,260px) minmax(0, clamp(280px, calc(280px + var(--kf-x) * 0.31531531), 420px));
+    gap:clamp(16px, calc(16px + var(--kf-x) * 0.05405406), 40px);
     align-items:center;justify-content:center;
     padding:2cqb
-            calc(var(--cap) + clamp(28px, calc(28px + var(--kf-x) * 0.00763359), 32px))
+            calc(var(--cap) + clamp(28px, calc(28px + var(--kf-x) * 0.00900901), 32px))
             2cqb
-            calc(var(--cap) + clamp(32px, calc(48px + var(--kf-x) * -0.03053435), 48px));}
+            calc(var(--cap) + clamp(32px, calc(48px + var(--kf-x) * -0.03603603), 48px));}
   /* The rings are an inline <svg> (not a background image) so their fill inherits colour
      from CSS. --rect-mix is 1 on the Porcupine panel and falls to 0 either side of it, so the
      tint interpolates across the transition rather than snapping. */
@@ -283,7 +282,7 @@
      Only `width` is a keyframe pair now; top and right are constants, so the badge's size
      no longer drags its position around. */
   .v-port .panel--hero .p-badge{position:absolute;top:calc(var(--ring-step) * 2);right:calc(var(--cap) + var(--ring-step) * 2);
-    width:clamp(82px, calc(82px + var(--kf-x) * 0.10305344), 136px);
+    width:clamp(82px, calc(82px + var(--kf-x) * 0.12162163), 136px);
     aspect-ratio:1;color:#e84264;z-index:1;pointer-events:auto;cursor:pointer;}
 
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
@@ -295,10 +294,10 @@
   /* --bar-rule-h is the hero tagline's rendered height (2 lines at line-height 1.2).
      The project rows' feature list adopts it as a min-height so the divider rule is the
      same length on every bar row instead of shrinking to its own content. */
-  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(18px + var(--kf-x) * 0.00572519),21px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(28px + var(--kf-x) * 0.01526718),36px)
-            calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.01526718), 32px))
+  .v-port .p-sub{--bar-tag-size:clamp(18px,calc(18px + var(--kf-x) * 0.00675676),21px);--bar-rule-h:calc(2.4 * var(--bar-tag-size));display:grid;padding:clamp(28px,calc(28px + var(--kf-x) * 0.01801802),36px)
+            calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.01801802), 32px))
             var(--bar-pad-b)
-            calc(var(--cap) + clamp(40px, calc(48px + var(--kf-x) * -0.01526718), 48px));border-bottom:1px solid var(--hairline);}
+            calc(var(--cap) + clamp(40px, calc(48px + var(--kf-x) * -0.01801802), 48px));border-bottom:1px solid var(--hairline);}
   /* one .sub-panel per stage panel, all in the same grid cell so they overlay and the
      container still sizes to the tallest. Opacity is 1 - |i - progress|, so the bar
      cross-fades on exactly the same scroll value that drives the panels. */
@@ -306,7 +305,7 @@
     opacity:calc(1 - max(var(--i) - var(--progress,0), var(--progress,0) - var(--i)));}
   /* Projects now carry the same two metadata pairs as the hero, so they inherit .meta's
      stacked layout unchanged; only the description is resized to hold the bar's height. */
-  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px, calc(0px + var(--kf-x) * 0.04770992), 25px);padding:0 0 0 clamp(16px, calc(16px + var(--kf-x) * 0.00763359), 20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
+  .v-port .p-sub .tag{font-family:"DM Serif Display",serif;font-size:var(--bar-tag-size);line-height:1.2;letter-spacing:-.005em;margin:0 0 0 clamp(0px, calc(0px + var(--kf-x) * 0.0563063), 25px);padding:0 0 0 clamp(16px, calc(16px + var(--kf-x) * 0.00900901), 20px);border-left:1px solid rgba(234,230,220,0.25);max-width:24ch;color:var(--ink);font-weight:400;}
   .v-port .p-sub .meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:grid;row-gap:4px;white-space:nowrap;text-align:right;margin:0;}
   .v-port .p-sub .meta b{color:var(--ink);font-weight:400;font-size:13px;text-transform:none;letter-spacing:.02em;}
   /* size and gap live in vars on .panel--hero so .hero-block can cancel them out - see the
@@ -348,32 +347,32 @@
   .v-port .p-phone{position:relative;width:100%;max-width:min(240px,40cqb);justify-self:center;}
   .v-port .p-phone .shell{position:relative;border-radius:min(28px,4.667cqb);overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.04);}
   .v-port .p-phone .shell img{width:100%;height:auto;display:block;}
-  .v-port .p-phone .numbadge{position:absolute;top:clamp(-8px, calc(-4px + var(--kf-x) * -0.00763359), -4px);left:clamp(-8px, calc(-4px + var(--kf-x) * -0.00763359), -4px);font-family:var(--mono);font-size:clamp(8px, calc(8px + var(--kf-x) * 0.00381679), 10px);letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:var(--ink);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;z-index:2;}
-  .v-port .p-phone .status{position:absolute;top:clamp(-7px, calc(-4px + var(--kf-x) * -0.00572519), -4px);right:clamp(-7px, calc(-4px + var(--kf-x) * -0.00572519), -4px);font-family:var(--mono);font-size:clamp(7.5px, calc(7.5px + var(--kf-x) * 0.00381679), 9.5px);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:rgba(20,20,20,.9);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
+  .v-port .p-phone .numbadge{position:absolute;top:clamp(-8px, calc(-4px + var(--kf-x) * -0.00900901), -4px);left:clamp(-8px, calc(-4px + var(--kf-x) * -0.00900901), -4px);font-family:var(--mono);font-size:clamp(8px, calc(8px + var(--kf-x) * 0.0045045), 10px);letter-spacing:.2em;text-transform:uppercase;color:#0a0a0a;background:var(--ink);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;z-index:2;}
+  .v-port .p-phone .status{position:absolute;top:clamp(-7px, calc(-4px + var(--kf-x) * -0.00675676), -4px);right:clamp(-7px, calc(-4px + var(--kf-x) * -0.00675676), -4px);font-family:var(--mono);font-size:clamp(7.5px, calc(7.5px + var(--kf-x) * 0.0045045), 9.5px);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:rgba(20,20,20,.9);padding:clamp(4px,calc(1.222px + .5556vw),6px) clamp(7px,calc(2.833px + .8333vw),10px);border-radius:999px;border:1px solid rgba(255,255,255,.12);z-index:2;}
 
   /* right column — metadata stack */
-  .v-port .p-info{display:flex;flex-direction:column;gap:clamp(20px, calc(20px + var(--kf-x) * 0.01526718), 28px);max-width:320px;justify-self:start;}
+  .v-port .p-info{display:flex;flex-direction:column;gap:clamp(20px, calc(20px + var(--kf-x) * 0.01801802), 28px);max-width:320px;justify-self:start;}
   .v-port .p-info .role{font-family:"Distortion",serif;font-weight:400;font-size:min(60px,10cqb);line-height:.9;letter-spacing:-.015em;text-transform:none;color:#a89a7d;margin:0;}
   .v-port .p-info .title{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;letter-spacing:-.005em;margin:0;color:inherit;font-weight:400;}
   .v-port .p-info .title .thin{font-weight:inherit;opacity:1;}
   .v-port .p-info .title em{font-style:italic;font-weight:inherit;}
-  .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:clamp(17px, calc(17px + var(--kf-x) * 0.01717557), 26px);line-height:1.2;margin:0;color:var(--ink);letter-spacing:-.005em;}
-  .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px, calc(10px + var(--kf-x) * 0.00763359), 14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
-  .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px, calc(9px + var(--kf-x) * 0.0019084), 10px);}
-  .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px, calc(10px + var(--kf-x) * 0.0019084), 11px);}
+  .v-port .p-info .tagline{font-family:"DM Serif Display",serif;font-size:clamp(17px, calc(17px + var(--kf-x) * 0.02027027), 26px);line-height:1.2;margin:0;color:var(--ink);letter-spacing:-.005em;}
+  .v-port .p-info dl{display:grid;grid-template-columns:auto 1fr;row-gap:10px;column-gap:clamp(10px, calc(10px + var(--kf-x) * 0.00900901), 14px);margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;}
+  .v-port .p-info dt{color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:clamp(9px, calc(9px + var(--kf-x) * 0.00225226), 10px);}
+  .v-port .p-info dd{margin:0;color:var(--ink);font-size:clamp(10px, calc(10px + var(--kf-x) * 0.00225226), 11px);}
   /* Feature list lives in the info bar (the panel carries the description). Flows
      column-first at 3 rows, so six items read as two balanced columns and fill the rule
      height (3 rows = 70px inside the 77px rule). Adding a 7th item would silently start a
      third column - keep the count a multiple of 3. */
   .v-port .p-sub .feats{list-style:none;
-    display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:clamp(20px, calc(20px + var(--kf-x) * 0.01908397), 30px);row-gap:8px;
+    display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:clamp(20px, calc(20px + var(--kf-x) * 0.02252252), 30px);row-gap:8px;
     align-content:center;min-height:var(--bar-rule-h);
-    font-family:var(--mono);font-size:clamp(9px, calc(9px + var(--kf-x) * 0.00572519), 12px);line-height:1.5;letter-spacing:.02em;color:var(--ink);
+    font-family:var(--mono);font-size:clamp(9px, calc(9px + var(--kf-x) * 0.00675676), 12px);line-height:1.5;letter-spacing:.02em;color:var(--ink);
     /* same divider anchor as the hero's tagline, and deliberately the same margin/padding
        so the rule sits at one x-position across every bar row - otherwise it shifts
        sideways as you scroll from the hero to a project */
-    margin:0 0 0 clamp(0px, calc(0px + var(--kf-x) * 0.04770992), 25px);
-    padding:0 0 0 clamp(16px, calc(16px + var(--kf-x) * 0.00763359), 20px);
+    margin:0 0 0 clamp(0px, calc(0px + var(--kf-x) * 0.0563063), 25px);
+    padding:0 0 0 clamp(16px, calc(16px + var(--kf-x) * 0.00900901), 20px);
     border-left:1px solid rgba(234,230,220,0.25);}
   .v-port .p-sub .feats li{position:relative;padding-left:1.35em;white-space:nowrap;}
   .v-port .p-sub .feats li::before{content:"+";position:absolute;left:0;top:0;opacity:.45;}
@@ -384,7 +383,7 @@
     /* sized by frame height AND viewport width: at narrow widths the info column is only
        ~157px, where a height-derived 20px ribbons into five lines. The vw term takes over
        there (14px at 390), the cqb term still caps it on short frames, 16px overall. */
-    font-size:min(3.1cqb,calc(13.67px + var(--kf-x) * 0.00444656),16px);line-height:1.25;letter-spacing:-.005em;
+    font-size:min(3.1cqb,calc(13.67px + var(--kf-x) * 0.00524774),16px);line-height:1.25;letter-spacing:-.005em;
     margin:calc(var(--feat-pull, 12px) * -1) 0 0;max-width:24ch;color:inherit;
     /* same divider anchor the hero's tagline uses; padding in em and the rule in
        currentColor so both track the cqb font size and the panel's ink (the Porcupine
@@ -399,11 +398,11 @@
   .v-port .p-ticker span{display:inline-block;padding:0 30px;}
   .v-port .p-ticker span::before{content:"◎";font-family:serif;color:#3a3630;margin-right:30px;}
 
-  .v-port .p-outro{padding:clamp(32px, calc(32px + var(--kf-x) * 0.01526718), 40px)
-            calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.01526718), 32px))
-            clamp(50px, calc(50px + var(--kf-x) * 0.01908397), 60px);border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
+  .v-port .p-outro{padding:clamp(32px, calc(32px + var(--kf-x) * 0.01801802), 40px)
+            calc(var(--cap) + clamp(24px, calc(24px + var(--kf-x) * 0.01801802), 32px))
+            clamp(50px, calc(50px + var(--kf-x) * 0.02252252), 60px);border-top:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;}
   .v-port .p-outro .contact{padding-left:0;}
-  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:var(--mono);font-size:clamp(11px, calc(11px + var(--kf-x) * 0.00572519), 14px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;align-items:baseline;}
+  .v-port .p-outro .contact dl{display:grid;grid-template-columns:auto auto;row-gap:8px;column-gap:20px;font-family:var(--mono);font-size:clamp(11px, calc(11px + var(--kf-x) * 0.00675676), 14px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;align-items:baseline;}
   .v-port .p-outro .contact dt{}
   .v-port .p-outro .contact dd{margin:0;color:var(--ink);text-transform:none;letter-spacing:.02em;}
   .v-port .p-outro .contact a{color:inherit;text-decoration:none;}
@@ -433,7 +432,7 @@
      or adding a 7th feature, spends past 86 and the jump comes back. */
   @media (max-width:565px){
     .v-port .p-sub .feats{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:minmax(0,1fr);
-      min-height:0;row-gap:2px;line-height:1.2;font-size:clamp(9px, calc(9px + var(--kf-x) * 0.00572519), 10px);}
+      min-height:0;row-gap:2px;line-height:1.2;font-size:clamp(9px, calc(9px + var(--kf-x) * 0.00675676), 10px);}
   }
   @media (max-width:500px){
     .v-port .p-top .mark,.v-port .p-foot .wm{-webkit-text-stroke:.4px currentColor;}

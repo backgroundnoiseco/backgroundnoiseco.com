@@ -13,7 +13,7 @@
   // The layout's two keyframe widths. Everything fluid on the page interpolates between
   // them - in CSS via --kf-x (see the keyframe table at the top of css/site.css), and here
   // for the one piece of positioning JS still owns. Keep these in sync with the CSS.
-  const KF0 = 360, KF1 = 884;
+  const KF0 = 360, KF1 = 804;
 
   // Portrait stage — one scroll-progress value drives everything: the panels translate by
   // (index - progress) * 100%, and the rail reads the same number. No IntersectionObserver,
@@ -95,13 +95,13 @@
         const pRect = phone.getBoundingClientRect();
         if (pRect.width <= 0) return;
         // Shift the pair so the phone's centre lands ~37% of width. Past the layout cap
-        // (maxw + 64 = 884) freeze the target at a constant offset left of centre, so the
+        // (maxw + 64 = 804) freeze the target at a constant offset left of centre, so the
         // pair stops drifting left as the window widens (37% of viewport keeps sliding left
         // of the centred, capped content otherwise). The two branches meet exactly at
-        // CAP_W (0.37 x 884 === 884/2 - 884 x 0.13), so there is no step there.
+        // CAP_W (0.37 x 804 === 804/2 - 804 x 0.13), so there is no step there.
         // KEEP IN SYNC with --maxw + 64 in css/site.css - it is the width at which the
         // content band stops growing, which is what the freeze is for.
-        const CAP_W = 884;
+        const CAP_W = 804;
         const phoneCenter = pRect.left + pRect.width / 2;
         const vw = window.innerWidth;
         const target = vw <= CAP_W ? vw * 0.37 : vw / 2 - CAP_W * 0.13;
