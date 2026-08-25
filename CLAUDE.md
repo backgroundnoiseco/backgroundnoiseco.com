@@ -133,6 +133,19 @@ The **gutters** (frame background past `--cap`, left/right of the band) read **d
 
 The contact email (in `.p-outro`) is stored as two base64 chunks in `data-a` / `data-b` on `<a class="email">` and assembled at runtime (`atob(...) + '@' + atob(...)`). If you change the address, update both attributes; don't hardcode the plaintext. The decoder runs once on load.
 
+## Tuning overlay (`js/tune.js`)
+
+Dev-only. Load any page with **`?tune`** and `js/site.js` injects `js/tune.js`; without the flag the file is never fetched, so the live page pays nothing for it.
+
+Drag the wordmark, drag the badge, or drag the badge's corner grip to resize it. The panel prints finished CSS declarations to paste back — `--hero-drop`, the hero's left padding, the badge's width, and the badge's `top`/`right` expressed in `--ring-step` multiples so it stays anchored to a concentric rectangle.
+
+Two things it handles that are easy to get wrong by hand:
+
+- **The wordmark moves half as far as `--hero-drop` does.** It's a margin on a centred grid item, so the overlay applies `dy × 2` and reports the margin value, not the visual offset.
+- **A drag only ever sets one endpoint.** The layout is a two-keyframe system, so the panel names which keyframe your current window width is editing and recomputes that declaration's `K`. Between the two it says so and refuses to emit CSS — widen past the band cap or narrow to 360 first.
+
+Hold **shift** for 10× finer movement, **R** to reset to the stylesheet's own values.
+
 ## Deployment
 
 Pushing to the default branch on GitHub publishes to GitHub Pages (per the `CNAME`). There is no staging environment.

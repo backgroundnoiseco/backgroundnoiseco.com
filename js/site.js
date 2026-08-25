@@ -460,3 +460,11 @@
     measure();
     start();
   })();
+
+  // Dev-only tuning overlay. Loaded ONLY when ?tune is in the URL, so the live page never
+  // fetches or parses it. See js/tune.js.
+  if (new URLSearchParams(location.search).has('tune')) {
+    const s = document.createElement('script');
+    s.src = 'js/tune.js';
+    document.body.appendChild(s);
+  }
