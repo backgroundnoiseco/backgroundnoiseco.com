@@ -113,7 +113,8 @@
       `\n──────────────────────────────────────────\n` +
       `drag wordmark/badge to move · corner grip = badge size\n` +
       `side grips: yellow = hero · blue = kicker · purple = bar tagline\n` +
-      `shift = 10× slower · R = reset · H = hide`;
+      `shift = 10× slower · R = reset · H = hide panel · G = hide handles` +
+      (gripsHidden ? `  [handles hidden]` : ``);
   }
 
   // --- dragging ------------------------------------------------------------
@@ -160,12 +161,13 @@
   // Type grips. A drag on the text itself is already taken (that moves the block), so each
   // resizable run gets its own handle pinned to its right edge. Sensitivity is per-element
   // because a 1px step means something very different to a 91px wordmark and a 9px kicker.
+  const grips = [];
   function typeGrip(el, key, perPx, colour){
     if (cs(el).position === 'static') el.style.position = 'relative';
     const g = document.createElement('div');
     g.style.cssText = `position:absolute;right:-9px;top:50%;width:14px;height:14px;
       margin-top:-7px;background:${colour};border:1px solid #06302e;cursor:ew-resize;z-index:6`;
-    el.appendChild(g);
+    el.appendChild(g); grips.push(g);
     drag(g, (dx, dy, s) => { state[key] = Math.max(6, s[key] + dx * perPx); }, 'ew-resize');
   }
   typeGrip(h1,     'heroSize', 0.2,  '#e8c84a');
@@ -175,7 +177,7 @@
   const grip = document.createElement('div');
   grip.style.cssText = `position:absolute;left:-7px;top:-7px;width:16px;height:16px;
     background:#1fcbc4;border:1px solid #06302e;cursor:nwse-resize;z-index:5`;
-  badge.appendChild(grip);
+  badge.appendChild(grip); grips.push(grip);
   drag(grip, (dx, dy, s) => {
     state.badgeW = Math.max(24, s.badgeW - dx);       // grows toward the left/top
     state.badgeRight = s.badgeRight;
@@ -196,8 +198,18 @@
     chip.style.display = v ? 'block' : 'none';
   }
 
+  let gripsHidden = false;
+  function setGrips(v){
+    gripsHidden = v;
+    grips.forEach(g => { g.style.display = v ? 'none' : ''; });
+    // the move cursors are a handle too - drop them so nothing hints at edit mode
+    [block, badge].forEach(el => { el.style.cursor = v ? '' : 'move'; });
+    report();
+  }
+
   addEventListener('keydown', e => {
     if (e.key === 'h' || e.key === 'H') { setHidden(!hidden); return; }
+    if (e.key === 'g' || e.key === 'G') { setGrips(!gripsHidden); return; }
     if (e.key === 'r' || e.key === 'R') {
       panel.style.paddingLeft = block.style.marginTop = '';
       vport.style.removeProperty('--hero-size');

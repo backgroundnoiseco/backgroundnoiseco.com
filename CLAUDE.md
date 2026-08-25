@@ -144,7 +144,7 @@ Two things it handles that are easy to get wrong by hand:
 - **The wordmark moves half as far as `--hero-drop` does.** It's a margin on a centred grid item, so the overlay applies `dy × 2` and reports the margin value, not the visual offset.
 - **A drag only ever sets one endpoint.** The layout is a two-keyframe system, so the panel names which keyframe your current window width is editing and recomputes that declaration's `K`. Between the two it says so and refuses to emit CSS — widen past the band cap or narrow to 360 first.
 
-Hold **shift** for 10× finer movement, **R** to reset to the stylesheet's own values, **H** to hide the panel (it collapses to a `tune ▸` chip rather than vanishing, so there's always a way back).
+Hold **shift** for 10× finer movement, **R** to reset to the stylesheet's own values, **H** to hide the panel (it collapses to a `tune ▸` chip rather than vanishing, so there's always a way back), **G** to hide the handles for a clean look at the composition. The two toggle independently, so you can keep the numbers up while the grips are out of the way; dragging the wordmark and badge still works with handles hidden.
 
 The badge is a live App Store link, so the overlay swallows clicks on it in the capture phase — otherwise every attempt to drag it opens a new tab. That only applies under `?tune`; without the flag the link behaves normally.
 
