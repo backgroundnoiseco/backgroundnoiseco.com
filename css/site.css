@@ -30,9 +30,7 @@
 
          property            360px      1000px          K
          --hero-size           54    ->    118     0.1
-         badge width           78    ->    140     0.096875
-         badge margin-left     -8    ->    272     0.4375
-         badge top         -163.1    ->   -137     0.04078125
+         badge width           96    ->    170     0.115625
          --kicker-fs            9    ->     12     0.0046875
          --kicker-mb           20    ->     32     0.01875
          --hero-drop           60    ->     36    -0.0375   (+ svh guard, below)
@@ -269,56 +267,21 @@
      margin-top is the deliberate bias on top of that - see --hero-drop. It survives the
      algebra above untouched: the mt/2 term is independent of the kicker cancellation. */
   .v-port .hero-block{padding-left:0;margin-top:var(--hero-drop);margin-bottom:var(--kicker-block);}
-  /* Badge geometry is three keyframe pairs on the shared 360/1000 anchors - see the table
-     at the top. It is absolutely positioned inside the h1, which shrink-wraps, so left:100%
-     lands on the end of the wordmark and margin-left is the gap from there; `top` is
-     measured from the h1's own top edge.
-     Two things worth knowing before retuning these:
-     - `top` at the large keyframe is -(width at the large keyframe), so the badge's BOTTOM
-       lands on the wordmark's top edge. Change the width pair and this one has to follow,
-       or the badge sinks into the first line.
-     - margin-left is measured from the END OF THE WORDMARK (the h1 shrink-wraps and the
-       badge is absolute at left:100%), so it inherits the h1's width. That means
-       **changing --hero-size silently moves the badge sideways** and this pair has to be
-       refitted: dropping the hero max 114 -> 100 pulled the badge 53px left on its own.
-       If that coupling ever becomes a nuisance, the fix is to drop position:relative from
-       the h1 so the badge's containing block becomes .panel--hero and it can be anchored
-       with `right` instead - but note that also re-bases `top` onto the panel, which would
-       decouple the badge from the vertically-centred wordmark.
-     - none of the three is expressed as an em fraction of --hero-size, even though the
-       badge sits inside the h1 and that would be tempting. The em multipliers the badge
-       was drawn at (1.45em narrow -> 0.80em wide) only held its px size roughly constant
-       because the original hero ran 75 -> 137px; against any smaller hero the same
-       multipliers make the badge SHRINK as the window widens.
-     Consequence of the `top` pair: on narrow windows the gap between badge and wordmark
-     opens up, because the text keeps descending and the badge does not. */
-  /* Shown at every width, and it shares the hero's right-hand space with .hero-snake:
-     the badge is z-index 2 and the snake z-index 1, so the badge paints over it.
-     Its whole keyframe range is live again, so the 1000px endpoints below are real.
-     Known behaviour, not a bug: past the 1000px cap the badge slides left as a SHARE
-     of the window, because it hangs off the end of the wordmark while everything
-     freezes its offset from the 936px band. No single pair fixes that - see the
-     margin-left note. */
-  .v-port .panel .p-badge{position:absolute;left:100%;
-    width:clamp(78px, calc(78px + var(--kf-x) * 0.096875), 140px);
-    margin-left:clamp(-8px, calc(-8px + var(--kf-x) * 0.4375), 272px);
-    top:clamp(-163.1px, calc(-163.1px + var(--kf-x) * 0.04078125), -137px);
-    /* z-index -1 so the badge paints BELOW the h1's glyphs - a negative-z positioned
-       descendant draws under its ancestor's inline content but still above the
-       .hero-block background, and .hero-block (z-index 2) as a whole still sits above
-       the snake canvas (z-index 1). Net order: body, then badge, then wordmark. */
-    /* Clickable: it links to Unicorn Porcupine on the App Store. aria-hidden +
-       tabindex=-1 on purpose - it lives inside the h1, so an exposed link would graft
-       its label onto the heading's accessible name. The same link is already keyboard
-       reachable as the Porcupine panel's CTA, so nothing is lost by making this one a
-       pointer-only shortcut. Where a glyph overlaps the badge the h1's inline content
-       wins the hit (the badge sits at z-index -1, below it); the rest is clickable. */
-    /* NO will-change here. Tried it to stop the wordmark shimmering and it made things
-       worse: promoting a NEGATIVE-z descendant forces WebKit to layerize the ancestor h1
-       to preserve paint order (badge under glyphs), and that layer clips to the h1's box -
-       which is exactly where the last glyph's ink sits. That produced a seam through the
-       'd' and sometimes dropped its right edge entirely. */
-    aspect-ratio:1;color:#e84264;z-index:-1;pointer-events:auto;cursor:pointer;}
+  /* The badge is anchored to the SECOND concentric rectangle: the rings step inward from
+     the band edge in 40px increments, so ring 2's top-left corner is 40px down from the
+     frame top and 40px in from the band's right edge (--cap is the band's own inset). Its
+     containing block is .panel--hero, not the h1 - that is what makes those two offsets
+     expressible at all, since the h1 is vertically centred and moves with the window.
+     Moving it off the h1 also retired the old construct where an absolutely positioned,
+     negative-z child sat inside the heading. That forced WebKit to split the h1's paint
+     between the badge and the glyphs above it, and was behind the Safari seam on the last
+     glyph. z-index 1 keeps it behind .hero-block (z-index 2), so it still passes under the
+     wordmark, while sitting above the frame's rings.
+     Only `width` is a keyframe pair now; top and right are constants, so the badge's size
+     no longer drags its position around. */
+  .v-port .panel--hero .p-badge{position:absolute;top:40px;right:calc(var(--cap) + 40px);
+    width:clamp(96px, calc(96px + var(--kf-x) * 0.115625), 170px);
+    aspect-ratio:1;color:#e84264;z-index:1;pointer-events:auto;cursor:pointer;}
 
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */

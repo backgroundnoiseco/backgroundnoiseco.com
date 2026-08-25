@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=122">
+<link rel="stylesheet" href="css/site.css?v=123">
 </head>
 <body>
 
@@ -40,10 +40,8 @@
              it passed under. To restore, unwrap this template - js/site.js finds the
              canvas by class and no-ops when it is absent, and the CSS is left in place. -->
         <template data-disabled="snake"><canvas class="hero-snake" aria-hidden="true"></canvas></template>
-        <div class="hero-block">
-        <div class="kicker">◎ Creative Software</div>
-        <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em><a class="p-badge" href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <a class="p-badge" aria-label="Unicorn Porcupine — now on the App Store" href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           <!-- Starburst: six squares at 15deg steps. Its visual radius is 36*sqrt(2) = 50.9
                of this 100 viewBox, which is what the snake's head-square size is derived
                against (offsetWidth / sqrt(2)) so the square's corners reach the badge edge. -->
@@ -62,7 +60,10 @@
             <text font-size="9" y="18">NOW LIVE!</text>
           </g>
         </svg>
-        </a></h1>
+        </a>
+        <div class="hero-block">
+        <div class="kicker">◎ Creative Software</div>
+        <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em></h1>
         </div>
       </article>
       <article class="panel panel--project" data-panel="1" data-idx="1" style="--i:1">
@@ -176,7 +177,7 @@
   </div>
 </div>
 
-<script src="js/site.js?v=122"></script>
+<script src="js/site.js?v=123"></script>
 
 </body>
 </html>
