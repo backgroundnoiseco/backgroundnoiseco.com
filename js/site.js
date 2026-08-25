@@ -384,9 +384,7 @@
             // corners come out exactly to the badge's radius.
             // offsetWidth, not the rect: getBoundingClientRect returns the ROTATED bounding
             // box, which is inflated by up to 1.41x and changes with the spin angle.
-            // offsetWidth is 0 while the badge is display:none, so fall back to its computed
-            // width and finally to the app's own 50 - a 0 head would erase the whole taper.
-            HEAD = (badge.offsetWidth || parseFloat(getComputedStyle(badge).width) || 50) / Math.SQRT2;
+            HEAD = badge.offsetWidth / Math.SQRT2;
           } else {
             badge.style.transform = '';   // snake hidden (<=565): hand the badge back to CSS
             tx = ty = 0;
@@ -429,10 +427,8 @@
         const cx = w / 2, cy = h / 2, rx = w * 0.38,
               ry = Math.max(0, (h - 2 * V_INSET - HEAD) / 3);
         // The badge IS the head, so segment 0 is never drawn - the badge is moved onto it
-        // instead and the squares read as the body trailing behind. With no visible badge
-        // the snake draws its own head, or it reads as a tail with nothing leading it.
-        const badgeVisible = badge && badge.offsetParent !== null;
-        if (badgeVisible) {
+        // instead and the squares read as the body trailing behind.
+        if (badge) {
           const head = posAt(t, cx, cy, rx, ry);
           // same seeded rotation segment 0 would have had, so the badge spins as the head
           const s0 = seed(0);
@@ -440,7 +436,7 @@
           badge.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) rotate('
                                 + ((t * ROT * (0.4 + s0 * 1.2) + s0 * 360) % 360).toFixed(1) + 'deg)';
         }
-        for (let i = N - 1; i >= (badgeVisible ? 1 : 0); i--) {   // tail first
+        for (let i = N - 1; i >= 1; i--) {   // tail first, segment 0 is the badge
           const p = i / (N - 1);
           const xy = posAt(t - i * DELAY, cx, cy, rx, ry);
           const size = TAIL + (HEAD - TAIL) * (1 - p);
@@ -465,6 +461,11 @@
       // Only run while the hero panel is on screen. The driver hands us the same --progress
       // everything else reads, so this needs no observer and no second source of truth.
       vport._onProgress = p => { p < 1 ? start() : stop(); };
+      // For the ?tune overlay, which shows and hides the canvas. measure() is the real
+      // switch: the cached size is what start() and draw() both gate on, so re-measuring
+      // after the canvas's display changes parks or revives the loop (and, when it parks,
+      // hands the badge back to its CSS position).
+      vport._snake = {start, stop, measure};
       document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
 
       if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measure).observe(cv);

@@ -246,6 +246,8 @@
   // touches the tuned values, so what the panel reports stays true in every mode.
   // The snake ships disabled inside <template data-disabled="snake">, so the first switch
   // into it unwraps the template and asks site.js to boot it.
+  // Snake mode keeps the BADGE ON: the badge is the snake's head, not an alternative to it.
+  // Only 'none' hides it.
   const DECOR = ['badge', 'snake', 'none'];
   let decor = 0;
   let snakeReady = false;
@@ -261,13 +263,26 @@
   function setDecor(i){
     decor = (i + DECOR.length) % DECOR.length;
     const mode = DECOR[decor];
+    // Show the badge BEFORE booting: the snake measures the badge's rect and offsetWidth
+    // on boot, and both read 0 while it is display:none - a 0 head erases the size taper.
+    badge.style.display = mode === 'none' ? 'none' : '';
     if (mode === 'snake') ensureSnake();
     const cv = document.querySelector('.v-port .hero-snake');
-    badge.style.display = mode === 'badge' ? '' : 'none';
     if (cv) cv.style.display = mode === 'snake' ? '' : 'none';
+    const snake = vport._snake;
+    if (mode === 'snake') {
+      // re-measure first: the canvas had no size while hidden, and start() gates on that
+      if (snake) { snake.measure(); snake.start(); }
+    } else if (snake) {
+      // stop() alone doesn't hold - the stage driver's _onProgress restarts the loop on the
+      // next update, and draw() writes the badge's transform every frame. Re-measuring with
+      // the canvas hidden is what actually parks it: measure() zeroes the cached size, which
+      // is the same gate start() and draw() already check, and hands the badge back to CSS.
+      snake.stop();
+      snake.measure();
+    }
     report();
   }
-  const badgeHidden = () => DECOR[decor] !== 'badge';
 
   let gripsHidden = false;
   function setGrips(v){
