@@ -12,8 +12,21 @@
 
   // The layout's two keyframe widths. Everything fluid on the page interpolates between
   // them - in CSS via --kf-x (see the keyframe table at the top of css/site.css), and here
-  // for the one piece of positioning JS still owns. Keep these in sync with the CSS.
-  const KF0 = 360, KF1 = 804;
+  // for the one piece of positioning JS still owns.
+  // KF1 is DERIVED from --maxw rather than duplicated: it is maxw + 64, the width at which
+  // the content band stops growing. Narrowing the layout used to mean editing this file and
+  // the stylesheet in lockstep, and a stale copy here leaves the project pair still drifting
+  // after the band has frozen. Read once and refreshed on resize - never in a hot path.
+  const KF0 = 360;
+  let KF1 = 804;
+  function readBandCap(){
+    const vp = document.querySelector('.v-port');
+    if (!vp) return;
+    const maxw = parseFloat(getComputedStyle(vp).getPropertyValue('--maxw'));
+    if (maxw > 0) KF1 = maxw + 64;
+  }
+  readBandCap();
+  window.addEventListener('resize', readBandCap);
 
   // Portrait stage — one scroll-progress value drives everything: the panels translate by
   // (index - progress) * 100%, and the rail reads the same number. No IntersectionObserver,
@@ -95,13 +108,11 @@
         const pRect = phone.getBoundingClientRect();
         if (pRect.width <= 0) return;
         // Shift the pair so the phone's centre lands ~37% of width. Past the layout cap
-        // (maxw + 64 = 804) freeze the target at a constant offset left of centre, so the
-        // pair stops drifting left as the window widens (37% of viewport keeps sliding left
-        // of the centred, capped content otherwise). The two branches meet exactly at
-        // CAP_W (0.37 x 804 === 804/2 - 804 x 0.13), so there is no step there.
-        // KEEP IN SYNC with --maxw + 64 in css/site.css - it is the width at which the
-        // content band stops growing, which is what the freeze is for.
-        const CAP_W = 804;
+        // freeze the target at a constant offset left of centre, so the pair stops drifting
+        // left as the window widens (37% of viewport keeps sliding left of the centred,
+        // capped content otherwise). The two branches meet exactly at the cap
+        // (0.37 x C === C/2 - C x 0.13 for any C), so there is no step there.
+        const CAP_W = KF1;   // = --maxw + 64, read from the CSS
         const phoneCenter = pRect.left + pRect.width / 2;
         const vw = window.innerWidth;
         const target = vw <= CAP_W ? vw * 0.37 : vw / 2 - CAP_W * 0.13;
