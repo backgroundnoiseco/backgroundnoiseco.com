@@ -116,7 +116,7 @@
       ``,
       `--hero-drop  (60 -> ${state.drop.toFixed(0)})`,
       `   min(clamp(60px, calc(60px + var(--kf-x) * ${K(d0,state.drop,span)}), ${state.drop.toFixed(0)}px),`,
-      `       max(0px, calc(100svh - 580px)))`,
+      `       max(0px, calc(100svh - 549px)))`,
       ``,
       `hero pad left (60 -> ${state.padLeft.toFixed(0)})`,
       `   clamp(60px, calc(60px + var(--kf-x) * ${K(p0,state.padLeft,span)}), ${state.padLeft.toFixed(0)}px)`,
