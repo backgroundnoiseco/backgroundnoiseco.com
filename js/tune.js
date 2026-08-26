@@ -155,13 +155,11 @@
       `badge top    ${state.badgeTop.toFixed(1)}px  = ring-step × ${(state.badgeTop/S).toFixed(2)}\n` +
       `badge right  ${state.badgeRight.toFixed(1)}px  = ring-step × ${(state.badgeRight/S).toFixed(2)}\n` +
       `   top:calc(var(--ring-step) * ${(state.badgeTop/S).toFixed(2)});\n` +
-      // `right` is a keyframe PAIR, not a constant. A flat inset measured at the wide end is
-      // far more than a 360px screen is wide, so pasting one back puts the badge off-screen
-      // on mobile - print the interpolated form, same as every other wide-keyframe value.
-      (atMax
-        ? `   right:calc(var(--cap) + clamp(calc(var(--ring-step) * ${(br0/S).toFixed(2)}),\n` +
-          `     calc(var(--ring-step) * ${(br0/S).toFixed(2)} + var(--kf-x) * ${K(br0,state.badgeRight,span)}), calc(var(--ring-step) * ${(state.badgeRight/S).toFixed(2)})));\n`
-        : `   right: 360px endpoint - widen past ${C} to emit the pair\n`) +
+      // Both are constants again, and the badge is mobile only - so tune it at a MOBILE
+      // width, not at the wide keyframe, and keep the multiplier small: a large inset
+      // measured on a wide window is off the left of a 360px screen entirely.
+      `   right:calc(var(--cap) + var(--ring-step) * ${(state.badgeRight/S).toFixed(2)});` +
+      (w > 565 ? `   <- badge is mobile-only; measure this at <=565\n` : `\n`) +
       `──────────────────────────────────────────\n` +
       lines.join('\n') +
       `\n──────────────────────────────────────────\n` +

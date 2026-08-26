@@ -31,7 +31,6 @@
          property            360px      1144px          K
          --hero-size            54    ->     85     0.03954081
          badge width            82    ->    136     0.06887755
-         badge right past cap   80    ->    417     0.42984694   (ring-step x2 -> x10.425)
          --kicker-fs             9    ->     10     0.00127551
          --kicker-mb            20    ->     32     0.01530612
          --hero-drop ceiling   490.84 -> 424     -0.0852551   (see below - BOTH of
@@ -318,13 +317,15 @@
      glyph. z-index 3 now puts it ABOVE .hero-block (z-index 2), so it sits on top of the
      wordmark rather than passing under it. Note it precedes .hero-block in the DOM, so an
      equal z-index would put the text on top - it has to be strictly greater.
-     `top` is a constant (ring 3's inset), so the badge's size no longer drags it up and
-     down. `right` has to be a keyframe pair: at the wide end it hangs off the end of the
-     wordmark, which is ~514px in from the band edge, and a flat 514px would put it off
-     the left of a 360px screen entirely. The pair holds it on ring 3 at 360 (where the
-     rings are all there is) and walks it out to x12.85 as the band grows. */
-  .v-port .panel--hero .p-badge{position:absolute;top:calc(var(--ring-step) * 2);right:calc(var(--cap) + clamp(calc(var(--ring-step) * 2),
-      calc(var(--ring-step) * 2 + var(--kf-x) * 0.42984694), calc(var(--ring-step) * 10.425)));
+     Both `top` and `right` are ring-anchored CONSTANTS, so the badge's size never drags its
+     position around: top on ring 3's line, right on ring 2's. `right` was briefly a
+     keyframe pair walking out to x10.425 as the band grew - that was for a desktop
+     composition where it hung off the end of the wordmark, and it needed the pair because
+     a flat 417px inset is off the left of a 360px screen entirely. The badge is mobile
+     only now, so the pair's wide half was never on screen: a small constant is both
+     simpler and safe at every width. Retarget with the multiplier - x1 is ring 2, x3 is
+     ring 4 - and keep it small enough to fit a 360px screen if it ever goes wide again. */
+  .v-port .panel--hero .p-badge{position:absolute;top:calc(var(--ring-step) * 2);right:calc(var(--cap) + var(--ring-step));
     width:clamp(82px, calc(82px + var(--kf-x) * 0.06887755), 136px);
     aspect-ratio:1;color:#e84264;z-index:3;pointer-events:auto;cursor:pointer;}
   /* The badge is MOBILE ONLY - above 565 the hero composition is the wordmark alone. This
