@@ -217,7 +217,16 @@
      by up to ~127px (much less on short ones - ~25px at 640 tall). A phone never crosses
      it; dragging a desktop window across it does. */
   @media (max-width:565px){
-    .v-port .panel--hero{--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.46428571), 424px),
+    .v-port .panel--hero{
+      /* Bigger type and a smaller drop than the shared curve gives: a phone has far less
+         frame to fill, so the wordmark reads small and sits low on the base values. The
+         SIZE ramp is fitted to rejoin the base ramp exactly at 565 (58 -> 62.1059, which is
+         what 54 + 205 x 0.03954081 comes to), so it adds no step of its own - the position
+         step described above is the only one at this boundary. --hero-size is set on the
+         panel rather than .v-port: custom properties inherit, so the nearer element wins
+         and the h1 picks this up without a specificity fight. */
+      --hero-size:clamp(58px, calc(58px + var(--kf-x) * 0.02002861), 62.11px);
+      --hero-drop:min(clamp(36px, calc(36px + var(--kf-x) * 0.46428571), 424px),
       max(0px, calc(100svh - 525px)));}
   }
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
