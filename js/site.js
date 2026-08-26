@@ -18,7 +18,7 @@
   // the stylesheet in lockstep, and a stale copy here leaves the project pair still drifting
   // after the band has frozen. Read once and refreshed on resize - never in a hot path.
   const KF0 = 360;
-  let KF1 = 644;
+  let KF1 = 1144;   // overwritten by readBandCap() on load; kept in step so it isn't misleading
   function readBandCap(){
     const vp = document.querySelector('.v-port');
     if (!vp) return;
