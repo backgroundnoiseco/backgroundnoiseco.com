@@ -220,12 +220,12 @@
     .v-port .panel--hero{
       /* Bigger type and a smaller drop than the shared curve gives: a phone has far less
          frame to fill, so the wordmark reads small and sits low on the base values. The
-         SIZE ramp is fitted to rejoin the base ramp exactly at 565 (58 -> 62.1059, which is
+         SIZE ramp is fitted to rejoin the base ramp exactly at 565 (56 -> 62.1059, which is
          what 54 + 205 x 0.03954081 comes to), so it adds no step of its own - the position
          step described above is the only one at this boundary. --hero-size is set on the
          panel rather than .v-port: custom properties inherit, so the nearer element wins
          and the h1 picks this up without a specificity fight. */
-      --hero-size:clamp(58px, calc(58px + var(--kf-x) * 0.02002861), 62.11px);
+      --hero-size:clamp(56px, calc(56px + var(--kf-x) * 0.02978471), 62.11px);
       --hero-drop:min(clamp(36px, calc(36px + var(--kf-x) * 0.46428571), 424px),
       max(0px, calc(100svh - 525px)));}
   }
