@@ -34,7 +34,8 @@
          badge right past cap   80    ->    417     0.42984694   (ring-step x2 -> x10.425)
          --kicker-fs             9    ->     10     0.00127551
          --kicker-mb            20    ->     32     0.01530612
-         --hero-drop            60    ->    424     0.46428571   (+ svh guard, below)
+         --hero-drop ceiling   490.84 -> 424     -0.0852551   (see below - BOTH of
+         --hero-drop guard     458.16 -> 525      0.0852551    its limits are pairs)
          hero pad left          60    ->     89     0.0369898
          hero pad right         60    ->     32     -0.03571428
          --bar-tag-size         18    ->     19     0.00127551
@@ -142,17 +143,27 @@
      really a height one.
      The vertical bias lives in --hero-drop instead: a margin, which participates in
      centring, never clips, and has no floor to hit. It shifts the block by HALF its value.
-     Its keyframe pair is capped by `100svh - 525px` - the one place a height term is
-     needed on the width keyframes - so the drop is the room left over after the header,
-     the info bar and the block's own height. Without it the block re-overflows its content
-     box on short windows and the reversal above comes straight back. The cap is
-     width-independent, so it cannot itself bend the width curve: min(rising pair, constant)
-     is still non-decreasing.
-     THE GUARD IS WHAT BINDS ON A NORMAL LAPTOP - it takes over below ~950px tall, where it
-     pins the block's bottom a constant ~72px above the frame's. Raising the 424px ceiling
-     alone moves nothing on those windows; to move the hero vertically, shift the ceiling
-     and the 525 constant by the SAME amount in opposite directions, or the two height
-     regimes drift apart. The block moves half of whatever you shift them by.
+     --hero-drop is the ONE value whose keyframe pair is not on the value itself but on
+     its two LIMITS, and that is deliberate. The drop is bounded by a ceiling and by an
+     `svh` guard - the one place a height term is needed on the width keyframes - and which
+     one binds depends on the window's height: the guard takes over below ~950px tall (any
+     normal laptop) and the ceiling above it. Without the guard the block re-overflows its
+     content box on short windows and the direction reversal described above comes back.
+
+     Where the block ENDS UP is `(frameH - drop - blockH + marginBottom) / 2` above the
+     frame's bottom. frameH, blockH and marginBottom all differ between the two keyframes -
+     the frame is 16px taller at 360 (a shorter info bar), the block 64.4px shorter (54px
+     type against 85px), its margin 13.6px smaller - so an IDENTICAL drop does not put the
+     hero in the same place at both ends. Netting those three out, the drop at 360 has to
+     run exactly 66.84px AHEAD of the drop at the cap. Hence one pair on each limit, equal
+     and opposite: ceiling 490.84 -> 424, guard constant 458.16 -> 525. The svh term then
+     cancels out of the expression above, so the block's bottom sits ~72px over the frame's
+     at every width AND every height until the ceiling takes over.
+
+     To move the hero vertically, shift BOTH limits by the same amount in opposite
+     directions (ceiling up = guard constant down) and keep the 66.84 gap between the ends
+     intact - the block moves half of whatever you shift them by. Touching only one moves
+     the hero on tall windows or short ones but not both, which is how this drifted before.
      Left padding must stay non-decreasing - it also absorbs what used to be .hero-block's
      own padding-left, and when it and the right padding both dipped mid-range the hero
      text ended up 19px from the side rail. */
@@ -187,7 +198,8 @@
      the wordmark to get the snake to actually cross the text. It passes BEHIND (z-index
      1 against the text's 2), so overlap is the intent, not a collision. */
   @media (max-width:565px){ .v-port .panel--hero .hero-snake{display:none;} }
-  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.46428571), 424px),max(0px, calc(100svh - 525px)));
+  .v-port .panel--hero{display:grid;align-items:center;--hero-drop:min(clamp(424px, calc(490.84px + var(--kf-x) * -0.0852551), 490.84px),
+      max(0px, calc(100svh - clamp(458.16px, calc(458.16px + var(--kf-x) * 0.0852551), 525px))));
     --kicker-fs:clamp(9px, calc(9px + var(--kf-x) * 0.00127551), 10px);
     --kicker-mb:clamp(20px, calc(20px + var(--kf-x) * 0.01530612), 32px);
     --kicker-block:calc(var(--kicker-fs) * 1.55 + var(--kicker-mb));

@@ -103,7 +103,13 @@
                 : atMin ? `EDITING THE ${KF0}px KEYFRAME`
                 : `⚠ BETWEEN KEYFRAMES (${w}px) — widen to ${C}+ or narrow to ${KF0} first`;
     // small-keyframe values are read straight off the stylesheet's own floors
-    const p0 = 60, d0 = 60, bw0 = 82, br0 = 80;   // br0 = ring-step x 2, ring 3's inset
+    const p0 = 60, bw0 = 82, br0 = 80;   // br0 = ring-step x 2, ring 3's inset
+    // How far AHEAD of the cap's drop the 360 drop has to run for the hero to sit in the
+    // same place at both ends: the frame is 16px taller at 360, the block 64.39px shorter
+    // and its margin-bottom 13.55px smaller, and gapBelow is (frameH - drop - blockH + mb)/2.
+    const DROP_OFF = 66.84;
+    const gC = innerHeight - state.drop;          // guard constant this drop implies
+    const ceilC = 424 + (525 - gC);               // ceiling that keeps the two in lockstep
     const lines = atMax ? [
       `--hero-size  (54 -> ${state.heroSize.toFixed(0)})`,
       `   clamp(54px, calc(54px + var(--kf-x) * ${K(54,state.heroSize,span)}), ${state.heroSize.toFixed(0)}px)`,
@@ -114,9 +120,13 @@
       `--bar-tag-size (18 -> ${state.barTag.toFixed(1)})`,
       `   clamp(18px, calc(18px + var(--kf-x) * ${K(18,state.barTag,span)}), ${state.barTag.toFixed(1)}px)`,
       ``,
-      `--hero-drop  (60 -> ${state.drop.toFixed(0)})`,
-      `   min(clamp(60px, calc(60px + var(--kf-x) * ${K(d0,state.drop,span)}), ${state.drop.toFixed(0)}px),`,
-      `       max(0px, calc(100svh - 525px)))`,
+      // --hero-drop's pair is on its two LIMITS, not on the value: which one binds depends
+      // on window height. A drag fixes the drop at THIS height, which pins the guard
+      // constant (100svh - drop); the ceiling is then derived so the two stay in lockstep,
+      // and each limit's 360 endpoint is DROP_OFF away. See the big comment in site.css.
+      `--hero-drop  ${state.drop.toFixed(0)} at ${innerHeight}px tall`,
+      `   guard 100svh - clamp(${(gC - DROP_OFF).toFixed(2)}px, calc(${(gC - DROP_OFF).toFixed(2)}px + var(--kf-x) * ${K(gC - DROP_OFF, gC, span)}), ${gC.toFixed(2)}px)`,
+      `   ceiling clamp(${ceilC.toFixed(2)}px, calc(${(ceilC + DROP_OFF).toFixed(2)}px + var(--kf-x) * ${K(ceilC + DROP_OFF, ceilC, span)}), ${(ceilC + DROP_OFF).toFixed(2)}px)`,
       ``,
       `hero pad left (60 -> ${state.padLeft.toFixed(0)})`,
       `   clamp(60px, calc(60px + var(--kf-x) * ${K(p0,state.padLeft,span)}), ${state.padLeft.toFixed(0)}px)`,
