@@ -296,7 +296,9 @@
     const mode = DECOR[decor];
     // Show the badge BEFORE booting: the snake measures the badge's rect and offsetWidth
     // on boot, and both read 0 while it is display:none - a 0 head erases the size taper.
-    badge.style.display = mode === 'none' ? 'none' : '';
+    // 'block' rather than '', because the stylesheet's own default is display:none above
+    // 565 - clearing the inline value would hand it straight back to that.
+    badge.style.display = mode === 'none' ? 'none' : 'block';
     if (mode === 'snake') ensureSnake();
     const cv = document.querySelector('.v-port .hero-snake');
     if (cv) cv.style.display = mode === 'snake' ? '' : 'none';

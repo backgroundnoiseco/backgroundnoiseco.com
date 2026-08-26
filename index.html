@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=155">
+<link rel="stylesheet" href="css/site.css?v=156">
 </head>
 <body>
 
@@ -40,10 +40,8 @@
              it passed under. To restore, unwrap this template - js/site.js finds the
              canvas by class and no-ops when it is absent, and the CSS is left in place. -->
         <template data-disabled="snake"><canvas class="hero-snake" aria-hidden="true"></canvas></template>
-        <!-- Badge disabled: hidden for now, kept for later. To restore, unwrap this
-             template - nothing on the live page looks for .p-badge, and js/tune.js
-             unwraps it itself so the overlay keeps working either way. -->
-        <template data-disabled="badge">
+        <!-- Badge is MOBILE ONLY - css/site.css hides it above 565px. It is the snake's
+             head when the snake is on, so it has to stay in the DOM either way. -->
         <a class="p-badge" aria-label="Unicorn Porcupine — now on the App Store" href="https://apps.apple.com/il/app/unicorn-porcupine/id6760215589" target="_blank" rel="noopener">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           <!-- Starburst: six squares at 15deg steps. Its visual radius is 36*sqrt(2) = 50.9
@@ -65,7 +63,6 @@
           </g>
         </svg>
         </a>
-        </template>
         <div class="hero-block">
         <div class="kicker">◎ Creative Software</div>
         <h1>Background<em><span class="dim">Noise</span> <span class="acc">Co.</span></em></h1>
@@ -182,7 +179,7 @@
   </div>
 </div>
 
-<script src="js/site.js?v=155"></script>
+<script src="js/site.js?v=156"></script>
 
 </body>
 </html>

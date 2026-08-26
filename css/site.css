@@ -207,6 +207,20 @@
             calc(var(--cap) + clamp(32px, calc(60px + var(--kf-x) * -0.03571428), 60px))
             0
             calc(var(--cap) + clamp(60px, calc(60px + var(--kf-x) * 0.0369898), 89px));}
+  /* MOBILE IS ITS OWN VERTICAL REGIME. Above 565 the drop's two limits are tuned so the
+     block lands at the same height as it does at the band cap - that match is a
+     desktop-resize concern, and at phone widths it pushed the wordmark down out of the
+     upper half of the frame and into the tagline's. So below 565 the drop goes back to
+     being a pair on the VALUE (60 at 360) against a flat guard, which is where the hero
+     has always sat on a phone, and the badge comes back with it. Same 565 boundary the
+     snake and the ring colour ramp use.
+     This STEPS, it does not ramp: crossing 565 on a tall narrow window moves the wordmark
+     by up to ~127px (much less on short ones - ~25px at 640 tall). A phone never crosses
+     it; dragging a desktop window across it does. */
+  @media (max-width:565px){
+    .v-port .panel--hero{--hero-drop:min(clamp(60px, calc(60px + var(--kf-x) * 0.46428571), 424px),
+      max(0px, calc(100svh - 525px)));}
+  }
   /* Project panel interpolates the old breakpoint steps: right pad 28@390 -> 32@1000
      (the old 12px floor left the title and description almost touching the frame edge on
      narrow windows),
@@ -313,6 +327,14 @@
       calc(var(--ring-step) * 2 + var(--kf-x) * 0.42984694), calc(var(--ring-step) * 10.425)));
     width:clamp(82px, calc(82px + var(--kf-x) * 0.06887755), 136px);
     aspect-ratio:1;color:#e84264;z-index:3;pointer-events:auto;cursor:pointer;}
+  /* The badge is MOBILE ONLY - above 565 the hero composition is the wordmark alone. This
+     has to be a min-width rule sitting AFTER the rule above, not a display:block inside the
+     mobile block further up the file: that block comes first, so at equal specificity the
+     base rule would win and the badge would never appear. Note 566+ is exactly the range
+     the snake runs in and the badge is its HEAD, so re-enabling the snake means dropping
+     this rule too - the ?tune overlay writes an inline display, so its snake mode already
+     overrides it either way. */
+  @media (min-width:566px){ .v-port .panel--hero .p-badge{display:none;} }
 
   /* the badge sits inside the h1, so reset the inherited hero font-size — the SVG's own
      letter-spacing is in em and would otherwise resolve against 137px instead of 15px */
